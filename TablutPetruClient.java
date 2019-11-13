@@ -25,7 +25,7 @@ public class TablutPetruClient extends TablutClient {
 	}
 
 	public TablutPetruClient(String player) throws UnknownHostException, IOException {
-		this(player, "random", 4);
+		this(player, "Petru", 4);
 	}
 
 	public TablutPetruClient(String player, String name) throws UnknownHostException, IOException {
@@ -33,13 +33,13 @@ public class TablutPetruClient extends TablutClient {
 	}
 
 	public TablutPetruClient(String player, int gameChosen) throws UnknownHostException, IOException {
-		this(player, "random", gameChosen);
+		this(player, "Petru2", gameChosen);
 	}
 
 	public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException {
 		int gametype = 4;
 		String role = "";
-		String name = "random";
+		String name = "Petru3";
 		
 		if (args.length < 1) {
 			System.out.println("You must specify which player you are (WHITE or BLACK)");
@@ -58,10 +58,25 @@ public class TablutPetruClient extends TablutClient {
 		
 		System.out.println("Selected client: " + args[0]);
 
-		TablutRandomClient client = new TablutRandomClient(role, name, gametype);
+		TablutPetruClient client = new TablutPetruClient(role, name, gametype);
 		client.run();
 	}
 
+	public void print_pawns_empty(List<int[]> pawns, List<int[]> empty) {
+		System.out.println("PAWNS");
+		for(int i = 0; i < pawns.size(); i++) {
+				System.out.println(pawns.get(i)[0] + " " + pawns.get(i)[1]);
+		}
+		
+		System.out.println("EMPTY");
+		for(int i = 0; i < empty.size(); i++) {
+			System.out.println(empty.get(i)[0] + " " + empty.get(i)[1]);
+		}
+		
+	}
+	
+	
+	
 	@Override
 	public void run() {
 
@@ -117,7 +132,6 @@ public class TablutPetruClient extends TablutClient {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 			}
-
 			if (this.getPlayer().equals(Turn.WHITE)) {
 				// white turn. Here I am updating my internal state setting for each white pawn his position
 				if (this.getCurrentState().getTurn().equals(StateTablut.Turn.WHITE)) {
@@ -139,7 +153,8 @@ public class TablutPetruClient extends TablutClient {
 						}
 					}
 					
-
+					//this.print_pawns_empty(pawns, empty);
+					
 					int[] selected = null;
 
 					boolean found = false;
@@ -152,13 +167,32 @@ public class TablutPetruClient extends TablutClient {
 					}
 					while (!found) {
 						if (pawns.size() > 1) {
-							selected = pawns.get(new Random().nextInt(pawns.size() - 1));
+							selected = pawns.get(new Random().nextInt(pawns.size() - 1)); // get a random pawn
 						} else {
 							selected = pawns.get(0);
 						}
+						
+						/* getCurrentState() returns the board state like that
+						 * 		 OOOBBBOOO
+							     OOOOBOOOO
+							     OOOOWOOOO
+							     BOOOWOOOB
+							     BBWWKWWBB
+							     BOOOWOOOB
+							     OOOOWOOOO
+							     OOOOBOOOO
+							     OOOBBBOOO
 
+						 * 
+						 */
+						/*
+						 * this.getCurrentState().getBox(0, 0) returns "a1" cell of the board (it is used to take the position of a pawn and move it)
+						 * 
+						 */
+						
 						String from = this.getCurrentState().getBox(selected[0], selected[1]);
-
+						
+						// take an empty random position where to move the pawn
 						selected = empty.get(new Random().nextInt(empty.size() - 1));
 						String to = this.getCurrentState().getBox(selected[0], selected[1]);
 
@@ -173,7 +207,8 @@ public class TablutPetruClient extends TablutClient {
 							rules.checkMove(state, a);
 							found = true;
 						} catch (Exception e) {
-
+							System.out.println("PETRU MOSSA IN DIAGONALE, from: " + from + ", to: " + to);
+							System.exit(0);
 						}
 
 					}
