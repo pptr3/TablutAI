@@ -176,6 +176,33 @@ public class TablutPetruClient extends TablutClient {
 		}
 	}
 	
+	public void check_general_status(Turn t) {
+		if (t == StateTablut.Turn.WHITE) {
+			// è il turno dell'avversario
+			if (this.state.getTurn().equals(StateTablut.Turn.BLACK)) {
+				System.out.println("Waiting for BLACK move... ");
+			}
+		} else if (this.state.getTurn().equals(StateTablut.Turn.WHITE)) {
+				System.out.println("Waiting for WHITE move... ");
+		}
+		// ho vinto
+		else if (this.state.getTurn().equals(StateTablut.Turn.WHITEWIN)) {
+			System.out.println("YOU WIN!");
+			System.exit(0);
+		}
+		// ho perso
+		else if (this.state.getTurn().equals(StateTablut.Turn.BLACKWIN)) {
+			System.out.println("YOU LOSE!");
+			System.exit(0);
+		}
+		// pareggio
+		else if (this.state.getTurn().equals(StateTablut.Turn.DRAW)) {
+			System.out.println("DRAW!");
+			System.exit(0);
+		}
+	}
+	
+	
 	
 	private void clear_pawns_and_pawns() {
 		this.pawns.clear();
@@ -203,54 +230,25 @@ public class TablutPetruClient extends TablutClient {
 
 		while (true) {
 			receive_state();
+			// white turn
 			if (this.getPlayer().equals(Turn.WHITE)) {
 				if (this.getCurrentState().getTurn().equals(StateTablut.Turn.WHITE)) {
 					store_pawns_and_empty_coordinates(State.Pawn.WHITE);
 					Action next_action = search_next_action();
 					System.out.println("Mossa scelta: " + next_action.toString());
 					send_action(next_action);
+				} else {
+					check_general_status(StateTablut.Turn.WHITE);
 				}
-				// è il turno dell'avversario
-				else if (this.state.getTurn().equals(StateTablut.Turn.BLACK)) {
-					System.out.println("Waiting for your opponent move... ");
-				}
-				// ho vinto
-				else if (this.state.getTurn().equals(StateTablut.Turn.WHITEWIN)) {
-					System.out.println("YOU WIN!");
-					System.exit(0);
-				}
-				// ho perso
-				else if (this.state.getTurn().equals(StateTablut.Turn.BLACKWIN)) {
-					System.out.println("YOU LOSE!");
-					System.exit(0);
-				}
-				// pareggio
-				else if (this.state.getTurn().equals(StateTablut.Turn.DRAW)) {
-					System.out.println("DRAW!");
-					System.exit(0);
-				}
-
 			} else {
-
 				// black turn
 				if (this.getCurrentState().getTurn().equals(StateTablut.Turn.BLACK)) {
 					store_pawns_and_empty_coordinates(State.Pawn.BLACK);
 					Action next_action = search_next_action();
 					System.out.println("Mossa scelta: " + next_action.toString());
 					send_action(next_action);
-				}
-
-				else if (this.state.getTurn().equals(StateTablut.Turn.WHITE)) {
-					System.out.println("Waiting for your opponent move... ");
-				} else if (this.state.getTurn().equals(StateTablut.Turn.WHITEWIN)) {
-					System.out.println("YOU LOSE!");
-					System.exit(0);
-				} else if (this.state.getTurn().equals(StateTablut.Turn.BLACKWIN)) {
-					System.out.println("YOU WIN!");
-					System.exit(0);
-				} else if (this.state.getTurn().equals(StateTablut.Turn.DRAW)) {
-					System.out.println("DRAW!");
-					System.exit(0);
+				} else {
+					check_general_status(StateTablut.Turn.BLACK);
 				}
 
 			}
