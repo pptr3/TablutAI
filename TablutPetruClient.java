@@ -169,11 +169,11 @@ public class TablutPetruClient extends TablutClient {
 		}
 		//System.out.println("Current state:");
 		this.state = this.getCurrentState();
-		try {
-			Thread.sleep(1000);
+		/*try {
+			//Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 	
 	public void check_general_status(Turn t) {
