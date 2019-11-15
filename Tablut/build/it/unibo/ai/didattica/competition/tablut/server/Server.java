@@ -365,7 +365,7 @@ public class Server implements Runnable {
 				// timer for the move
 				int counter = 0;
 				while (counter < time && t.isAlive()) {
-					Thread.sleep(10);
+					Thread.sleep(1000);
 					counter++;
 				}
 			} catch (InterruptedException e) {
@@ -405,7 +405,7 @@ public class Server implements Runnable {
 				// timer for the move
 				int counter = 0;
 				while (counter < time && t.isAlive()) {
-					Thread.sleep(10);
+					Thread.sleep(1000);
 					counter++;
 				}
 			} catch (InterruptedException e) {
@@ -497,7 +497,7 @@ public class Server implements Runnable {
 				// timer for the move
 				int counter = 0;
 				while (counter < time && t.isAlive()) {
-					Thread.sleep(10);
+					Thread.sleep(1000);
 					counter++;
 				}
 			} catch (InterruptedException e) {

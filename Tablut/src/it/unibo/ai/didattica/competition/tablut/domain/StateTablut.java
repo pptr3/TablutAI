@@ -1,6 +1,13 @@
 package it.unibo.ai.didattica.competition.tablut.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import aima.core.util.datastructure.XYLocation;
+import it.unibo.ai.didattica.competition.tablut.client.petru.aima.XYWho;
+import it.unibo.ai.didattica.competition.tablut.domain.State.Pawn;
+import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 
 
 /**
@@ -13,6 +20,7 @@ import java.io.Serializable;
 public class StateTablut extends State implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private double utility = Integer.MIN_VALUE; // 1: win for X, 0: win for O, 0.5: draw
 
 	public StateTablut() {
 		super();
@@ -25,9 +33,6 @@ public class StateTablut extends State implements Serializable {
 		}
 
 		this.board[4][4] = Pawn.THRONE;
-
-		this.turn = Turn.BLACK;
-
 		this.board[4][4] = Pawn.KING;
 
 		this.board[2][4] = Pawn.WHITE;
@@ -55,8 +60,74 @@ public class StateTablut extends State implements Serializable {
 		this.board[4][8] = Pawn.BLACK;
 		this.board[5][8] = Pawn.BLACK;
 		this.board[4][7] = Pawn.BLACK;
-
+		
+		// current turn is WHITE, set the next to BLACK (maybe?)
+		this.setTurn(Turn.BLACK);
 	}
+	
+	// maybe a second constructor?
+	
+	
+	public List<XYLocation> getAllLegalMoves() {
+		Pawn[][] currentBoardState = this.getBoard();
+		List<XYWho> result = new ArrayList<>();
+		
+		// all possible moves for white
+		if(this.turn.equals(Turn.WHITE)) {
+			List<int[]> whitePositions = new ArrayList<>();
+			int[] buf;
+			for (int i = 0; i < this.getBoard().length; i++) {
+				for (int j = 0; j < this.getBoard().length; j++) {
+					if (this.getPawn(i, j).equalsPawn(State.Pawn.WHITE.toString()) 
+							|| this.getPawn(i, j).equalsPawn(State.Pawn.KING.toString()))  {
+						buf = new int[2];
+						buf[0] = i;
+						buf[1] = j;
+						whitePositions.add(buf);
+						
+					}
+				}
+			}
+			//TODO: for each (i, j) in white position, try every possible move and add to result List
+			
+			
+			
+			
+			
+			
+		} else {
+			
+		}
+			
+		return null;
+	} 
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	public StateTablut clone() {
 		StateTablut result = new StateTablut();

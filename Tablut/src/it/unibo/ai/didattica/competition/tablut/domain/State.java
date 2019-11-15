@@ -47,15 +47,15 @@ public abstract class State {
 		private final String pawn;
 
 		private Pawn(String s) {
-			pawn = s;
+			this.pawn = s;
 		}
 
 		public boolean equalsPawn(String otherPawn) {
-			return (otherPawn == null) ? false : pawn.equals(otherPawn);
+			return (otherPawn == null) ? false : this.pawn.equals(otherPawn);
 		}
 
 		public String toString() {
-			return pawn;
+			return this.pawn;
 		}
 
 	}
@@ -68,7 +68,7 @@ public abstract class State {
 	}
 
 	public Pawn[][] getBoard() {
-		return board;
+		return this.board;
 	}
 
 	public String boardString() {

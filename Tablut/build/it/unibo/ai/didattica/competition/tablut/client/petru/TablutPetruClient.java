@@ -167,7 +167,7 @@ public class TablutPetruClient extends TablutClient {
 		} catch (ClassNotFoundException | IOException e1) {
 			System.exit(1);
 		}
-		//System.out.println("Current state:");
+		System.out.println("Current state:");
 		this.state = this.getCurrentState();
 		/*try {
 			//Thread.sleep(1000);
