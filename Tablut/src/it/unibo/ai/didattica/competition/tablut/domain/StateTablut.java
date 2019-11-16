@@ -2,6 +2,7 @@ package it.unibo.ai.didattica.competition.tablut.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import aima.core.util.datastructure.XYLocation;
@@ -21,7 +22,7 @@ public class StateTablut extends State implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private double utility = Integer.MIN_VALUE; // 1: win for X, 0: win for O, 0.5: draw
-
+	private List<int[]> blackCampPositions;
 	public StateTablut() {
 		super();
 		this.board = new Pawn[9][9];
@@ -61,6 +62,8 @@ public class StateTablut extends State implements Serializable {
 		this.board[5][8] = Pawn.BLACK;
 		this.board[4][7] = Pawn.BLACK;
 		
+		this.blackCampPositions = this.getBlackCampPositions();
+		
 		// current turn is WHITE, set the next to BLACK (maybe?)
 		this.setTurn(Turn.BLACK);
 	}
@@ -69,8 +72,8 @@ public class StateTablut extends State implements Serializable {
 	
 	
 	public List<XYWho> getAllLegalMoves() {
+		//this.setTurn(Turn.WHITE);
 		Pawn[][] currentBoardState = this.getBoard();
-		
 		// all possible moves for white (without constraints)
 		if(this.turn.equals(Turn.WHITE)) {
 			List<XYWho> whiteLegalMoves = new ArrayList<>();
@@ -91,19 +94,19 @@ public class StateTablut extends State implements Serializable {
 				// move each pawn vertically
 				for (int j = 0; j < currentBoardState.length; j++) {
 					// NOTE: here I am moving each white pawn up and down no matter if it actually cannot move because is blocked, TODO: to improve
-					if(this.getPawn(whitePawn.getX(), whitePawn.getY() - j) == Pawn.EMPTY) { // (x, y - j) UP
+					if(((whitePawn.getY() - j) >= 0) && this.getPawn(whitePawn.getX(), whitePawn.getY() - j) == Pawn.EMPTY) { // (x, y - j) UP
 						whiteLegalMoves.add(new XYWho(whitePawn.getX(), whitePawn.getY() - j, new int[]{whitePawn.getX(), whitePawn.getY()}));
 					}
-					if(this.getPawn(whitePawn.getX(), whitePawn.getY() + j) == Pawn.EMPTY) { // (x, y + j) DOWN
+					if(((whitePawn.getY() + j) < currentBoardState.length) && this.getPawn(whitePawn.getX(), whitePawn.getY() + j) == Pawn.EMPTY) { // (x, y + j) DOWN
 						whiteLegalMoves.add(new XYWho(whitePawn.getX(), whitePawn.getY() + j, new int[]{whitePawn.getX(), whitePawn.getY()}));
 					}
 				}
 				// move each pawn horizontally
 				for (int i = 0; i < currentBoardState.length; i++) {
-					if(this.getPawn(whitePawn.getX() - i, whitePawn.getY()) == Pawn.EMPTY) { // (x - i, y) LEFT
+					if(((whitePawn.getX() - i) >= 0) && this.getPawn(whitePawn.getX() - i, whitePawn.getY()) == Pawn.EMPTY) { // (x - i, y) LEFT
 						whiteLegalMoves.add(new XYWho(whitePawn.getX() - i, whitePawn.getY(), new int[]{whitePawn.getX(), whitePawn.getY()}));
 					}
-					if(this.getPawn(whitePawn.getX() + i, whitePawn.getY()) == Pawn.EMPTY) { // (x + i, y) RIGHT
+					if(((whitePawn.getX() + i) < currentBoardState.length) && this.getPawn(whitePawn.getX() + i, whitePawn.getY()) == Pawn.EMPTY) { // (x + i, y) RIGHT
 						whiteLegalMoves.add(new XYWho(whitePawn.getX() + i, whitePawn.getY(), new int[]{whitePawn.getX(), whitePawn.getY()}));
 					}
 				}
@@ -125,24 +128,25 @@ public class StateTablut extends State implements Serializable {
 					}
 				}
 			}
+
 			// for each (i, j) in black position, try every possible move and add to result List wheter is a lega move (manhattan and is emtpy)
 			for (XYWho blackPawn : blackPositions) {
 				// move each pawn vertically
-				for (int j = 0; j < currentBoardState.length; j++) {
+				for (int j = 0; j < currentBoardState.length - 1; j++) {
 					// NOTE: here I am moving each white pawn up and down no matter if it actually cannot move because is blocked, TODO: to improve
-					if(this.getPawn(blackPawn.getX(), blackPawn.getY() - j) == Pawn.EMPTY) { // (x, y - j) UP
-						blackLegalMoves.add(new XYWho(blackPawn.getX(), blackPawn.getY() - j, new int[]{blackPawn.getX(), blackPawn.getY()}));
+					if(((blackPawn.getY() - j) >= 0) && this.getPawn(blackPawn.getX(), blackPawn.getY() - j) == Pawn.EMPTY) { // (x, y - j) UP
+						blackLegalMoves.add(new XYWho(blackPawn.getX(), blackPawn.getY() , new int[]{blackPawn.getX(), blackPawn.getY()}));
 					}
-					if(this.getPawn(blackPawn.getX(), blackPawn.getY() + j) == Pawn.EMPTY) { // (x, y + j) DOWN
+					if(((blackPawn.getY() + j) < currentBoardState.length) && this.getPawn(blackPawn.getX(), blackPawn.getY() + j) == Pawn.EMPTY) { // (x, y + j) DOWN
 						blackLegalMoves.add(new XYWho(blackPawn.getX(), blackPawn.getY() + j, new int[]{blackPawn.getX(), blackPawn.getY()}));
 					}
 				}
 				// move each pawn horizontally
-				for (int i = 0; i < currentBoardState.length; i++) {
-					if(this.getPawn(blackPawn.getX() - i, blackPawn.getY()) == Pawn.EMPTY) { // (x - i, y) LEFT
+				for (int i = 0; i < currentBoardState.length - 1; i++) {
+					if(((blackPawn.getX() - i) >= 0) && this.getPawn(blackPawn.getX() - i, blackPawn.getY()) == Pawn.EMPTY) { // (x - i, y) LEFT
 						blackLegalMoves.add(new XYWho(blackPawn.getX() - i, blackPawn.getY(), new int[]{blackPawn.getX(), blackPawn.getY()}));
 					}
-					if(this.getPawn(blackPawn.getX() + i, blackPawn.getY()) == Pawn.EMPTY) { // (x + i, y) RIGHT
+					if(((blackPawn.getX() + i) < currentBoardState.length) && this.getPawn(blackPawn.getX() + i, blackPawn.getY()) == Pawn.EMPTY) { // (x + i, y) RIGHT
 						blackLegalMoves.add(new XYWho(blackPawn.getX() + i, blackPawn.getY(), new int[]{blackPawn.getX(), blackPawn.getY()}));
 					}
 				}
@@ -153,8 +157,11 @@ public class StateTablut extends State implements Serializable {
 		}
 			
 	} 
-	
-	
+	//TODO: check whether for each white and black they do their legal moves (check it before add contraints and when I will add constraints)
+	public static void main(String[] args) {
+		StateTablut s = new StateTablut();
+		System.out.println(s.getAllLegalMoves());
+	}
 
 	
 	
@@ -176,8 +183,25 @@ public class StateTablut extends State implements Serializable {
 	
 	
 	
-	
-	
+	private List<int[]> getBlackCampPositions() {
+		return new ArrayList<>(Arrays.asList(
+				new int[] {0,3},
+				new int[] {0,4},
+				new int[] {0,5},
+				new int[] {1,4},
+				new int[] {8,3},
+				new int[] {8,4},
+				new int[] {8,5},
+				new int[] {7,4},
+				new int[] {3,0},
+				new int[] {4,0},
+				new int[] {5,0},
+				new int[] {4,1},
+				new int[] {3,8},
+				new int[] {4,8},
+				new int[] {5,8},
+				new int[] {4,7}));
+	}
 	
 	
 
