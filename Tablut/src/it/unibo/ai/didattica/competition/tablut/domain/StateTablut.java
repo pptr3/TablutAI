@@ -100,10 +100,10 @@ public class StateTablut extends State implements Serializable {
 				}
 				// move each pawn horizontally
 				for (int i = 0; i < currentBoardState.length; i++) {
-					if(this.getPawn(whitePawn.getX() - i, whitePawn.getY()) == Pawn.EMPTY) { // (x - 1, y) LEFT
+					if(this.getPawn(whitePawn.getX() - i, whitePawn.getY()) == Pawn.EMPTY) { // (x - i, y) LEFT
 						whiteLegalMoves.add(new XYWho(whitePawn.getX() - i, whitePawn.getY(), new int[]{whitePawn.getX(), whitePawn.getY()}));
 					}
-					if(this.getPawn(whitePawn.getX() + i, whitePawn.getY()) == Pawn.EMPTY) { // (x + 1, y) RIGHT
+					if(this.getPawn(whitePawn.getX() + i, whitePawn.getY()) == Pawn.EMPTY) { // (x + i, y) RIGHT
 						whiteLegalMoves.add(new XYWho(whitePawn.getX() + i, whitePawn.getY(), new int[]{whitePawn.getX(), whitePawn.getY()}));
 					}
 				}
@@ -126,24 +126,24 @@ public class StateTablut extends State implements Serializable {
 				}
 			}
 			// for each (i, j) in black position, try every possible move and add to result List wheter is a lega move (manhattan and is emtpy)
-			for (XYWho whitePawn : blackPositions) {
+			for (XYWho blackPawn : blackPositions) {
 				// move each pawn vertically
 				for (int j = 0; j < currentBoardState.length; j++) {
 					// NOTE: here I am moving each white pawn up and down no matter if it actually cannot move because is blocked, TODO: to improve
-					if(this.getPawn(whitePawn.getX(), whitePawn.getY() - j) == Pawn.EMPTY) { // (x, y - j) UP
-						blackLegalMoves.add(new XYWho(whitePawn.getX(), whitePawn.getY() - j, new int[]{whitePawn.getX(), whitePawn.getY()}));
+					if(this.getPawn(blackPawn.getX(), blackPawn.getY() - j) == Pawn.EMPTY) { // (x, y - j) UP
+						blackLegalMoves.add(new XYWho(blackPawn.getX(), blackPawn.getY() - j, new int[]{blackPawn.getX(), blackPawn.getY()}));
 					}
-					if(this.getPawn(whitePawn.getX(), whitePawn.getY() + j) == Pawn.EMPTY) { // (x, y + j) DOWN
-						blackLegalMoves.add(new XYWho(whitePawn.getX(), whitePawn.getY() + j, new int[]{whitePawn.getX(), whitePawn.getY()}));
+					if(this.getPawn(blackPawn.getX(), blackPawn.getY() + j) == Pawn.EMPTY) { // (x, y + j) DOWN
+						blackLegalMoves.add(new XYWho(blackPawn.getX(), blackPawn.getY() + j, new int[]{blackPawn.getX(), blackPawn.getY()}));
 					}
 				}
 				// move each pawn horizontally
 				for (int i = 0; i < currentBoardState.length; i++) {
-					if(this.getPawn(whitePawn.getX() - i, whitePawn.getY()) == Pawn.EMPTY) { // (x - 1, y) LEFT
-						blackLegalMoves.add(new XYWho(whitePawn.getX() - i, whitePawn.getY(), new int[]{whitePawn.getX(), whitePawn.getY()}));
+					if(this.getPawn(blackPawn.getX() - i, blackPawn.getY()) == Pawn.EMPTY) { // (x - i, y) LEFT
+						blackLegalMoves.add(new XYWho(blackPawn.getX() - i, blackPawn.getY(), new int[]{blackPawn.getX(), blackPawn.getY()}));
 					}
-					if(this.getPawn(whitePawn.getX() + i, whitePawn.getY()) == Pawn.EMPTY) { // (x + 1, y) RIGHT
-						blackLegalMoves.add(new XYWho(whitePawn.getX() + i, whitePawn.getY(), new int[]{whitePawn.getX(), whitePawn.getY()}));
+					if(this.getPawn(blackPawn.getX() + i, blackPawn.getY()) == Pawn.EMPTY) { // (x + i, y) RIGHT
+						blackLegalMoves.add(new XYWho(blackPawn.getX() + i, blackPawn.getY(), new int[]{blackPawn.getX(), blackPawn.getY()}));
 					}
 				}
 					
