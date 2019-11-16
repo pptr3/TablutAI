@@ -4,7 +4,7 @@ import java.util.List;
 import aima.core.search.adversarial.Game;
 import it.unibo.ai.didattica.competition.tablut.domain.StateTablut;
 
-public class TablutGame implements  Game<StateTablut, XYWho, String>{
+public class TablutGame implements  Game<StateTablut, XYWho, String> {
 
 	@Override
 	public List<XYWho> getActions(StateTablut arg0) {

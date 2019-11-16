@@ -68,38 +68,90 @@ public class StateTablut extends State implements Serializable {
 	// maybe a second constructor?
 	
 	
-	public List<XYLocation> getAllLegalMoves() {
+	public List<XYWho> getAllLegalMoves() {
 		Pawn[][] currentBoardState = this.getBoard();
-		List<XYWho> result = new ArrayList<>();
 		
-		// all possible moves for white
+		// all possible moves for white (without constraints)
 		if(this.turn.equals(Turn.WHITE)) {
-			List<int[]> whitePositions = new ArrayList<>();
-			int[] buf;
-			for (int i = 0; i < this.getBoard().length; i++) {
-				for (int j = 0; j < this.getBoard().length; j++) {
+			List<XYWho> whiteLegalMoves = new ArrayList<>();
+			List<XYWho> whitePositions = new ArrayList<>();
+			XYWho buf;
+			for (int i = 0; i < currentBoardState.length; i++) {
+				for (int j = 0; j < currentBoardState.length; j++) {
 					if (this.getPawn(i, j).equalsPawn(State.Pawn.WHITE.toString()) 
 							|| this.getPawn(i, j).equalsPawn(State.Pawn.KING.toString()))  {
-						buf = new int[2];
-						buf[0] = i;
-						buf[1] = j;
+						buf = new XYWho(i, j, new int[]{i, j});
 						whitePositions.add(buf);
 						
 					}
 				}
 			}
-			//TODO: for each (i, j) in white position, try every possible move and add to result List
-			
-			
-			
-			
-			
+			// for each (i, j) in white position, try every possible move and add to result List wheter is a lega move (manhattan and is emtpy)
+			for (XYWho whitePawn : whitePositions) {
+				// move each pawn vertically
+				for (int j = 0; j < currentBoardState.length; j++) {
+					// NOTE: here I am moving each white pawn up and down no matter if it actually cannot move because is blocked, TODO: to improve
+					if(this.getPawn(whitePawn.getX(), whitePawn.getY() - j) == Pawn.EMPTY) { // (x, y - j) UP
+						whiteLegalMoves.add(new XYWho(whitePawn.getX(), whitePawn.getY() - j, new int[]{whitePawn.getX(), whitePawn.getY()}));
+					}
+					if(this.getPawn(whitePawn.getX(), whitePawn.getY() + j) == Pawn.EMPTY) { // (x, y + j) DOWN
+						whiteLegalMoves.add(new XYWho(whitePawn.getX(), whitePawn.getY() + j, new int[]{whitePawn.getX(), whitePawn.getY()}));
+					}
+				}
+				// move each pawn horizontally
+				for (int i = 0; i < currentBoardState.length; i++) {
+					if(this.getPawn(whitePawn.getX() - i, whitePawn.getY()) == Pawn.EMPTY) { // (x - 1, y) LEFT
+						whiteLegalMoves.add(new XYWho(whitePawn.getX() - i, whitePawn.getY(), new int[]{whitePawn.getX(), whitePawn.getY()}));
+					}
+					if(this.getPawn(whitePawn.getX() + i, whitePawn.getY()) == Pawn.EMPTY) { // (x + 1, y) RIGHT
+						whiteLegalMoves.add(new XYWho(whitePawn.getX() + i, whitePawn.getY(), new int[]{whitePawn.getX(), whitePawn.getY()}));
+					}
+				}
+					
+			}
+			return whiteLegalMoves;
 			
 		} else {
+			// all possible moves for black (without constraints)
+			List<XYWho> blackLegalMoves = new ArrayList<>();
+			List<XYWho> blackPositions = new ArrayList<>();
+			XYWho buf;
+			for (int i = 0; i < currentBoardState.length; i++) {
+				for (int j = 0; j < currentBoardState.length; j++) {
+					if (this.getPawn(i, j).equalsPawn(State.Pawn.BLACK.toString()))  {
+						buf = new XYWho(i, j, new int[]{i, j});
+						blackPositions.add(buf);
+						
+					}
+				}
+			}
+			// for each (i, j) in black position, try every possible move and add to result List wheter is a lega move (manhattan and is emtpy)
+			for (XYWho whitePawn : blackPositions) {
+				// move each pawn vertically
+				for (int j = 0; j < currentBoardState.length; j++) {
+					// NOTE: here I am moving each white pawn up and down no matter if it actually cannot move because is blocked, TODO: to improve
+					if(this.getPawn(whitePawn.getX(), whitePawn.getY() - j) == Pawn.EMPTY) { // (x, y - j) UP
+						blackLegalMoves.add(new XYWho(whitePawn.getX(), whitePawn.getY() - j, new int[]{whitePawn.getX(), whitePawn.getY()}));
+					}
+					if(this.getPawn(whitePawn.getX(), whitePawn.getY() + j) == Pawn.EMPTY) { // (x, y + j) DOWN
+						blackLegalMoves.add(new XYWho(whitePawn.getX(), whitePawn.getY() + j, new int[]{whitePawn.getX(), whitePawn.getY()}));
+					}
+				}
+				// move each pawn horizontally
+				for (int i = 0; i < currentBoardState.length; i++) {
+					if(this.getPawn(whitePawn.getX() - i, whitePawn.getY()) == Pawn.EMPTY) { // (x - 1, y) LEFT
+						blackLegalMoves.add(new XYWho(whitePawn.getX() - i, whitePawn.getY(), new int[]{whitePawn.getX(), whitePawn.getY()}));
+					}
+					if(this.getPawn(whitePawn.getX() + i, whitePawn.getY()) == Pawn.EMPTY) { // (x + 1, y) RIGHT
+						blackLegalMoves.add(new XYWho(whitePawn.getX() + i, whitePawn.getY(), new int[]{whitePawn.getX(), whitePawn.getY()}));
+					}
+				}
+					
+			}
+			return blackLegalMoves;
 			
 		}
 			
-		return null;
 	} 
 	
 	

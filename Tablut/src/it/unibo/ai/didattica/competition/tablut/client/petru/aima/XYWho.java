@@ -68,7 +68,7 @@ public class XYWho {
 	 * @return the location one unit ahead of this location.
 	 */
 	public XYWho north() {
-		return new XYWho(x, y - 1,this.who);
+		return new XYWho(x, y - 1, this.who);
 	}
 
 	/**
