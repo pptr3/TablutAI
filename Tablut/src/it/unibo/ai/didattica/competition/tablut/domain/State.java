@@ -2,6 +2,7 @@ package it.unibo.ai.didattica.competition.tablut.domain;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 
 /**
  * Abstract class for a State of a game We have a representation of the board
@@ -77,11 +78,21 @@ public abstract class State {
 		}
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	public static final int WIDTH = 9;
+	public static final int HEIGHT = 9;
+	public static final int KING_POSITION = 4; // this 4 is meant ad the initial king position which is [4, 4]
+	
 	private Pawn board[][];
 	private Area boardArea[][];
 	private Turn turn;
-	public static final int WIDTH = 9;
-	public static final int HEIGHT = 9;
+
 
 	public State() {
 		super();
@@ -103,7 +114,6 @@ public abstract class State {
 		this.boardArea = boardArea;
 	}
 	
-
 	public Turn getTurn() {
 		return this.turn;
 	}
@@ -112,57 +122,6 @@ public abstract class State {
 		this.turn = turn;
 	}
 
-	
-	public String boardString() {
-		StringBuffer result = new StringBuffer();
-		for (int i = 0; i < this.board.length; i++) {
-			for (int j = 0; j < this.board.length; j++) {
-				result.append(this.board[i][j].toString());
-				if (j == 8) {
-					result.append("\n");
-				}
-			}
-		}
-		return result.toString();
-	}
-
-	@Override
-	public String toString() {
-		StringBuffer result = new StringBuffer();
-
-		// board
-		result.append("");
-		result.append(this.boardString());
-
-		result.append("-");
-		result.append("\n");
-
-		// TURNO
-		result.append(this.turn.toString());
-
-		return result.toString();
-	}
-
-	public String toLinearString() {
-		StringBuffer result = new StringBuffer();
-
-		// board
-		result.append("");
-		result.append(this.boardString().replace("\n", ""));
-		result.append(this.turn.toString());
-
-		return result.toString();
-	}
-
-	/**
-	 * this function tells the pawn inside a specific box on the board
-	 * 
-	 * @param row
-	 *            represents the row of the specific box
-	 * @param column
-	 *            represents the column of the specific box
-	 * @return is the pawn of the box
-	 */
 	public Pawn getPawn(int row, int column) {
 		return this.board[row][column];
 	}
@@ -179,21 +138,24 @@ public abstract class State {
 		this.boardArea[row][column] = area;
 	}
 	
-	/**
-	 * this function remove a specified pawn from the board
-	 * 
-	 * @param row
-	 *            represents the row of the specific box
-	 * @param column
-	 *            represents the column of the specific box
-	 * 
-	 */
 	public void removePawn(int row, int column) {
 		this.board[row][column] = Pawn.EMPTY;
 	}
 
+	public boolean hasTheKingMoved() {
+		return this.getKingPosition()[0] == KING_POSITION;
+	}
 	
-
+	public int[] getKingPosition() {
+		for (int i = 0; i < this.getBoard().length; i++) {
+			for (int j = 0; j < this.getBoard().length; j++) {
+				if(this.getPawn(i, j) == Pawn.KING) {
+					return new int[] {i,j};
+				}
+			}
+		}
+		return null;
+	}
 	
 	/**
 	 * Counts the number of checkers of a specific color on the board. Note: the king is not taken into account for white, it must be checked separately
@@ -245,8 +207,46 @@ public abstract class State {
 	
 	
 	
-	
-	
+	public String boardString() {
+		StringBuffer result = new StringBuffer();
+		for (int i = 0; i < this.board.length; i++) {
+			for (int j = 0; j < this.board.length; j++) {
+				result.append(this.board[i][j].toString());
+				if (j == 8) {
+					result.append("\n");
+				}
+			}
+		}
+		return result.toString();
+	}
+
+	@Override
+	public String toString() {
+		StringBuffer result = new StringBuffer();
+
+		// board
+		result.append("");
+		result.append(this.boardString());
+
+		result.append("-");
+		result.append("\n");
+
+		// TURNO
+		result.append(this.turn.toString());
+
+		return result.toString();
+	}
+
+	public String toLinearString() {
+		StringBuffer result = new StringBuffer();
+
+		// board
+		result.append("");
+		result.append(this.boardString().replace("\n", ""));
+		result.append(this.turn.toString());
+
+		return result.toString();
+	}
 	
 	
 	

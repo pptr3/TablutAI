@@ -2,6 +2,7 @@ package it.unibo.ai.didattica.competition.tablut.domain;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 
 /**
  * Abstract class for a State of a game We have a representation of the board
@@ -23,15 +24,15 @@ public abstract class State {
 		private final String turn;
 
 		private Turn(String s) {
-			turn = s;
+			this.turn = s;
 		}
 
 		public boolean equalsTurn(String otherName) {
-			return (otherName == null) ? false : turn.equals(otherName);
+			return (otherName == null) ? false : this.turn.equals(otherName);
 		}
 
 		public String toString() {
-			return turn;
+			return this.turn;
 		}
 	}
 
@@ -47,30 +48,165 @@ public abstract class State {
 		private final String pawn;
 
 		private Pawn(String s) {
-			pawn = s;
+			this.pawn = s;
 		}
 
 		public boolean equalsPawn(String otherPawn) {
-			return (otherPawn == null) ? false : pawn.equals(otherPawn);
+			return (otherPawn == null) ? false : this.pawn.equals(otherPawn);
 		}
 
 		public String toString() {
-			return pawn;
+			return this.pawn;
 		}
 
 	}
+	
+	public enum Area {
+		NORMAL("N"), CASTLE("K"), CAMPS("C"), ESCAPES("E");
+		private final String area;
 
-	protected Pawn board[][];
-	protected Turn turn;
+		private Area(String a) {
+			this.area = a;
+		}
+
+		public boolean equalsPawn(String otherPawn) {
+			return (otherPawn == null) ? false : this.area.equals(otherPawn);
+		}
+
+		public String toString() {
+			return this.area;
+		}
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	public static final int WIDTH = 9;
+	public static final int HEIGHT = 9;
+	public static final int KING_POSITION = 4; // this 4 is meant ad the initial king position which is [4, 4]
+	
+	private Pawn board[][];
+	private Area boardArea[][];
+	private Turn turn;
+
 
 	public State() {
 		super();
 	}
 
 	public Pawn[][] getBoard() {
-		return board;
+		return this.board;
 	}
 
+	public void setBoard(Pawn[][] board) {
+		this.board = board;
+	}
+	
+	public Area[][] getBoardArea() {
+		return this.boardArea;
+	}
+	
+	public void setBoardArea(Area[][] boardArea) {
+		this.boardArea = boardArea;
+	}
+	
+	public Turn getTurn() {
+		return this.turn;
+	}
+
+	public void setTurn(Turn turn) {
+		this.turn = turn;
+	}
+
+	public Pawn getPawn(int row, int column) {
+		return this.board[row][column];
+	}
+
+	public void setPawn(int row, int column, Pawn pawn) {
+		this.board[row][column] = pawn;
+	}
+	
+	public Area getArea(int row, int column) {
+		return this.boardArea[row][column];
+	}
+
+	public void setArea(int row, int column, Area area) {
+		this.boardArea[row][column] = area;
+	}
+	
+	public void removePawn(int row, int column) {
+		this.board[row][column] = Pawn.EMPTY;
+	}
+
+	public boolean hasTheKingMoved() {
+		return this.getKingPosition()[0] == KING_POSITION;
+	}
+	
+	public int[] getKingPosition() {
+		for (int i = 0; i < this.getBoard().length; i++) {
+			for (int j = 0; j < this.getBoard().length; j++) {
+				if(this.getPawn(i, j) == Pawn.KING) {
+					return new int[] {i,j};
+				}
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Counts the number of checkers of a specific color on the board. Note: the king is not taken into account for white, it must be checked separately
+	 * @param color The color of the checker that will be counted. It is possible also to use EMPTY to count empty cells.
+	 * @return The number of cells of the board that contains a checker of that color.
+	 */
+	public int getNumberOf(Pawn color) {
+		int count = 0;
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; j < board[i].length; j++) {
+				if (board[i][j] == color)
+					count++;
+			}
+		}
+		return count;
+	}
+	
+	public void printBoardArea() {
+		for(int i=0; i < this.getBoardArea().length; i++) {
+			for(int j=0; j < this.getBoardArea().length; j++) {
+				System.out.print(this.getBoardArea()[i][j]+ "  ");
+			}
+			System.out.println("\n");
+		}
+	}
+	
+	public void printBoard() {
+		for(int i=0; i < this.getBoard().length; i++) {
+			for(int j=0; j < this.getBoard().length; j++) {
+				System.out.print(this.getBoard()[i][j]+ "  ");
+			}
+			System.out.println("\n");
+		}
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public String boardString() {
 		StringBuffer result = new StringBuffer();
 		for (int i = 0; i < this.board.length; i++) {
@@ -111,45 +247,11 @@ public abstract class State {
 
 		return result.toString();
 	}
-
-	/**
-	 * this function tells the pawn inside a specific box on the board
-	 * 
-	 * @param row
-	 *            represents the row of the specific box
-	 * @param column
-	 *            represents the column of the specific box
-	 * @return is the pawn of the box
-	 */
-	public Pawn getPawn(int row, int column) {
-		return this.board[row][column];
-	}
-
-	/**
-	 * this function remove a specified pawn from the board
-	 * 
-	 * @param row
-	 *            represents the row of the specific box
-	 * @param column
-	 *            represents the column of the specific box
-	 * 
-	 */
-	public void removePawn(int row, int column) {
-		this.board[row][column] = Pawn.EMPTY;
-	}
-
-	public void setBoard(Pawn[][] board) {
-		this.board = board;
-	}
-
-	public Turn getTurn() {
-		return turn;
-	}
-
-	public void setTurn(Turn turn) {
-		this.turn = turn;
-	}
-
+	
+	
+	
+	
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -220,21 +322,4 @@ public abstract class State {
 		result.setTurn(this.turn);
 		return result;
 	}
-
-	/**
-	 * Counts the number of checkers of a specific color on the board. Note: the king is not taken into account for white, it must be checked separately
-	 * @param color The color of the checker that will be counted. It is possible also to use EMPTY to count empty cells.
-	 * @return The number of cells of the board that contains a checker of that color.
-	 */
-	public int getNumberOf(Pawn color) {
-		int count = 0;
-		for (int i = 0; i < board.length; i++) {
-			for (int j = 0; j < board[i].length; j++) {
-				if (board[i][j] == color)
-					count++;
-			}
-		}
-		return count;
-	}
-
 }

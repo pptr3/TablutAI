@@ -24,6 +24,7 @@ public class TablutPetruClient extends TablutClient {
 	private State state;
 	private Game rules = null;
 
+
 	public TablutPetruClient(String player, String name, int gameChosen) throws UnknownHostException, IOException {
 		super(player, name);
 		game = gameChosen;
@@ -208,6 +209,16 @@ public class TablutPetruClient extends TablutClient {
 		this.pawns.clear();
 		this.empty.clear();
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	@Override
 	public void run() {
