@@ -14,7 +14,7 @@ public class StateBrandub extends State implements Serializable{
 
 	public StateBrandub() 
 	{
-		super();
+		/*super();
 		this.board = new Pawn[7][7];
 		for(int i=0; i<7; i++)
 		{
@@ -43,7 +43,7 @@ public class StateBrandub extends State implements Serializable{
 		this.board[3][0] = Pawn.BLACK;
 		this.board[3][1] = Pawn.BLACK;
 		this.board[0][3] = Pawn.BLACK;
-		this.board[1][3] = Pawn.BLACK;
+		this.board[1][3] = Pawn.BLACK;*/
 		
 	}
 	
