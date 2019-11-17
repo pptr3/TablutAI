@@ -43,29 +43,62 @@ public class StateTablut extends State implements Serializable {
 					}
 				}
 			}
-			// for each (i, j) in white position, try every possible move and add to result List whether is a legal move (manhattan and is emtpy)
+			// BUG: crossing problem
+			// for each (i, j) in white position, try every possible move and add to result List whether is a legal move (manhattan and is empty)
 			for (XYWho whitePawn : whitePositions) {
 				// move each pawn vertically
 				for (int j = 0; j < currentBoardState.length; j++) {
-					// NOTE: here I am moving each white pawn up and down no matter if it actually cannot move because is blocked, TODO: to improve
 					// (x, y - j) UP
 					if(((whitePawn.getY() - j) >= 0) && super.getPawn(whitePawn.getX(), whitePawn.getY() - j) == Pawn.EMPTY && (super.getArea(whitePawn.getX(), whitePawn.getY() - j) != Area.CAMPS) && (this.getArea(whitePawn.getX(), whitePawn.getY() - j) != Area.CASTLE)) {
-						whiteLegalMoves.add(new XYWho(whitePawn.getX(), whitePawn.getY() - j, new int[]{whitePawn.getX(), whitePawn.getY()}));
+						int howManyEmptyPawns = 0;
+						for (int f = whitePawn.getY() - 1; f > whitePawn.getY() - j; f--) {
+							if(super.getPawn(whitePawn.getX(), f) != Pawn.EMPTY) {
+								howManyEmptyPawns++;
+							}
+						}
+						if(howManyEmptyPawns == 0) {
+							
+							whiteLegalMoves.add(new XYWho(whitePawn.getX(), whitePawn.getY() - j, new int[]{whitePawn.getX(), whitePawn.getY()}));
+						}
 					}
 					// (x, y + j) DOWN
 					if(((whitePawn.getY() + j) < currentBoardState.length) && super.getPawn(whitePawn.getX(), whitePawn.getY() + j) == Pawn.EMPTY && (super.getArea(whitePawn.getX(), whitePawn.getY() + j) != Area.CAMPS) && (super.getArea(whitePawn.getX(), whitePawn.getY() + j) != Area.CASTLE)) {
-						whiteLegalMoves.add(new XYWho(whitePawn.getX(), whitePawn.getY() + j, new int[]{whitePawn.getX(), whitePawn.getY()}));
+						int howManyEmptyPawns = 0;
+						for (int f = whitePawn.getY() + 1; f < whitePawn.getY() + j; f++) {
+							if(super.getPawn(whitePawn.getX(), f) != Pawn.EMPTY) {
+								howManyEmptyPawns++;
+							}
+						}
+						if(howManyEmptyPawns == 0) {
+							whiteLegalMoves.add(new XYWho(whitePawn.getX(), whitePawn.getY() + j, new int[]{whitePawn.getX(), whitePawn.getY()}));
+						}
 					}
 				}
 				// move each pawn horizontally
 				for (int i = 0; i < currentBoardState.length; i++) {
 					// (x - i, y) LEFT
 					if(((whitePawn.getX() - i) >= 0) && super.getPawn(whitePawn.getX() - i, whitePawn.getY()) == Pawn.EMPTY && (super.getArea(whitePawn.getX() - i, whitePawn.getY()) != Area.CAMPS) && (this.getArea(whitePawn.getX() - i, whitePawn.getY()) != Area.CASTLE)) {
-						whiteLegalMoves.add(new XYWho(whitePawn.getX() - i, whitePawn.getY(), new int[]{whitePawn.getX(), whitePawn.getY()}));
+						int howManyEmptyPawns = 0;
+						for (int f = whitePawn.getX() - 1; f > whitePawn.getX() - i; f--) {
+							if(super.getPawn(f, whitePawn.getY()) != Pawn.EMPTY) {
+								howManyEmptyPawns++;
+							}
+						}
+						if(howManyEmptyPawns == 0) {
+							whiteLegalMoves.add(new XYWho(whitePawn.getX() - i, whitePawn.getY(), new int[]{whitePawn.getX(), whitePawn.getY()}));
+						}
 					}
 					// (x + i, y) RIGHT
 					if(((whitePawn.getX() + i) < currentBoardState.length) && super.getPawn(whitePawn.getX() + i, whitePawn.getY()) == Pawn.EMPTY && (super.getArea(whitePawn.getX() + i, whitePawn.getY()) != Area.CAMPS) && (super.getArea(whitePawn.getX() + i, whitePawn.getY()) != Area.CASTLE)) {
-						whiteLegalMoves.add(new XYWho(whitePawn.getX() + i, whitePawn.getY(), new int[]{whitePawn.getX(), whitePawn.getY()}));
+						int howManyEmptyPawns = 0;
+						for (int f = whitePawn.getX() + 1; f < whitePawn.getX() + i; f++) {
+							if(super.getPawn(f, whitePawn.getY()) != Pawn.EMPTY) {
+								howManyEmptyPawns++;
+							}
+						}
+						if(howManyEmptyPawns == 0) {
+							whiteLegalMoves.add(new XYWho(whitePawn.getX() + i, whitePawn.getY(), new int[]{whitePawn.getX(), whitePawn.getY()}));
+						}
 					}
 				}
 					
@@ -92,11 +125,6 @@ public class StateTablut extends State implements Serializable {
 					whiteLegalMoves.add(new XYWho(king_position[0] + i, king_position[1], new int[]{king_position[0], king_position[1]}));
 				}
 			}
-			
-				
-			
-			
-			
 			return whiteLegalMoves;
 			
 			
@@ -129,7 +157,7 @@ public class StateTablut extends State implements Serializable {
 			
 			
 		} else {
-			// all possible moves for black (without constraints)
+			// all possible moves for black
 			List<XYWho> blackLegalMoves = new ArrayList<>();
 			List<XYWho> blackPositions = new ArrayList<>();
 			XYWho buf;
@@ -146,7 +174,7 @@ public class StateTablut extends State implements Serializable {
 			// for each (i, j) in black position, try every possible move and add to result List whether is a legal move (manhattan and is emtpy)
 			for (XYWho blackPawn : blackPositions) {
 				// move each pawn vertically
-				for (int j = 0; j < currentBoardState.length - 1; j++) {
+				for (int j = 0; j < currentBoardState.length; j++) {
 					// NOTE: here I am moving each white pawn up and down no matter if it actually cannot move because is blocked, TODO: to improve
 					if(((blackPawn.getY() - j) >= 0) && super.getPawn(blackPawn.getX(), blackPawn.getY() - j) == Pawn.EMPTY) { // (x, y - j) UP
 						blackLegalMoves.add(new XYWho(blackPawn.getX(), blackPawn.getY() , new int[]{blackPawn.getX(), blackPawn.getY()}));
@@ -156,7 +184,7 @@ public class StateTablut extends State implements Serializable {
 					}
 				}
 				// move each pawn horizontally
-				for (int i = 0; i < currentBoardState.length - 1; i++) {
+				for (int i = 0; i < currentBoardState.length; i++) {
 					if(((blackPawn.getX() - i) >= 0) && super.getPawn(blackPawn.getX() - i, blackPawn.getY()) == Pawn.EMPTY) { // (x - i, y) LEFT
 						blackLegalMoves.add(new XYWho(blackPawn.getX() - i, blackPawn.getY(), new int[]{blackPawn.getX(), blackPawn.getY()}));
 					}
@@ -221,14 +249,14 @@ public class StateTablut extends State implements Serializable {
 		//super.setPawn(State.KING_POSITION,  State.KING_POSITION, Pawn.THRONE);
 		super.setPawn(State.KING_POSITION,  State.KING_POSITION, Pawn.KING);
 		
-		/*super.setPawn(2,  4, Pawn.WHITE);
+		super.setPawn(2,  4, Pawn.WHITE);
 		super.setPawn(3,  4, Pawn.WHITE);
 		super.setPawn(5,  4, Pawn.WHITE);
 		super.setPawn(6,  4, Pawn.WHITE);
 		super.setPawn(4,  2, Pawn.WHITE);
 		super.setPawn(4,  3, Pawn.WHITE);
 		super.setPawn(4,  5, Pawn.WHITE);
-		super.setPawn(4,  6, Pawn.WHITE);*/
+		super.setPawn(4,  6, Pawn.WHITE);
 		
 		
 		
