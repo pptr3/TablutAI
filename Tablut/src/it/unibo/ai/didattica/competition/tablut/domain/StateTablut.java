@@ -14,15 +14,12 @@ import it.unibo.ai.didattica.competition.tablut.client.petru.aima.XYWho;
 public class StateTablut extends State implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private boolean hasTheKingMoved;
 	
 	public StateTablut() {
 		super();
 		super.setBoard(new Pawn[State.WIDTH][State.HEIGHT]);
 		super.setBoardArea(new Area[State.WIDTH][State.WIDTH]);
 		this.initBoard();
-		this.hasTheKingMoved = false;
-		
 	}
 	
 	
@@ -37,7 +34,7 @@ public class StateTablut extends State implements Serializable {
 			for (int i = 0; i < currentBoardState.length; i++) {
 				for (int j = 0; j < currentBoardState.length; j++) {
 					if (super.getPawn(i, j).equalsPawn(State.Pawn.WHITE.toString()))  {
-						buf = new XYWho(i, j, new int[]{i, j});
+						buf = new XYWho(i, j, new int[]{i, j}, false);
 						whitePositions.add(buf);
 						
 					}
@@ -57,7 +54,7 @@ public class StateTablut extends State implements Serializable {
 						}
 						if(howManyEmptyPawns == 0) {
 							
-							whiteLegalMoves.add(new XYWho(whitePawn.getX(), whitePawn.getY() - j, new int[]{whitePawn.getX(), whitePawn.getY()}));
+							whiteLegalMoves.add(new XYWho(whitePawn.getX(), whitePawn.getY() - j, new int[]{whitePawn.getX(), whitePawn.getY()}, false));
 						}
 					}
 					// (x, y + j) DOWN
@@ -69,7 +66,7 @@ public class StateTablut extends State implements Serializable {
 							}
 						}
 						if(howManyEmptyPawns == 0) {
-							whiteLegalMoves.add(new XYWho(whitePawn.getX(), whitePawn.getY() + j, new int[]{whitePawn.getX(), whitePawn.getY()}));
+							whiteLegalMoves.add(new XYWho(whitePawn.getX(), whitePawn.getY() + j, new int[]{whitePawn.getX(), whitePawn.getY()}, false));
 						}
 					}
 				}
@@ -84,7 +81,7 @@ public class StateTablut extends State implements Serializable {
 							}
 						}
 						if(howManyEmptyPawns == 0) {
-							whiteLegalMoves.add(new XYWho(whitePawn.getX() - i, whitePawn.getY(), new int[]{whitePawn.getX(), whitePawn.getY()}));
+							whiteLegalMoves.add(new XYWho(whitePawn.getX() - i, whitePawn.getY(), new int[]{whitePawn.getX(), whitePawn.getY()}, false));
 						}
 					}
 					// (x + i, y) RIGHT
@@ -96,7 +93,7 @@ public class StateTablut extends State implements Serializable {
 							}
 						}
 						if(howManyEmptyPawns == 0) {
-							whiteLegalMoves.add(new XYWho(whitePawn.getX() + i, whitePawn.getY(), new int[]{whitePawn.getX(), whitePawn.getY()}));
+							whiteLegalMoves.add(new XYWho(whitePawn.getX() + i, whitePawn.getY(), new int[]{whitePawn.getX(), whitePawn.getY()}, false));
 						}
 					}
 				}
@@ -107,21 +104,21 @@ public class StateTablut extends State implements Serializable {
 			for (int j = 0; j < currentBoardState.length; j++) {
 				// (x, y - j) UP
 				if(((king_position[1] - j) >= 0) && super.getPawn(king_position[0], king_position[1] - j) == Pawn.EMPTY && (super.getArea(king_position[0], king_position[1] - j) != Area.CAMPS) && (king_position[0] != State.KING_POSITION || (king_position[1] - j) != State.KING_POSITION)) {
-					whiteLegalMoves.add(new XYWho(king_position[0], king_position[1] - j, new int[]{king_position[0], king_position[1]}));
+					whiteLegalMoves.add(new XYWho(king_position[0], king_position[1] - j, new int[]{king_position[0], king_position[1]}, false));
 				}
 				// (x, y + j) DOWN
 				if(((king_position[1] + j) < currentBoardState.length) && super.getPawn(king_position[0], king_position[1] + j) == Pawn.EMPTY && (super.getArea(king_position[0], king_position[1] + j) != Area.CAMPS) && (king_position[0] != State.KING_POSITION | (king_position[1] + j) != State.KING_POSITION)) {
-					whiteLegalMoves.add(new XYWho(king_position[0], king_position[1] + j, new int[]{king_position[0], king_position[1]}));
+					whiteLegalMoves.add(new XYWho(king_position[0], king_position[1] + j, new int[]{king_position[0], king_position[1]}, false));
 				}
 			}
 			for (int i = 0; i < currentBoardState.length; i++) {
 				// (x - i, y) LEFT
 				if(((king_position[0] - i) >= 0) && super.getPawn(king_position[0] - i, king_position[1]) == Pawn.EMPTY && (super.getArea(king_position[0] - i, king_position[1]) != Area.CAMPS) && ((king_position[0] - i) != State.KING_POSITION || (king_position[1]) != State.KING_POSITION)) {
-					whiteLegalMoves.add(new XYWho(king_position[0] - i, king_position[1], new int[]{king_position[0], king_position[1]}));
+					whiteLegalMoves.add(new XYWho(king_position[0] - i, king_position[1], new int[]{king_position[0], king_position[1]}, false));
 				}
 				// (x + i, y) RIGHT
 				if(((king_position[0] + i) < currentBoardState.length) && super.getPawn(king_position[0] + i, king_position[1]) == Pawn.EMPTY && (super.getArea(king_position[0] + i, king_position[1]) != Area.CAMPS) && ((king_position[0] + i) != State.KING_POSITION || (king_position[1]) != State.KING_POSITION)) {
-					whiteLegalMoves.add(new XYWho(king_position[0] + i, king_position[1], new int[]{king_position[0], king_position[1]}));
+					whiteLegalMoves.add(new XYWho(king_position[0] + i, king_position[1], new int[]{king_position[0], king_position[1]}, false));
 				}
 			}
 			return whiteLegalMoves;
@@ -163,13 +160,12 @@ public class StateTablut extends State implements Serializable {
 			for (int i = 0; i < currentBoardState.length; i++) {
 				for (int j = 0; j < currentBoardState.length; j++) {
 					if (this.getPawn(i, j).equalsPawn(State.Pawn.BLACK.toString()))  {
-						buf = new XYWho(i, j, new int[]{i, j});
+						buf = new XYWho(i, j, new int[]{i, j}, false); //BUG in this false
 						blackPositions.add(buf);
 						
 					}
 				}
 			}
-
 			// for each (i, j) in black position, try every possible move
 			for (XYWho blackPawn : blackPositions) {
 				// move each pawn vertically
@@ -183,11 +179,14 @@ public class StateTablut extends State implements Serializable {
 							}
 						}
 						if(howManyEmptyPawns == 0) {
-							blackLegalMoves.add(new XYWho(blackPawn.getX(), blackPawn.getY() - j, new int[]{blackPawn.getX(), blackPawn.getY()}));
+							// BUG here, a black pawn if leaves his camps, cannot go in the other camps (maybe distinguish the different 4 camps?)
+							if((blackPawn.hasLeftTheCamp() && (super.getArea(blackPawn.getX(), blackPawn.getY() - j) != Area.CAMPS)) || (!blackPawn.hasLeftTheCamp())) {
+								blackLegalMoves.add(new XYWho(blackPawn.getX(), blackPawn.getY() - j, new int[]{blackPawn.getX(), blackPawn.getY()}, false));
+							}
 						}
 					}
 					// (x, y + j) DOWN
-					if(((blackPawn.getY() + j) < currentBoardState.length) && super.getPawn(blackPawn.getX(), blackPawn.getY() + j) == Pawn.EMPTY && (super.getArea(blackPawn.getX(), blackPawn.getY() + j) != Area.CASTLE)) {
+					if(((blackPawn.getY() + j) < currentBoardState.length) && super.getPawn(blackPawn.getX(), blackPawn.getY() + j) == Pawn.EMPTY && (super.getArea(blackPawn.getX(), blackPawn.getY() + j) != Area.CASTLE) && (!blackPawn.hasLeftTheCamp())) {
 						int howManyEmptyPawns = 0;
 						for (int f = blackPawn.getY() + 1; f < blackPawn.getY() + j; f++) {
 							if(super.getPawn(blackPawn.getX(), f) != Pawn.EMPTY) {
@@ -195,14 +194,14 @@ public class StateTablut extends State implements Serializable {
 							}
 						}
 						if(howManyEmptyPawns == 0) {
-							blackLegalMoves.add(new XYWho(blackPawn.getX(), blackPawn.getY() + j, new int[]{blackPawn.getX(), blackPawn.getY()}));
+							blackLegalMoves.add(new XYWho(blackPawn.getX(), blackPawn.getY() + j, new int[]{blackPawn.getX(), blackPawn.getY()}, false));
 						}
 					}
 				}
 				// move each pawn horizontally
 				for (int i = 0; i < currentBoardState.length; i++) {
 					// (x - i, y) LEFT
-					if(((blackPawn.getX() - i) >= 0) && super.getPawn(blackPawn.getX() - i, blackPawn.getY()) == Pawn.EMPTY && (super.getArea(blackPawn.getX() - i, blackPawn.getY()) != Area.CASTLE)) {
+					if(((blackPawn.getX() - i) >= 0) && super.getPawn(blackPawn.getX() - i, blackPawn.getY()) == Pawn.EMPTY && (super.getArea(blackPawn.getX() - i, blackPawn.getY()) != Area.CASTLE)&& (!blackPawn.hasLeftTheCamp())) {
 						int howManyEmptyPawns = 0;
 						for (int f = blackPawn.getX() - 1; f > blackPawn.getX() - i; f--) {
 							if(super.getPawn(f, blackPawn.getY()) != Pawn.EMPTY) {
@@ -210,11 +209,11 @@ public class StateTablut extends State implements Serializable {
 							}
 						}
 						if(howManyEmptyPawns == 0) {
-							blackLegalMoves.add(new XYWho(blackPawn.getX() - i, blackPawn.getY(), new int[]{blackPawn.getX(), blackPawn.getY()}));
+							blackLegalMoves.add(new XYWho(blackPawn.getX() - i, blackPawn.getY(), new int[]{blackPawn.getX(), blackPawn.getY()}, false));
 						}
 					}
 					// (x + i, y) RIGHT
-					if(((blackPawn.getX() + i) < currentBoardState.length) && super.getPawn(blackPawn.getX() + i, blackPawn.getY()) == Pawn.EMPTY && (super.getArea(blackPawn.getX() + i, blackPawn.getY()) != Area.CASTLE)) {
+					if(((blackPawn.getX() + i) < currentBoardState.length) && super.getPawn(blackPawn.getX() + i, blackPawn.getY()) == Pawn.EMPTY && (super.getArea(blackPawn.getX() + i, blackPawn.getY()) != Area.CASTLE) && (!blackPawn.hasLeftTheCamp())) {
 						int howManyEmptyPawns = 0;
 						for (int f = blackPawn.getX() + 1; f < blackPawn.getX() + i; f++) {
 							if(super.getPawn(f, blackPawn.getY()) != Pawn.EMPTY) {
@@ -222,7 +221,7 @@ public class StateTablut extends State implements Serializable {
 							}
 						}
 						if(howManyEmptyPawns == 0) {
-							blackLegalMoves.add(new XYWho(blackPawn.getX() + i, blackPawn.getY(), new int[]{blackPawn.getX(), blackPawn.getY()}));
+							blackLegalMoves.add(new XYWho(blackPawn.getX() + i, blackPawn.getY(), new int[]{blackPawn.getX(), blackPawn.getY()}, false));
 						}
 					}
 				}
@@ -294,7 +293,7 @@ public class StateTablut extends State implements Serializable {
 		
 		
 		
-		//super.setPawn(0,  3, Pawn.BLACK);
+		super.setPawn(0,  3, Pawn.BLACK);
 		super.setPawn(0,  4, Pawn.BLACK);
 		super.setPawn(0,  5, Pawn.BLACK);
 		super.setPawn(1,  4, Pawn.BLACK);

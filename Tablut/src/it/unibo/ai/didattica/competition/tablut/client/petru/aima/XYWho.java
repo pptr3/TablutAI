@@ -10,6 +10,7 @@ public class XYWho {
     private int x; // new x coordinate where to move the pawn with index (x, y) 
     private int y;
     private int[] who;
+    boolean hasLeftTheCamp;
 
 	/**
 	 * Constructs and initializes a location at the specified (<em>x</em>,
@@ -20,10 +21,11 @@ public class XYWho {
 	 * @param y
 	 *            the y coordinate
 	 */
-	public XYWho(int x, int y, int[] who) {
+	public XYWho(int x, int y, int[] who, boolean hasLeftTheCamp) {
 		this.x = x;
 		this.y = y;
 		this.who = who;
+		this.hasLeftTheCamp = false;
 	}
 
 	/**
@@ -42,102 +44,11 @@ public class XYWho {
 	public int[] getWho() {
 		return this.who;
 	}
-
-	/**
-	 * Returns the location one unit left of this location.
-	 * 
-	 * @return the location one unit left of this location.
-	 */
-	public XYWho west() {
-		return new XYWho(x - 1, y, this.who);
+	
+	public boolean hasLeftTheCamp() {
+		return this.hasLeftTheCamp;
 	}
 
-	/**
-	 * Returns the location one unit right of this location.
-	 * 
-	 * @return the location one unit right of this location.
-	 */
-	public XYWho east() {
-		return new XYWho(x + 1, y, this.who);
-	}
-
-	/**
-	 * Returns the location one unit ahead of this location.
-	 * 
-	 * @return the location one unit ahead of this location.
-	 */
-	public XYWho north() {
-		return new XYWho(x, y - 1, this.who);
-	}
-
-	/**
-	 * Returns the location one unit behind, this location.
-	 * 
-	 * @return the location one unit behind this location.
-	 */
-	public XYWho south() {
-		return new XYWho(x, y + 1, this.who);
-	}
-
-	/**
-	 * Returns the location one unit left of this location.
-	 * 
-	 * @return the location one unit left of this location.
-	 */
-	public XYWho left() {
-		return west();
-	}
-
-	/**
-	 * Returns the location one unit right of this location.
-	 * 
-	 * @return the location one unit right of this location.
-	 */
-	public XYWho right() {
-		return east();
-	}
-
-	/**
-	 * Returns the location one unit above this location.
-	 * 
-	 * @return the location one unit above this location.
-	 */
-	public XYWho up() {
-		return north();
-	}
-
-	/**
-	 * Returns the location one unit below this location.
-	 * 
-	 * @return the location one unit below this location.
-	 */
-	public XYWho down() {
-		return south();
-	}
-
-	/**
-	 * Returns the location one unit from this location in the specified
-	 * direction.
-	 * 
-	 * @return the location one unit from this location in the specified
-	 *         direction.
-	 */
-	public XYWho locationAt(Direction direction) {
-		if (direction.equals(Direction.North)) {
-			return north();
-		}
-		if (direction.equals(Direction.South)) {
-			return south();
-		}
-		if (direction.equals(Direction.East)) {
-			return east();
-		}
-		if (direction.equals(Direction.West)) {
-			return west();
-		} else {
-			throw new RuntimeException("Unknown direction " + direction);
-		}
-	}
 
 	@Override
 	public boolean equals(Object o) {

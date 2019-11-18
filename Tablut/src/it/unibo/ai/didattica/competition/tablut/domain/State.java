@@ -4,6 +4,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 
+import it.unibo.ai.didattica.competition.tablut.client.petru.aima.XYWho;
+
 /**
  * Abstract class for a State of a game We have a representation of the board
  * and the turn
@@ -92,6 +94,7 @@ public abstract class State {
 	private Pawn board[][];
 	private Area boardArea[][];
 	private Turn turn;
+	private boolean boolBlackCamps[][];
 
 
 	public State() {
@@ -137,6 +140,20 @@ public abstract class State {
 	public void setArea(int row, int column, Area area) {
 		this.boardArea[row][column] = area;
 	}
+	
+	public boolean getBoolBlackCamps(int row, int column) {
+		return this.boolBlackCamps[row][column];
+	}
+
+	public void setBoolBlackCamps(int row, int column, boolean hasBlackLeftTheCamp) {
+		this.boolBlackCamps[row][column] = hasBlackLeftTheCamp;
+	}
+	
+	public boolean hasBlackLeftTheCamp(XYWho xywho) {
+		// XYWho has destination coordinates and coordinates of the black pawn that has moved. Then update with setBoolBlackCamps()
+		return false;
+	}
+	
 	
 	public void removePawn(int row, int column) {
 		this.board[row][column] = Pawn.EMPTY;
