@@ -12,10 +12,6 @@ public class TablutGame implements Game<StateTablut, XYWho, String> {
 
 	private StateTablut initialState;
 	
-	public TablutGame() {
-		this.initialState = new StateTablut();
-	}
-	
 	@Override
 	public List<XYWho> getActions(StateTablut state) {
 		return state.getAllLegalMoves();
@@ -47,15 +43,7 @@ public class TablutGame implements Game<StateTablut, XYWho, String> {
 
 	@Override
 	public double getUtility(StateTablut state, String player) {
-		double result = state.getUtility();
-		if (result != -1) {
-			if (player == Pawn.BLACK.toString()) {
-				result = 1 - result;
-			}
-		} else {
-			throw new IllegalArgumentException("State is not terminal.");
-		}
-		return result;
+		return 1;
 	}
 
 	@Override

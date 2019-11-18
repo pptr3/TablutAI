@@ -20,8 +20,8 @@ public class TablutPetruClient extends TablutClient {
 	public TablutPetruClient(String player, String name, int gameChosen) throws UnknownHostException, IOException {
 		super(player, name);
 		this.tablut = new TablutGame();
-		//this.tablut.getState().setTurn(State.Turn.BLACK);
-		this.alpha_beta =  new AlphaBetaSearch<StateTablut, XYWho, String> (this.tablut);
+		//this.tablut.getState().setTurn(State.Turn.WHITE);
+		//this.alpha_beta =  new AlphaBetaSearch<StateTablut, XYWho, String> (this.tablut);
 	}
 
 	public void receiveState() {
@@ -45,8 +45,8 @@ public class TablutPetruClient extends TablutClient {
 		while (true) {
 			this.receiveState();
 			// white turn
-			/*if (this.getPlayer().equals(Turn.WHITE)) {
-				if (this.getCurrentState().getTurn().equals(StateTablut.Turn.WHITE)) {
+			if (this.getPlayer().equals(Turn.WHITE)) {
+				/*if (this.getCurrentState().getTurn().equals(StateTablut.Turn.WHITE)) {
 					XYWho actionToPerform = this.alpha_beta.makeDecision(this.tablut.getState());
 					String from = String.valueOf(actionToPerform.getX());
 					String to = String.valueOf(actionToPerform.getY());
@@ -56,11 +56,11 @@ public class TablutPetruClient extends TablutClient {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-				}
+				}*/
 				
 			} else {
 				// black turn
-				if (this.getCurrentState().getTurn().equals(StateTablut.Turn.BLACK)) {
+				/*if (this.getCurrentState().getTurn().equals(StateTablut.Turn.BLACK)) {
 					XYWho actionToPerform = this.alpha_beta.makeDecision(this.tablut.getState());
 					String from = String.valueOf(actionToPerform.getX());
 					String to = String.valueOf(actionToPerform.getY());
@@ -70,9 +70,9 @@ public class TablutPetruClient extends TablutClient {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-				}
-			 		
-			}*/
+				}*/
+
+			}
 		}
 
 	}
