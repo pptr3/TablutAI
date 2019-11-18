@@ -59,8 +59,9 @@ public class TablutGame implements Game<StateTablut, XYWho, String> {
 	public StateTablut getResult(StateTablut state, XYWho action) {
 		StateTablut result = state.clone();
 		Pawn[][] b = result.getBoard();
-		b[action.getX()][action.getY()] = Pawn.EMPTY;
-		b[action.getWho()[0]][action.getWho()[1]] = b[action.getX()][action.getY()];
+		b[action.getX()][action.getY()] = this.getState().getBoard()[action.getWho()[0]][action.getWho()[1]];
+		b[action.getWho()[0]][action.getWho()[1]] = Pawn.EMPTY;
+		this.getState().setBoard(b);
 		return result;
 	}
 }

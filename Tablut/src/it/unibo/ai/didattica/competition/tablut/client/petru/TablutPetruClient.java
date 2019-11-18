@@ -48,7 +48,7 @@ public class TablutPetruClient extends TablutClient {
 			this.receiveState();
 			// white turn
 			if (this.getPlayer().equals(Turn.WHITE)) {
-				/*if (this.getCurrentState().getTurn().equals(StateTablut.Turn.WHITE)) {
+				if (this.getCurrentState().getTurn().equals(StateTablut.Turn.WHITE)) {
 					XYWho actionToPerform = this.alpha_beta.makeDecision(this.tablut.getState());
 					String from = String.valueOf(actionToPerform.getX());
 					String to = String.valueOf(actionToPerform.getY());
@@ -58,11 +58,11 @@ public class TablutPetruClient extends TablutClient {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-				}*/
+				}
 				
 			} else {
 				// black turn
-				/*if (this.getCurrentState().getTurn().equals(StateTablut.Turn.BLACK)) {
+				if (this.getCurrentState().getTurn().equals(StateTablut.Turn.BLACK)) {
 					XYWho actionToPerform = this.alpha_beta.makeDecision(this.tablut.getState());
 					String from = String.valueOf(actionToPerform.getX());
 					String to = String.valueOf(actionToPerform.getY());
@@ -72,7 +72,7 @@ public class TablutPetruClient extends TablutClient {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-				}*/
+				}
 
 			}
 		}

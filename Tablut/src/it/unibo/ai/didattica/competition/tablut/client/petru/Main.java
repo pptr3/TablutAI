@@ -20,10 +20,11 @@ public class Main {
 		AlphaBetaSearch<TicTacToeState, XYLocation, String> ab = new AlphaBetaSearch<TicTacToeState, XYLocation, String> (ttg);
 		up = ttg.getResult(current_state, ab.makeDecision(current_state));
 		System.out.println(ab.getMetrics());*/
-		/*TablutGame st = new TablutGame();
+		TablutGame st = new TablutGame();
 		StateTablut c = st.getInitialState();
 		st.getState().setTurn(Turn.BLACK);
 		AlphaBetaSearch<StateTablut, XYWho, String> ab = new AlphaBetaSearch<StateTablut, XYWho, String> (st);
-		System.out.println((st.getResult(c, ab.makeDecision(c))));*/
+		System.out.println((st.getResult(c, ab.makeDecision(c))));
+		
 	}
 }

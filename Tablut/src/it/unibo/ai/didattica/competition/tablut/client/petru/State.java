@@ -81,13 +81,9 @@ public abstract class State {
 	
 	
 	
-	
-	
-	
-	
-	public static final int WIDTH = 9;
-	public static final int HEIGHT = 9;
-	public static final int KING_POSITION = 4; // this 4 is meant ad the initial king position which is [4, 4]
+	public static final int WIDTH = 9; 
+	public static final int HEIGHT = 9; 
+	public static final int KING_POSITION = 4; // this 4 is meant as the initial king position which is [4, 4]
 	
 	private Pawn board[][];
 	private Area boardArea[][];

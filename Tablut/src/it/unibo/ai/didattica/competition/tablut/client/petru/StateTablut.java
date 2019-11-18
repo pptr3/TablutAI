@@ -22,7 +22,6 @@ public class StateTablut extends State implements Serializable {
 	
 	
 	public List<XYWho> getAllLegalMoves() {
-		//super.setTurn(Turn.BLACK);
 		Pawn[][] currentBoardState = super.getBoard();
 		// all possible moves for white (without constraints)
 		if(this.getTurn().equals(Turn.WHITE)) {
@@ -232,9 +231,10 @@ public class StateTablut extends State implements Serializable {
 		StateTablut s = new StateTablut();
 		List<XYWho> white = s.getAllLegalMoves();
 		for(int i = 0; i < white.size(); i++) {
-			System.out.println("who: (" + white.get(i).getWho()[0] + ", " + white.get(i).getWho()[1] +") x: "+white.get(i).getX()+ " y: " + white.get(i).getY());
+			//System.out.println("who: (" + white.get(i).getWho()[0] + ", " + white.get(i).getWho()[1] +") x: "+white.get(i).getX()+ " y: " + white.get(i).getY());
 		}
-		//s.printBoard();
+		s.printBoard();
+		s.printBoardArea();
 		//System.out.println(white.size());
 		
 	}
@@ -245,25 +245,9 @@ public class StateTablut extends State implements Serializable {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	public void mark(XYWho action) {
-		//action = new Action(actionStringFrom, actionStringTo, this.getPlayer());
-		//this.write(action);
-		//analyzeUtility();
-		//playerToMove = (Objects.equals(playerToMove, X) ? O : X);
-	}
-	
-	
 	public double getUtility() {
 		return this.utility;
 	}
-	
 	
 	
 	
@@ -281,8 +265,8 @@ public class StateTablut extends State implements Serializable {
 				super.setPawn(i,  j, Pawn.EMPTY);
 			}
 		}
-		//super.setPawn(State.KING_POSITION,  State.KING_POSITION, Pawn.THRONE);
-		super.setPawn(State.KING_POSITION,  State.KING_POSITION, Pawn.KING);
+		super.setPawn(State.KING_POSITION,  State.KING_POSITION, Pawn.THRONE);
+//		super.setPawn(State.KING_POSITION,  State.KING_POSITION, Pawn.KING);
 		
 		super.setPawn(2,  4, Pawn.WHITE);
 		super.setPawn(3,  4, Pawn.WHITE);
@@ -292,7 +276,8 @@ public class StateTablut extends State implements Serializable {
 		super.setPawn(4,  3, Pawn.WHITE);
 		super.setPawn(4,  5, Pawn.WHITE);
 		super.setPawn(4,  6, Pawn.WHITE);
-		
+//		super.setPawn(1,  2, Pawn.WHITE);
+//		super.setPawn(3,  2, Pawn.WHITE);
 		
 		
 		super.setPawn(0,  3, Pawn.BLACK);
@@ -311,6 +296,8 @@ public class StateTablut extends State implements Serializable {
 		super.setPawn(4,  8, Pawn.BLACK);
 		super.setPawn(5,  8, Pawn.BLACK);
 		super.setPawn(4,  7, Pawn.BLACK);
+//		super.setPawn(2,  0, Pawn.BLACK);
+//		super.setPawn(2,  4, Pawn.BLACK);
 		
 		// initialize area on board
 		for (int i = 0; i < super.getBoardArea().length; i++) {
@@ -320,6 +307,7 @@ public class StateTablut extends State implements Serializable {
 		}
 
 		super.setArea(4, 4, Area.CASTLE);
+//		super.setArea(2, 2, Area.CASTLE);
 		
 		super.setArea(0, 0, Area.ESCAPES);
 		super.setArea(0, 1, Area.ESCAPES);
@@ -358,6 +346,9 @@ public class StateTablut extends State implements Serializable {
 		super.setArea(4, 8, Area.CAMPS);
 		super.setArea(5, 8, Area.CAMPS);
 		super.setArea(4, 7, Area.CAMPS);
+//		super.setArea(2, 0, Area.CAMPS);
+//		super.setArea(2, 4, Area.CAMPS);
+		super.setTurn(Turn.BLACK);
 	}
 	
 
