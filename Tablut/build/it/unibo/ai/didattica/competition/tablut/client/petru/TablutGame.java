@@ -3,6 +3,7 @@ package it.unibo.ai.didattica.competition.tablut.client.petru;
 import java.util.List;
 
 
+
 import aima.core.search.adversarial.Game;
 import it.unibo.ai.didattica.competition.tablut.client.petru.State.Pawn;
 import it.unibo.ai.didattica.competition.tablut.client.petru.State.Turn;
@@ -12,6 +13,9 @@ public class TablutGame implements Game<StateTablut, XYWho, String> {
 
 	private StateTablut initialState;
 	
+	public TablutGame() {
+		this.initialState = new StateTablut();
+	}
 	@Override
 	public List<XYWho> getActions(StateTablut state) {
 		return state.getAllLegalMoves();

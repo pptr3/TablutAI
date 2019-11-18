@@ -2,6 +2,8 @@ package it.unibo.ai.didattica.competition.tablut.client.petru;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
+
+import aima.core.environment.tictactoe.TicTacToeGame;
 import aima.core.search.adversarial.AlphaBetaSearch;
 import it.unibo.ai.didattica.competition.tablut.client.petru.State.Turn;
 import it.unibo.ai.didattica.competition.tablut.domain.*;
@@ -20,8 +22,8 @@ public class TablutPetruClient extends TablutClient {
 	public TablutPetruClient(String player, String name, int gameChosen) throws UnknownHostException, IOException {
 		super(player, name);
 		this.tablut = new TablutGame();
-		//this.tablut.getState().setTurn(State.Turn.WHITE);
-		//this.alpha_beta =  new AlphaBetaSearch<StateTablut, XYWho, String> (this.tablut);
+		this.tablut.getState().setTurn(State.Turn.WHITE);
+		this.alpha_beta =  new AlphaBetaSearch<StateTablut, XYWho, String> (this.tablut);
 	}
 
 	public void receiveState() {
@@ -31,7 +33,7 @@ public class TablutPetruClient extends TablutClient {
 			System.exit(1);
 		}
 		System.out.println("Current state:");
-		//this.tablut.setState((StateTablut) super.getCurrentState());
+		this.tablut.setState((StateTablut) super.getCurrentState());
 	}
 	
 
