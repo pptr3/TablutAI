@@ -52,24 +52,33 @@ public class TablutGame implements Game<StateTablut, XYWho, String> {
 			if (player == Pawn.BLACK.toString()) {
 				result = 1 - result;
 			}
-		} else {
-			throw new IllegalArgumentException("State is not terminal.");
 		}
 		return result;
 	}
 
 	@Override
 	public boolean isTerminal(StateTablut state) {
-		return state.getUtility() != -1;
+		return state.getUtility() != 0;
 	}
 
 	@Override
 	public StateTablut getResult(StateTablut state, XYWho action) {
-		StateTablut result = state.clone();
-		Pawn[][] b = result.getBoard();
-		b[action.getX()][action.getY()] = this.getState().getBoard()[action.getWho()[0]][action.getWho()[1]];
-		b[action.getWho()[0]][action.getWho()[1]] = Pawn.EMPTY;
-		this.getState().setBoard(b);
-		return result;
+		if(state.getUtility() != -1) {
+			state.setPawn(action.getX(), action.getX(), state.getBoard()[action.getWho()[0]][action.getWho()[1]]);
+			state.setPawn(action.getWho()[0], action.getWho()[1], Pawn.EMPTY);
+			this.analyzeUtility(state, state.getKingPosition());
+			//change player
+			/*if(this.getPlayer(state).equals("WHITE")) {
+				state
+			}*/
+				
+		}
+		return state;
+	}
+	
+	private void analyzeUtility(StateTablut state, int[] kingPosition) { // here I implement the WIN, LOSE or DRAW
+		if(kingPosition[0] == 5 && kingPosition[1] == 5) { //test using initial king position
+			state.setUtility(1);
+		}
 	}
 }

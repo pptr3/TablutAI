@@ -238,29 +238,15 @@ public class StateTablut extends State implements Serializable {
 		//System.out.println(white.size());
 		
 	}
-
-	
-	public void mark(XYWho action) {
-		//action = new Action(actionStringFrom, actionStringTo, this.getPlayer());
-		//this.write(action);
-		//analyzeUtility();
-		//playerToMove = (Objects.equals(playerToMove, X) ? O : X);
-	}
-	
-	
 	
 	
 	public double getUtility() {
 		return this.utility;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
+	public void setUtility(double utility) {
+		this.utility = utility;
+	}
 	
 	
 	private void initBoard() {

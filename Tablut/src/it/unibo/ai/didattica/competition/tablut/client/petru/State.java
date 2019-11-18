@@ -201,21 +201,6 @@ public abstract class State {
 			System.out.println("\n");
 		}
 	}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	public String boardString() {
