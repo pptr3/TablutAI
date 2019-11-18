@@ -6,8 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import it.unibo.ai.didattica.competition.tablut.client.petru.State;
+import it.unibo.ai.didattica.competition.tablut.client.petru.StateTablut;
+import it.unibo.ai.didattica.competition.tablut.client.petru.TablutClient;
+import it.unibo.ai.didattica.competition.tablut.client.petru.State.Turn;
 import it.unibo.ai.didattica.competition.tablut.domain.*;
-import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 
 /**
  * 

@@ -11,8 +11,10 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import it.unibo.ai.didattica.competition.tablut.client.petru.State;
+import it.unibo.ai.didattica.competition.tablut.client.petru.StateTablut;
+import it.unibo.ai.didattica.competition.tablut.client.petru.State.*;
 import it.unibo.ai.didattica.competition.tablut.domain.*;
-import it.unibo.ai.didattica.competition.tablut.domain.State.*;
 import it.unibo.ai.didattica.competition.tablut.gui.Gui;
 
 public class TestGuiFrame extends JFrame{

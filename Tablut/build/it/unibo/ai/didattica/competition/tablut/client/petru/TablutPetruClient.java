@@ -5,11 +5,11 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import it.unibo.ai.didattica.competition.tablut.client.TablutClient;
+
 import it.unibo.ai.didattica.competition.tablut.client.TablutRandomClient;
+import it.unibo.ai.didattica.competition.tablut.client.petru.State.Pawn;
+import it.unibo.ai.didattica.competition.tablut.client.petru.State.Turn;
 import it.unibo.ai.didattica.competition.tablut.domain.*;
-import it.unibo.ai.didattica.competition.tablut.domain.State.Pawn;
-import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 
 /**
  * 
@@ -17,7 +17,6 @@ import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
  *
  */
 public class TablutPetruClient extends TablutClient {
-
 	private int game;
 	private List<int[]> pawns = new ArrayList<int[]>();
 	private List<int[]> empty = new ArrayList<int[]>();
@@ -67,88 +66,13 @@ public class TablutPetruClient extends TablutClient {
 		client.run();
 	}
 
-	public void print_pawns_empty() {
-		System.out.println("PAWNS");
-		for(int i = 0; i < this.pawns.size(); i++) {
-				System.out.println(this.pawns.get(i)[0] + " " + this.pawns.get(i)[1]);
-		}
-		System.out.println("EMPTY");
-		for(int i = 0; i < this.empty.size(); i++) {
-			System.out.println(this.empty.get(i)[0] + " " + this.empty.get(i)[1]);
-		}
-	}
-	
-	public void store_pawns_and_empty_coordinates(Pawn s) {
-		int[] buf;
-		for (int i = 0; i < this.state.getBoard().length; i++) {
-			for (int j = 0; j < this.state.getBoard().length; j++) {
-				if(s == State.Pawn.WHITE) {
-					if (this.state.getPawn(i, j).equalsPawn(State.Pawn.WHITE.toString())
-							|| this.state.getPawn(i, j).equalsPawn(State.Pawn.KING.toString())) {
-						buf = new int[2];
-						buf[0] = i;
-						buf[1] = j;
-						this.pawns.add(buf);
-					} else if (this.state.getPawn(i, j).equalsPawn(State.Pawn.EMPTY.toString())) {
-						buf = new int[2];
-						buf[0] = i;
-						buf[1] = j;
-						this.empty.add(buf);
-					}
-					// duplicate code
-				} else {
-					if (state.getPawn(i, j).equalsPawn(State.Pawn.BLACK.toString())) {
-						buf = new int[2];
-						buf[0] = i;
-						buf[1] = j;
-						this.pawns.add(buf);
-					} else if (state.getPawn(i, j).equalsPawn(State.Pawn.EMPTY.toString())) {
-						buf = new int[2];
-						buf[0] = i;
-						buf[1] = j;
-						this.empty.add(buf);
-					}
-				}
-			}
-		}
-	}
+
 	
 	// currently the next action is chosen randomly
-	public Action search_next_action() {
-		int[] selected = null;
-		boolean found = false;
-		Action action = null;
-		try {
-			action = new Action("z0", "z0", State.Turn.WHITE);
-		} catch (IOException e2) {
-			e2.printStackTrace();
-		}
-		while (!found) {
-			if (this.pawns.size() > 1) {
-				selected = this.pawns.get(new Random().nextInt(this.pawns.size() - 1)); // get a random pawn
-			} else {
-				selected = this.pawns.get(0);
-			}
-			String from = this.getCurrentState().getBox(selected[0], selected[1]);
-			
-			// take an empty random position where to move the pawn
-			selected = this.empty.get(new Random().nextInt(this.empty.size() - 1));
-			String to = this.getCurrentState().getBox(selected[0], selected[1]);
-
-			try {
-				action = new Action(from, to, State.Turn.WHITE);
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-
-			try {
-				this.rules.checkMove(this.state, action);
-				found = true;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return action;
+	public Action search_next_action() throws IOException {
+		 
+		return new Action("z0", "z0", State.Turn.WHITE);
+		
 	}
 	
 	
@@ -175,32 +99,6 @@ public class TablutPetruClient extends TablutClient {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}*/
-	}
-	
-	public void check_general_status(Turn t) {
-		if (t == StateTablut.Turn.WHITE) {
-			// è il turno dell'avversario
-			if (this.state.getTurn().equals(StateTablut.Turn.BLACK)) {
-				System.out.println("Waiting for BLACK move... ");
-			}
-		} else if (this.state.getTurn().equals(StateTablut.Turn.WHITE)) {
-				System.out.println("Waiting for WHITE move... ");
-		}
-		// ho vinto
-		else if (this.state.getTurn().equals(StateTablut.Turn.WHITEWIN)) {
-			System.out.println("YOU WIN!");
-			System.exit(0);
-		}
-		// ho perso
-		else if (this.state.getTurn().equals(StateTablut.Turn.BLACKWIN)) {
-			System.out.println("YOU LOSE!");
-			System.exit(0);
-		}
-		// pareggio
-		else if (this.state.getTurn().equals(StateTablut.Turn.DRAW)) {
-			System.out.println("DRAW!");
-			System.exit(0);
-		}
 	}
 	
 	
@@ -244,22 +142,18 @@ public class TablutPetruClient extends TablutClient {
 			// white turn
 			if (this.getPlayer().equals(Turn.WHITE)) {
 				if (this.getCurrentState().getTurn().equals(StateTablut.Turn.WHITE)) {
-					store_pawns_and_empty_coordinates(State.Pawn.WHITE);
+				/*
 					Action next_action = search_next_action();
 					System.out.println("Mossa scelta: " + next_action.toString());
-					send_action(next_action);
-				} else {
-					check_general_status(StateTablut.Turn.WHITE);
+					send_action(next_action);*/
 				}
 			} else {
 				// black turn
 				if (this.getCurrentState().getTurn().equals(StateTablut.Turn.BLACK)) {
-					store_pawns_and_empty_coordinates(State.Pawn.BLACK);
+					/*
 					Action next_action = search_next_action();
 					System.out.println("Mossa scelta: " + next_action.toString());
-					send_action(next_action);
-				} else {
-					check_general_status(StateTablut.Turn.BLACK);
+					send_action(next_action);*/
 				}
 
 			}

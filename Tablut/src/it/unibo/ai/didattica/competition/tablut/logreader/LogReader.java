@@ -8,7 +8,8 @@ import java.nio.file.*;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
+
+import it.unibo.ai.didattica.competition.tablut.client.petru.State.Turn;
 
 /**
  * @author Andrea Galassi

@@ -11,8 +11,10 @@ import java.nio.file.Paths;
 import java.util.Date;
 import java.util.logging.*;
 
+import it.unibo.ai.didattica.competition.tablut.client.petru.State;
+import it.unibo.ai.didattica.competition.tablut.client.petru.StateTablut;
+import it.unibo.ai.didattica.competition.tablut.client.petru.State.Turn;
 import it.unibo.ai.didattica.competition.tablut.domain.*;
-import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 import it.unibo.ai.didattica.competition.tablut.gui.Gui;
 import it.unibo.ai.didattica.competition.tablut.util.StreamUtils;
 

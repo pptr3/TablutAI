@@ -2,6 +2,8 @@ package it.unibo.ai.didattica.competition.tablut.domain;
 
 import java.io.Serializable;
 
+import it.unibo.ai.didattica.competition.tablut.client.petru.State;
+
 
 /**
  * This class represents a state of a match of the smallest version of tablut

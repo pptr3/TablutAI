@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.security.InvalidParameterException;
 
+import it.unibo.ai.didattica.competition.tablut.client.petru.State;
+import it.unibo.ai.didattica.competition.tablut.client.petru.StateTablut;
+
 /**
  * this class represents an action of a player
  * 

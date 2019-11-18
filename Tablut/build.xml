@@ -9,9 +9,17 @@
 
     <target name="compile">
         <mkdir dir="build"/>
-        <javac encoding="iso-8859-1" srcdir="src" 
-            destdir="build"
-            classpath="lib/gson-2.2.2.jar" />
+        <javac encoding="iso-8859-1" srcdir="src" destdir="build">
+            <classpath>
+                <pathelement location="lib/gson-2.2.2.jar"/>
+                <pathelement location="build"/>
+            </classpath>
+             <classpath>
+                <pathelement location="lib/aima-core.jar"/>
+                <pathelement location="build"/>
+            </classpath>
+        </javac>
+           
         <copy todir="build">
             <fileset dir="src" excludes="*.java"/>
         </copy>
