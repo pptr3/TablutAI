@@ -10,7 +10,11 @@ import it.unibo.ai.didattica.competition.tablut.client.petru.State.Turn;
 
 public class TablutGame implements Game<StateTablut, XYWho, String> {
 
-	private  StateTablut initialState = new StateTablut();
+	private StateTablut initialState;
+	
+	public TablutGame() {
+		this.initialState = new StateTablut();
+	}
 	
 	@Override
 	public List<XYWho> getActions(StateTablut state) {
@@ -20,6 +24,15 @@ public class TablutGame implements Game<StateTablut, XYWho, String> {
 	@Override
 	public StateTablut getInitialState() {
 		return this.initialState;
+	}
+
+
+	public StateTablut getState() {
+		return this.initialState;
+	}
+	
+	public void setState(StateTablut newState) {
+		 this.initialState = newState;
 	}
 
 	@Override

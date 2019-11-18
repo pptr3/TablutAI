@@ -358,9 +358,6 @@ public class StateTablut extends State implements Serializable {
 		super.setArea(4, 8, Area.CAMPS);
 		super.setArea(5, 8, Area.CAMPS);
 		super.setArea(4, 7, Area.CAMPS);
-		
-		// current turn is WHITE, set the next to BLACK (maybe?)
-		super.setTurn(Turn.BLACK);
 	}
 	
 

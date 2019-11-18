@@ -1,9 +1,7 @@
 package it.unibo.ai.didattica.competition.tablut.client.petru;
 
-import aima.core.environment.tictactoe.TicTacToeGame;
-import aima.core.environment.tictactoe.TicTacToeState;
 import aima.core.search.adversarial.AlphaBetaSearch;
-import aima.core.util.datastructure.XYLocation;
+import it.unibo.ai.didattica.competition.tablut.client.petru.State.Turn;
 
 public class Main {
 	
@@ -22,10 +20,10 @@ public class Main {
 		AlphaBetaSearch<TicTacToeState, XYLocation, String> ab = new AlphaBetaSearch<TicTacToeState, XYLocation, String> (ttg);
 		up = ttg.getResult(current_state, ab.makeDecision(current_state));
 		System.out.println(ab.getMetrics());*/
-		TablutGame st = new TablutGame();
+		/*TablutGame st = new TablutGame();
 		StateTablut c = st.getInitialState();
+		st.getState().setTurn(Turn.BLACK);
 		AlphaBetaSearch<StateTablut, XYWho, String> ab = new AlphaBetaSearch<StateTablut, XYWho, String> (st);
-		//System.out.println((st.getResult(c, ab.makeDecision(c))));
-		System.out.println(ab.getMetrics());
+		System.out.println((st.getResult(c, ab.makeDecision(c))));*/
 	}
 }

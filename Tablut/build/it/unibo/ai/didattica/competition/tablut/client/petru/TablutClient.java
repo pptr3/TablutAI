@@ -32,7 +32,7 @@ public abstract class TablutClient implements Runnable {
 	private String serverIp;
 
 	public State.Turn getPlayer() {
-		return player;
+		return this.player;
 	}
 
 	public void setPlayer(State.Turn player) {
@@ -40,7 +40,7 @@ public abstract class TablutClient implements Runnable {
 	}
 
 	public State getCurrentState() {
-		return currentState;
+		return this.currentState;
 	}
 
 	public void setCurrentState(State currentState) {
