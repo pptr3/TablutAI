@@ -47,7 +47,15 @@ public class TablutGame implements Game<StateTablut, XYWho, String> {
 
 	@Override
 	public double getUtility(StateTablut state, String player) {
-		return 1;
+		double result = state.getUtility();
+		if (result != -1) {
+			if (player == Pawn.BLACK.toString()) {
+				result = 1 - result;
+			}
+		} else {
+			throw new IllegalArgumentException("State is not terminal.");
+		}
+		return result;
 	}
 
 	@Override

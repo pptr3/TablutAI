@@ -240,7 +240,12 @@ public class StateTablut extends State implements Serializable {
 	}
 
 	
-	
+	public void mark(XYWho action) {
+		//action = new Action(actionStringFrom, actionStringTo, this.getPlayer());
+		//this.write(action);
+		//analyzeUtility();
+		//playerToMove = (Objects.equals(playerToMove, X) ? O : X);
+	}
 	
 	
 	
@@ -265,8 +270,8 @@ public class StateTablut extends State implements Serializable {
 				super.setPawn(i,  j, Pawn.EMPTY);
 			}
 		}
-		super.setPawn(State.KING_POSITION,  State.KING_POSITION, Pawn.THRONE);
-//		super.setPawn(State.KING_POSITION,  State.KING_POSITION, Pawn.KING);
+		
+		super.setPawn(State.KING_POSITION,  State.KING_POSITION, Pawn.KING);
 		
 		super.setPawn(2,  4, Pawn.WHITE);
 		super.setPawn(3,  4, Pawn.WHITE);
@@ -348,7 +353,6 @@ public class StateTablut extends State implements Serializable {
 		super.setArea(4, 7, Area.CAMPS);
 //		super.setArea(2, 0, Area.CAMPS);
 //		super.setArea(2, 4, Area.CAMPS);
-		super.setTurn(Turn.BLACK);
 	}
 	
 
