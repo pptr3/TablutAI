@@ -44,7 +44,7 @@ public abstract class State {
 	 *
 	 */
 	public enum Pawn {
-		EMPTY("O"), WHITE("W"), BLACK("B"), THRONE("T"), KING("K");
+		EMPTY(" "), WHITE("W"), BLACK("B"), THRONE("T"), KING("K");
 		private final String pawn;
 
 		private Pawn(String s) {
@@ -78,8 +78,6 @@ public abstract class State {
 		}
 	}
 
-	
-	
 	
 	public static final int WIDTH = 9; 
 	public static final int HEIGHT = 9; 
@@ -224,12 +222,12 @@ public abstract class State {
 		result.append("");
 		result.append(this.boardString());
 
-		result.append("-");
+		result.append("-------");
 		result.append("\n");
 
 		// TURNO
-		result.append(this.turn.toString());
-
+		result.append(this.turn.toString()+"\n");
+		result.append("-------");
 		return result.toString();
 	}
 

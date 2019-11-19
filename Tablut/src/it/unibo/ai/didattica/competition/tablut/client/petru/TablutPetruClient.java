@@ -17,13 +17,13 @@ public class TablutPetruClient extends TablutClient {
 	
 	
 	private TablutGame tablut;
-	private AlphaBetaSearch<StateTablut, XYWho, String> alpha_beta;
+	private AlphaBetaSearch<StateTablut, XYWho, Turn> alpha_beta;
 	
 	public TablutPetruClient(String player, String name, int gameChosen) throws UnknownHostException, IOException {
 		super(player, name);
 		this.tablut = new TablutGame();
 		this.tablut.getState().setTurn(State.Turn.WHITE);
-		this.alpha_beta =  new AlphaBetaSearch<StateTablut, XYWho, String> (this.tablut);
+		this.alpha_beta =  new AlphaBetaSearch<StateTablut, XYWho, Turn> (this.tablut);
 	}
 
 	public void receiveState() {

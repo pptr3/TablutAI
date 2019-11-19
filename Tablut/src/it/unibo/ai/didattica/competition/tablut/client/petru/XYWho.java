@@ -3,8 +3,8 @@ package it.unibo.ai.didattica.competition.tablut.client.petru;
 
 public class XYWho {
 
-    private int x; // new destination coordinate
-    private int y; // new destination coordinate
+    private int x; // new x destination coordinate
+    private int y; // new y destination coordinate
     private int[] who; // old coordinates
     boolean hasLeftTheCamp;
 

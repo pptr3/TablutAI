@@ -10,10 +10,11 @@ public class Main {
 		TablutGame st = new TablutGame();
 		StateTablut c = st.getInitialState();
 		st.getState().setTurn(Turn.BLACK);
-		AlphaBetaSearch<StateTablut, XYWho, String> ab = new AlphaBetaSearch<StateTablut, XYWho, String> (st);
+		AlphaBetaSearch<StateTablut, XYWho, Turn> ab = new AlphaBetaSearch<StateTablut, XYWho, Turn> (st);
 		//System.out.println((st.getResult(c, ab.makeDecision(c))));
 		XYWho a = ab.makeDecision(c);
-		System.out.println(a.getX() + " " + a.getY() + " | " + a.getWho()[0] + ", " + a.getWho()[1]);
+		//System.out.println(a.getX() + " " + a.getY() + " | " + a.getWho()[0] + ", " + a.getWho()[1]);
 		System.out.println(ab.getMetrics());
+		
 	}
 }

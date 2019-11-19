@@ -11,7 +11,6 @@ import java.util.List;
 public class StateTablut extends State implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private double utility = -1; // 1: win for X, 0: win for O, 0.5: draw
 	
 	public StateTablut() {
 		super();
@@ -239,14 +238,6 @@ public class StateTablut extends State implements Serializable {
 		
 	}
 	
-	
-	public double getUtility() {
-		return this.utility;
-	}
-	
-	public void setUtility(double utility) {
-		this.utility = utility;
-	}
 	
 	
 	private void initBoard() {
