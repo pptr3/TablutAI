@@ -16,7 +16,7 @@ public class StateTablut extends State implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	public int depth;
-	public int utility = 0;
+	public int utility = 0; // useless so far
 	
 	public StateTablut() {
 		super();
@@ -35,7 +35,7 @@ public class StateTablut extends State implements Serializable {
 		return super.getTurn();
 	}
 	
-	public void mark(XYWho action) {
+	public void mark(XYWho action) { // useless probably
 		if(super.getTurn().equals(Turn.WHITE)) {
 			super.setPawn(action.getX(), action.getY(), Pawn.WHITE);
 			super.setPawn(action.getWho()[0], action.getWho()[1], Pawn.EMPTY);
@@ -151,35 +151,6 @@ public class StateTablut extends State implements Serializable {
 				}
 			}
 			return whiteLegalMoves;
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
 		} else {
 			// all possible moves for black
 			List<XYWho> blackLegalMoves = new ArrayList<>();
@@ -187,9 +158,14 @@ public class StateTablut extends State implements Serializable {
 			XYWho buf;
 			for (int i = 0; i < currentBoardState.length; i++) {
 				for (int j = 0; j < currentBoardState.length; j++) {
-					if (this.getPawn(i, j).equalsPawn(State.Pawn.BLACK.toString()))  {
-						buf = new XYWho(i, j, new int[]{i, j}, false); //BUG in this false
-						blackPositions.add(buf);
+					if (super.getPawn(i, j).equalsPawn(State.Pawn.BLACK.toString()))  {
+						if(super.getArea(i, j).equalsArea(Area.CAMPS.toString())) { // if a black is still in a camp, he can move into it
+							buf = new XYWho(i, j, new int[]{i, j}, false);
+							blackPositions.add(buf);
+						} else if (super.getArea(i, j).equalsArea(Area.CAMPS.toString()) || super.getArea(i, j).equalsArea(Area.NORMAL.toString()) || super.getArea(i, j).equalsArea(Area.ESCAPES.toString())) {
+							buf = new XYWho(i, j, new int[]{i, j}, true); // if a black is no more in a camp, he cannot enter in any camp anymore
+							blackPositions.add(buf);
+						}
 					}
 				}
 			}
@@ -206,10 +182,10 @@ public class StateTablut extends State implements Serializable {
 							}
 						}
 						if(howManyEmptyPawns == 0) {
-							// BUG here, a black pawn if leaves his camps, cannot go in the other camps (ACTUALLY this is ok)
-							//if((blackPawn.hasLeftTheCamp() && (super.getArea(blackPawn.getX(), blackPawn.getY() - j) != Area.CAMPS)) || (!blackPawn.hasLeftTheCamp())) {
-								blackLegalMoves.add(new XYWho(blackPawn.getX(), blackPawn.getY() - j, new int[]{blackPawn.getX(), blackPawn.getY()}, false));
-							//}
+							// if a black is no more in a camp, he cannot enter in any camp anymore
+							if((blackPawn.hasLeftTheCamp() && (super.getArea(blackPawn.getX(), blackPawn.getY() - j) != Area.CAMPS)) || (!blackPawn.hasLeftTheCamp())) {
+								blackLegalMoves.add(new XYWho(blackPawn.getX(), blackPawn.getY() - j, new int[]{blackPawn.getX(), blackPawn.getY()}, blackPawn.hasLeftTheCamp()));
+							}
 						}
 					}
 					// (x, y + j) DOWN
@@ -221,7 +197,9 @@ public class StateTablut extends State implements Serializable {
 							}
 						}
 						if(howManyEmptyPawns == 0) {
-							blackLegalMoves.add(new XYWho(blackPawn.getX(), blackPawn.getY() + j, new int[]{blackPawn.getX(), blackPawn.getY()}, false));
+							if((blackPawn.hasLeftTheCamp() && (super.getArea(blackPawn.getX(), blackPawn.getY() + j) != Area.CAMPS)) || (!blackPawn.hasLeftTheCamp())) {
+								blackLegalMoves.add(new XYWho(blackPawn.getX(), blackPawn.getY() + j, new int[]{blackPawn.getX(), blackPawn.getY()}, blackPawn.hasLeftTheCamp()));
+							}
 						}
 					}
 				}
@@ -236,8 +214,11 @@ public class StateTablut extends State implements Serializable {
 							}
 						}
 						if(howManyEmptyPawns == 0) {
-							blackLegalMoves.add(new XYWho(blackPawn.getX() - i, blackPawn.getY(), new int[]{blackPawn.getX(), blackPawn.getY()}, false));
+							if((blackPawn.hasLeftTheCamp() && (super.getArea(blackPawn.getX() - i, blackPawn.getY()) != Area.CAMPS)) || (!blackPawn.hasLeftTheCamp())) {
+								blackLegalMoves.add(new XYWho(blackPawn.getX() - i, blackPawn.getY(), new int[]{blackPawn.getX(), blackPawn.getY()}, blackPawn.hasLeftTheCamp()));
+							}
 						}
+						
 					}
 					// (x + i, y) RIGHT
 					if(((blackPawn.getX() + i) < currentBoardState.length) && super.getPawn(blackPawn.getX() + i, blackPawn.getY()) == Pawn.EMPTY && (super.getArea(blackPawn.getX() + i, blackPawn.getY()) != Area.CASTLE)) {
@@ -248,7 +229,9 @@ public class StateTablut extends State implements Serializable {
 							}
 						}
 						if(howManyEmptyPawns == 0) {
-							blackLegalMoves.add(new XYWho(blackPawn.getX() + i, blackPawn.getY(), new int[]{blackPawn.getX(), blackPawn.getY()}, false));
+							if((blackPawn.hasLeftTheCamp() && (super.getArea(blackPawn.getX() + i, blackPawn.getY()) != Area.CAMPS)) || (!blackPawn.hasLeftTheCamp())) {
+								blackLegalMoves.add(new XYWho(blackPawn.getX() + i, blackPawn.getY(), new int[]{blackPawn.getX(), blackPawn.getY()}, blackPawn.hasLeftTheCamp()));
+							}
 						}
 					}
 				}

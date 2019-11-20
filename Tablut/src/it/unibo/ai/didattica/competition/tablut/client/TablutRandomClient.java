@@ -121,7 +121,7 @@ public class TablutRandomClient extends TablutClient {
 			state = this.getCurrentState();
 			System.out.println(state.toString());
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 			}
 
@@ -151,9 +151,6 @@ public class TablutRandomClient extends TablutClient {
 					boolean found = false;
 					Action a = null;
 					
-//					TablutGame st = new TablutGame();
-//					StateTablut c = this.getCurrentState();
-//					AlphaBetaSearch<StateTablut, XYWho, Turn> ab = new AlphaBetaSearch<StateTablut, XYWho, Turn> (st);
 					XYWho a2 = ab.makeDecision(this.getCurrentState());
 					System.out.println("MOOOO\n"+c);
 					String from = this.getCurrentState().getBox(a2.getWho()[0], a2.getWho()[1]);

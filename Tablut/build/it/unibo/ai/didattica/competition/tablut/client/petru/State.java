@@ -69,8 +69,8 @@ public abstract class State {
 			this.area = a;
 		}
 
-		public boolean equalsPawn(String otherPawn) {
-			return (otherPawn == null) ? false : this.area.equals(otherPawn);
+		public boolean equalsArea(String otherArea) {
+			return (otherArea == null) ? false : this.area.equals(otherArea);
 		}
 
 		public String toString() {
