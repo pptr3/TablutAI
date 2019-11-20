@@ -5,6 +5,9 @@ import java.net.UnknownHostException;
 
 import aima.core.environment.tictactoe.TicTacToeGame;
 import aima.core.search.adversarial.AlphaBetaSearch;
+import aima.core.search.adversarial.MinimaxSearch;
+import it.unibo.ai.didattica.competition.tablut.client.TablutHumanClient;
+import it.unibo.ai.didattica.competition.tablut.client.TablutRandomClient;
 import it.unibo.ai.didattica.competition.tablut.client.petru.State.Turn;
 import it.unibo.ai.didattica.competition.tablut.domain.*;
 
@@ -16,74 +19,31 @@ import it.unibo.ai.didattica.competition.tablut.domain.*;
 public class TablutPetruClient extends TablutClient {
 	
 	
-	private TablutGame tablut;
-	private AlphaBetaSearch<StateTablut, XYWho, Turn> alpha_beta;
-	
-	public TablutPetruClient(String player, String name, int gameChosen) throws UnknownHostException, IOException {
-		super(player, name);
-		this.tablut = new TablutGame();
-		this.tablut.getState().setTurn(State.Turn.WHITE);
-		this.alpha_beta =  new AlphaBetaSearch<StateTablut, XYWho, Turn> (this.tablut);
+	public TablutPetruClient(String player) throws UnknownHostException, IOException {
+		super(player, "humanInterface");
 	}
 
-	public void receiveState() {
-		try {
-			super.read();
-		} catch (ClassNotFoundException | IOException e1) {
-			System.exit(1);
+	public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException {
+
+		if (args.length == 0) {
+			System.out.println("You must specify which player you are (WHITE or BLACK)!");
+			System.exit(-1);
 		}
-		System.out.println("Current state:");
-		this.tablut.setState((StateTablut) super.getCurrentState());
+		System.out.println("Selected this: " + args[0]);
+
+		TablutClient client = new TablutPetruClient(args[0]);
+
+		client.run();
+
 	}
-	
 
 	@Override
 	public void run() {
-		try {
-			super.declareName();
-		} catch (Exception e) {
-		}
-		
-		while (true) {
-			this.receiveState();
-			// white turn
-			if (this.getPlayer().equals(Turn.WHITE)) {
-				if (this.getCurrentState().getTurn().equals(StateTablut.Turn.WHITE)) {
-					XYWho actionToPerform = this.alpha_beta.makeDecision(this.tablut.getState());
-					String from = String.valueOf(actionToPerform.getX());
-					String to = String.valueOf(actionToPerform.getY());
-					try {
-						Action action = new Action(from, to, super.getPlayer());
-						super.write(action);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-				
-			} else {
-				// black turn
-				if (this.getCurrentState().getTurn().equals(StateTablut.Turn.BLACK)) {
-					XYWho actionToPerform = this.alpha_beta.makeDecision(this.tablut.getState());
-					String from = String.valueOf(actionToPerform.getX());
-					String to = String.valueOf(actionToPerform.getY());
-					try {
-						Action action = new Action(from, to, super.getPlayer());
-						super.write(action);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-
+		while(true) {
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
 			}
 		}
-
-	}
-	
-	public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException {
-		String role = "WHITE";
-		String name = "Petru";
-		int gametype = 4;
-		TablutPetruClient client = new TablutPetruClient(role, name, gametype);
-		client.run();
 	}
 }

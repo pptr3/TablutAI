@@ -1,0 +1,22 @@
+Nov 20, 2019 4:41:25 PM it.unibo.ai.didattica.competition.tablut.domain.GameAshtonTablut <init>
+FINE: Players:	Petru	vs	humanInter
+Nov 20, 2019 4:41:25 PM it.unibo.ai.didattica.competition.tablut.domain.GameAshtonTablut <init>
+FINE: Repeated moves allowed:	0	Cache:	-1
+Nov 20, 2019 4:41:25 PM it.unibo.ai.didattica.competition.tablut.domain.GameAshtonTablut <init>
+FINE: Inizio partita
+Nov 20, 2019 4:41:25 PM it.unibo.ai.didattica.competition.tablut.domain.GameAshtonTablut <init>
+FINE: Stato:
+   BBB   
+    B    
+    W    
+B   W   B
+BBWWKWWBB
+B   W   B
+    W    
+    B    
+   BBB   
+-------
+W
+-------
+Nov 20, 2019 4:41:25 PM it.unibo.ai.didattica.competition.tablut.domain.GameAshtonTablut checkMove
+FINE: Turn: W Pawn from null to null

@@ -2,14 +2,10 @@ package it.unibo.ai.didattica.competition.tablut.client.petru;
 
 
 public class XYWho {
-	
-	public enum Direction {
-		North, South, East, West
-	}
 
-    private int x; // new x coordinate where to move the pawn with index (x, y) 
-    private int y;
-    private int[] who;
+    private int x; // new x destination coordinate
+    private int y; // new y destination coordinate
+    private int[] who; // old coordinates
     boolean hasLeftTheCamp;
 
 	/**

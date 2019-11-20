@@ -27,7 +27,7 @@ public abstract class TablutClient implements Runnable {
 	private DataInputStream in;
 	private DataOutputStream out;
 	private Gson gson;
-	private State currentState;
+	private StateTablut currentState;
 	private int timeout;
 	private String serverIp;
 
@@ -39,11 +39,11 @@ public abstract class TablutClient implements Runnable {
 		this.player = player;
 	}
 
-	public State getCurrentState() {
+	public StateTablut getCurrentState() {
 		return this.currentState;
 	}
 
-	public void setCurrentState(State currentState) {
+	public void setCurrentState(StateTablut currentState) {
 		this.currentState = currentState;
 	}
 

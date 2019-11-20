@@ -11,12 +11,13 @@ import java.util.List;
 public class StateTablut extends State implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+	public int depth;
 	public StateTablut() {
 		super();
 		super.setBoard(new Pawn[State.WIDTH][State.HEIGHT]);
 		super.setBoardArea(new Area[State.WIDTH][State.WIDTH]);
 		this.initBoard();
+		this.depth = 0;
 	}
 	
 	

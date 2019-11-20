@@ -104,17 +104,32 @@
     </target>
 	
 	<target name="petruwhite">
-	        <java classname="it.unibo.ai.didattica.competition.tablut.client.petru.TablutPetruClientWhite" fork="true">
-	            <classpath>
-	                <pathelement location="lib/gson-2.2.2.jar"/>
-	                <pathelement location="build"/>
-	            </classpath>
-	        	<classpath>
-	                <pathelement location="lib/aima-core.jar"/>
-	                <pathelement location="build"/>
-	            </classpath>
-	        </java>
-	    </target>
+        <java classname="it.unibo.ai.didattica.competition.tablut.client.petru.TablutPetruClientWhite" fork="true">
+            <classpath>
+                <pathelement location="lib/gson-2.2.2.jar"/>
+                <pathelement location="build"/>
+            </classpath>
+        	<classpath>
+                <pathelement location="lib/aima-core.jar"/>
+                <pathelement location="build"/>
+            </classpath>
+        </java>
+    </target>
+	
+	<target name="petrublack">
+	    <java classname="it.unibo.ai.didattica.competition.tablut.client.petru.TablutPetruClientBlack" fork="true">
+	        <classpath>
+	            <pathelement location="lib/gson-2.2.2.jar"/>
+	            <pathelement location="build"/>
+	        </classpath>
+	    	<classpath>
+	            <pathelement location="lib/aima-core.jar"/>
+	            <pathelement location="build"/>
+	        </classpath>
+	    </java>
+	</target>
+	
+	
 
 
 

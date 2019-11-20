@@ -48,17 +48,22 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 
 	@Override
 	public double getUtility(StateTablut state, Turn player) {
-		if(this.getPlayer(state).equals(Turn.WHITE)) {
-			return 100;
+		if((player).equals(Turn.WHITE)) {
+			return new Random().nextInt(100);
 		} else {
-			return -100;
+			return new Random().nextInt(10000);
 		}
 	}
 
 	@Override
 	public boolean isTerminal(StateTablut state) {
-		int a =  new Random().nextInt(100);
-		return true;
+		//int a =  new Random().nextInt(100);
+		if(state.depth == 2) {
+			return true;
+		} else {
+			state.depth++;
+			return false;
+		}
 	}
 
 	@Override
@@ -67,13 +72,13 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 		if(this.getPlayer(state).equals(Turn.WHITE)) {
 			state.setPawn(action.getX(), action.getX(), Pawn.WHITE);
 			state.setPawn(action.getWho()[0], action.getWho()[1], Pawn.EMPTY);
-			state.setTurn(Turn.BLACK);
+			//state.setTurn(Turn.BLACK);
 		} else {
 			state.setPawn(action.getX(), action.getX(), Pawn.BLACK);
 			state.setPawn(action.getWho()[0], action.getWho()[1], Pawn.EMPTY);
-			state.setTurn(Turn.WHITE);
+			//state.setTurn(Turn.WHITE);
 		}
-		System.out.println(state);
+		//System.out.println(state);
 		return state;
 	}
 	

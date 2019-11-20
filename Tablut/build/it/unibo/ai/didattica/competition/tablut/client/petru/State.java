@@ -44,7 +44,7 @@ public abstract class State {
 	 *
 	 */
 	public enum Pawn {
-		EMPTY("O"), WHITE("W"), BLACK("B"), THRONE("T"), KING("K");
+		EMPTY(" "), WHITE("W"), BLACK("B"), THRONE("T"), KING("K");
 		private final String pawn;
 
 		private Pawn(String s) {
@@ -79,15 +79,9 @@ public abstract class State {
 	}
 
 	
-	
-	
-	
-	
-	
-	
-	public static final int WIDTH = 9;
-	public static final int HEIGHT = 9;
-	public static final int KING_POSITION = 4; // this 4 is meant ad the initial king position which is [4, 4]
+	public static final int WIDTH = 9; 
+	public static final int HEIGHT = 9; 
+	public static final int KING_POSITION = 4; // this 4 is meant as the initial king position which is [4, 4]
 	
 	private Pawn board[][];
 	private Area boardArea[][];
@@ -205,21 +199,6 @@ public abstract class State {
 			System.out.println("\n");
 		}
 	}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	public String boardString() {
@@ -243,12 +222,12 @@ public abstract class State {
 		result.append("");
 		result.append(this.boardString());
 
-		result.append("-");
+		result.append("-------");
 		result.append("\n");
 
 		// TURNO
-		result.append(this.turn.toString());
-
+		result.append(this.turn.toString()+"\n");
+		result.append("-------");
 		return result.toString();
 	}
 
