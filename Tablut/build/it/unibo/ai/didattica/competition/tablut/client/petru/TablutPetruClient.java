@@ -10,6 +10,7 @@ import it.unibo.ai.didattica.competition.tablut.client.TablutHumanClient;
 import it.unibo.ai.didattica.competition.tablut.client.TablutRandomClient;
 import it.unibo.ai.didattica.competition.tablut.client.petru.State.Turn;
 import it.unibo.ai.didattica.competition.tablut.domain.*;
+import it.unibo.ai.didattica.competition.tablut.util.StreamUtils;
 
 /**
  * 
@@ -18,9 +19,13 @@ import it.unibo.ai.didattica.competition.tablut.domain.*;
  */
 public class TablutPetruClient extends TablutClient {
 	
-	
+	private AlphaBetaSearch<StateTablut, XYWho, Turn> alpha_beta;
+
 	public TablutPetruClient(String player) throws UnknownHostException, IOException {
 		super(player, "humanInterface");
+		super.game = new TablutGame();
+		this.alpha_beta = new AlphaBetaSearch<StateTablut, XYWho, Turn> (super.game);
+		super.game.getInitialState().setTurn(Turn.WHITE);
 	}
 
 	public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException {
@@ -37,19 +42,30 @@ public class TablutPetruClient extends TablutClient {
 
 	}
 
+	
 	@Override
 	public void run() {
 		while(true) {
-
+			/*try {
+				//super.read();
+			} catch (ClassNotFoundException | IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				System.exit(1);
+			}*/
+			
 			try {
 				this.declareName();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			
 			try {
-				Thread.sleep(3000);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 			}
+			System.out.println("MOLDIII: \n"+ super.game.getState());
+			
 		}
 	}
 }

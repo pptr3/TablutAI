@@ -17,7 +17,6 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 		this.initialState = new StateTablut();
 	}
 	
-
 	public StateTablut getState() {
 		return this.initialState;
 	}

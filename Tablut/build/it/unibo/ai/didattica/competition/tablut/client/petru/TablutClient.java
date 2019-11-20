@@ -21,31 +21,16 @@ import it.unibo.ai.didattica.competition.tablut.server.Server;
  */
 public abstract class TablutClient implements Runnable {
 
-	private State.Turn player;
+	private StateTablut.Turn player;
 	private String name;
 	private Socket playerSocket;
 	private DataInputStream in;
 	private DataOutputStream out;
 	private Gson gson;
-	private StateTablut currentState;
 	private int timeout;
 	private String serverIp;
+	protected TablutGame game;
 
-	public State.Turn getPlayer() {
-		return this.player;
-	}
-
-	public void setPlayer(State.Turn player) {
-		this.player = player;
-	}
-
-	public StateTablut getCurrentState() {
-		return this.currentState;
-	}
-
-	public void setCurrentState(StateTablut currentState) {
-		this.currentState = currentState;
-	}
 
 	/**
 	 * Creates a new player initializing the sockets and the logger
@@ -153,11 +138,11 @@ public abstract class TablutClient implements Runnable {
 	public void declareName() throws IOException, ClassNotFoundException {
 		StreamUtils.writeString(out, this.gson.toJson(this.name));
 	}
-
+	
 	/**
 	 * Read the state from the server
 	 */
 	public void read() throws ClassNotFoundException, IOException {
-		this.currentState = this.gson.fromJson(StreamUtils.readString(in), StateTablut.class);
+		this.game.setState(this.gson.fromJson(StreamUtils.readString(in), StateTablut.class)); 
 	}
 }
