@@ -65,7 +65,6 @@ public class StateTablut extends State implements Serializable {
 					if (super.getPawn(i, j).equalsPawn(State.Pawn.WHITE.toString()))  {
 						buf = new XYWho(i, j, new int[]{i, j}, false);
 						whitePositions.add(buf);
-						
 					}
 				}
 			}
@@ -77,12 +76,11 @@ public class StateTablut extends State implements Serializable {
 					if(((whitePawn.getY() - j) >= 0) && super.getPawn(whitePawn.getX(), whitePawn.getY() - j) == Pawn.EMPTY && (super.getArea(whitePawn.getX(), whitePawn.getY() - j) != Area.CAMPS) && (this.getArea(whitePawn.getX(), whitePawn.getY() - j) != Area.CASTLE)) {
 						int howManyEmptyPawns = 0;
 						for (int f = whitePawn.getY() - 1; f > whitePawn.getY() - j; f--) {
-							if(super.getPawn(whitePawn.getX(), f) != Pawn.EMPTY) {
+							if(super.getPawn(whitePawn.getX(), f) != Pawn.EMPTY || super.getArea(whitePawn.getX(), f) == Area.CAMPS || super.getArea(whitePawn.getX(), f) == Area.CASTLE) {
 								howManyEmptyPawns++;
 							}
 						}
 						if(howManyEmptyPawns == 0) {
-							
 							whiteLegalMoves.add(new XYWho(whitePawn.getX(), whitePawn.getY() - j, new int[]{whitePawn.getX(), whitePawn.getY()}, false));
 						}
 					}
@@ -90,7 +88,7 @@ public class StateTablut extends State implements Serializable {
 					if(((whitePawn.getY() + j) < currentBoardState.length) && super.getPawn(whitePawn.getX(), whitePawn.getY() + j) == Pawn.EMPTY && (super.getArea(whitePawn.getX(), whitePawn.getY() + j) != Area.CAMPS) && (super.getArea(whitePawn.getX(), whitePawn.getY() + j) != Area.CASTLE)) {
 						int howManyEmptyPawns = 0;
 						for (int f = whitePawn.getY() + 1; f < whitePawn.getY() + j; f++) {
-							if(super.getPawn(whitePawn.getX(), f) != Pawn.EMPTY) {
+							if(super.getPawn(whitePawn.getX(), f) != Pawn.EMPTY || super.getArea(whitePawn.getX(), f) == Area.CAMPS || super.getArea(whitePawn.getX(), f) == Area.CASTLE) {
 								howManyEmptyPawns++;
 							}
 						}
@@ -105,7 +103,7 @@ public class StateTablut extends State implements Serializable {
 					if(((whitePawn.getX() - i) >= 0) && super.getPawn(whitePawn.getX() - i, whitePawn.getY()) == Pawn.EMPTY && (super.getArea(whitePawn.getX() - i, whitePawn.getY()) != Area.CAMPS) && (this.getArea(whitePawn.getX() - i, whitePawn.getY()) != Area.CASTLE)) {
 						int howManyEmptyPawns = 0;
 						for (int f = whitePawn.getX() - 1; f > whitePawn.getX() - i; f--) {
-							if(super.getPawn(f, whitePawn.getY()) != Pawn.EMPTY) {
+							if(super.getPawn(f, whitePawn.getY()) != Pawn.EMPTY || super.getArea(f, whitePawn.getY()) == Area.CAMPS || super.getArea(f, whitePawn.getY()) == Area.CASTLE) {
 								howManyEmptyPawns++;
 							}
 						}
@@ -117,7 +115,7 @@ public class StateTablut extends State implements Serializable {
 					if(((whitePawn.getX() + i) < currentBoardState.length) && super.getPawn(whitePawn.getX() + i, whitePawn.getY()) == Pawn.EMPTY && (super.getArea(whitePawn.getX() + i, whitePawn.getY()) != Area.CAMPS) && (super.getArea(whitePawn.getX() + i, whitePawn.getY()) != Area.CASTLE)) {
 						int howManyEmptyPawns = 0;
 						for (int f = whitePawn.getX() + 1; f < whitePawn.getX() + i; f++) {
-							if(super.getPawn(f, whitePawn.getY()) != Pawn.EMPTY) {
+							if(super.getPawn(f, whitePawn.getY()) != Pawn.EMPTY || super.getArea(f, whitePawn.getY()) == Area.CAMPS || super.getArea(f, whitePawn.getY()) == Area.CASTLE) {
 								howManyEmptyPawns++;
 							}
 						}
@@ -151,6 +149,8 @@ public class StateTablut extends State implements Serializable {
 				}
 			}
 			return whiteLegalMoves;
+			
+			
 		} else {
 			// all possible moves for black
 			List<XYWho> blackLegalMoves = new ArrayList<>();
@@ -177,7 +177,7 @@ public class StateTablut extends State implements Serializable {
 					if(((blackPawn.getY() - j) >= 0) && super.getPawn(blackPawn.getX(), blackPawn.getY() - j) == Pawn.EMPTY && (super.getArea(blackPawn.getX(), blackPawn.getY() - j) != Area.CASTLE)) {
 						int howManyEmptyPawns = 0;
 						for (int f = blackPawn.getY() - 1; f > blackPawn.getY() - j; f--) {
-							if(super.getPawn(blackPawn.getX(), f) != Pawn.EMPTY) {
+							if(super.getPawn(blackPawn.getX(), f) != Pawn.EMPTY || (super.getArea(blackPawn.getX(), f) == Area.CAMPS && blackPawn.hasLeftTheCamp()) || super.getArea(blackPawn.getX(), f) == Area.CASTLE) {
 								howManyEmptyPawns++;
 							}
 						}
@@ -192,7 +192,7 @@ public class StateTablut extends State implements Serializable {
 					if(((blackPawn.getY() + j) < currentBoardState.length) && super.getPawn(blackPawn.getX(), blackPawn.getY() + j) == Pawn.EMPTY && (super.getArea(blackPawn.getX(), blackPawn.getY() + j) != Area.CASTLE)) {
 						int howManyEmptyPawns = 0;
 						for (int f = blackPawn.getY() + 1; f < blackPawn.getY() + j; f++) {
-							if(super.getPawn(blackPawn.getX(), f) != Pawn.EMPTY) {
+							if(super.getPawn(blackPawn.getX(), f) != Pawn.EMPTY || (super.getArea(blackPawn.getX(), f) == Area.CAMPS && blackPawn.hasLeftTheCamp()) || super.getArea(blackPawn.getX(), f) == Area.CASTLE) {
 								howManyEmptyPawns++;
 							}
 						}
@@ -209,7 +209,7 @@ public class StateTablut extends State implements Serializable {
 					if(((blackPawn.getX() - i) >= 0) && super.getPawn(blackPawn.getX() - i, blackPawn.getY()) == Pawn.EMPTY && (super.getArea(blackPawn.getX() - i, blackPawn.getY()) != Area.CASTLE)) {
 						int howManyEmptyPawns = 0;
 						for (int f = blackPawn.getX() - 1; f > blackPawn.getX() - i; f--) {
-							if(super.getPawn(f, blackPawn.getY()) != Pawn.EMPTY) {
+							if(super.getPawn(f, blackPawn.getY()) != Pawn.EMPTY || (super.getArea(f, blackPawn.getY()) == Area.CAMPS && blackPawn.hasLeftTheCamp()) || super.getArea(f, blackPawn.getY()) == Area.CASTLE) {
 								howManyEmptyPawns++;
 							}
 						}
@@ -224,7 +224,7 @@ public class StateTablut extends State implements Serializable {
 					if(((blackPawn.getX() + i) < currentBoardState.length) && super.getPawn(blackPawn.getX() + i, blackPawn.getY()) == Pawn.EMPTY && (super.getArea(blackPawn.getX() + i, blackPawn.getY()) != Area.CASTLE)) {
 						int howManyEmptyPawns = 0;
 						for (int f = blackPawn.getX() + 1; f < blackPawn.getX() + i; f++) {
-							if(super.getPawn(f, blackPawn.getY()) != Pawn.EMPTY) {
+							if(super.getPawn(f, blackPawn.getY()) != Pawn.EMPTY || (super.getArea(f, blackPawn.getY()) == Area.CAMPS && blackPawn.hasLeftTheCamp()) || super.getArea(f, blackPawn.getY()) == Area.CASTLE) {
 								howManyEmptyPawns++;
 							}
 						}
@@ -274,8 +274,6 @@ public class StateTablut extends State implements Serializable {
 		super.setPawn(4,  3, Pawn.WHITE);
 		super.setPawn(4,  5, Pawn.WHITE);
 		super.setPawn(4,  6, Pawn.WHITE);
-//		super.setPawn(1,  2, Pawn.WHITE);
-//		super.setPawn(3,  2, Pawn.WHITE);
 		
 		
 		super.setPawn(0,  3, Pawn.BLACK);
@@ -294,8 +292,6 @@ public class StateTablut extends State implements Serializable {
 		super.setPawn(4,  8, Pawn.BLACK);
 		super.setPawn(5,  8, Pawn.BLACK);
 		super.setPawn(4,  7, Pawn.BLACK);
-//		super.setPawn(2,  0, Pawn.BLACK);
-//		super.setPawn(2,  4, Pawn.BLACK);
 		
 		// initialize area on board
 		for (int i = 0; i < super.getBoardArea().length; i++) {
@@ -305,7 +301,6 @@ public class StateTablut extends State implements Serializable {
 		}
 
 		super.setArea(4, 4, Area.CASTLE);
-//		super.setArea(2, 2, Area.CASTLE);
 		
 		super.setArea(0, 0, Area.ESCAPES);
 		super.setArea(0, 1, Area.ESCAPES);
@@ -344,8 +339,6 @@ public class StateTablut extends State implements Serializable {
 		super.setArea(4, 8, Area.CAMPS);
 		super.setArea(5, 8, Area.CAMPS);
 		super.setArea(4, 7, Area.CAMPS);
-//		super.setArea(2, 0, Area.CAMPS);
-//		super.setArea(2, 4, Area.CAMPS);
 	}
 	
 
