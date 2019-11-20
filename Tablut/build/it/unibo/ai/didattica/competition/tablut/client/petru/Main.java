@@ -1,7 +1,11 @@
 package it.unibo.ai.didattica.competition.tablut.client.petru;
 
+import aima.core.environment.tictactoe.TicTacToeGame;
+import aima.core.environment.tictactoe.TicTacToeState;
 import aima.core.search.adversarial.AlphaBetaSearch;
 import aima.core.search.adversarial.MinimaxSearch;
+import aima.core.util.datastructure.XYLocation;
+import it.unibo.ai.didattica.competition.tablut.client.petru.State.Pawn;
 import it.unibo.ai.didattica.competition.tablut.client.petru.State.Turn;
 
 public class Main {
@@ -10,23 +14,43 @@ public class Main {
 		
 		TablutGame st = new TablutGame();
 		StateTablut c = st.getInitialState();
-		st.getState().setTurn(Turn.BLACK);
-		MinimaxSearch<StateTablut, XYWho, Turn> ab = new MinimaxSearch<StateTablut, XYWho, Turn> (st);
-		//System.out.println((st.getResult(c, ab.makeDecision(c))));
-		XYWho a = ab.makeDecision(c);
-		//System.out.println(a.getX() + " " + a.getY() + " | " + a.getWho()[0] + ", " + a.getWho()[1]);
-		System.out.println(ab.getMetrics());
+		AlphaBetaSearch<StateTablut, XYWho, Turn> ab = new AlphaBetaSearch<StateTablut, XYWho, Turn> (st);
 		
+		XYWho a = ab.makeDecision(c);
+		System.out.println(a.getX() + " " + a.getY() + " | " + a.getWho()[0] + ", " + a.getWho()[1]);
+		c.setPawn(a.getX(), a.getY(), Pawn.WHITE);
+		c.setPawn(a.getWho()[0], a.getWho()[1], Pawn.EMPTY);
+		printBoard(c.getBoard());
+		
+		c.setTurn(Turn.BLACK);
+		
+		XYWho a2 = ab.makeDecision(c);
+		System.out.println(a2.getX() + " " + a2.getY() + " | " + a2.getWho()[0] + ", " + a2.getWho()[1]);
+		c.setPawn(a2.getX(), a2.getY(), Pawn.BLACK);
+		c.setPawn(a2.getWho()[0], a2.getWho()[1], Pawn.EMPTY);
+		printBoard(c.getBoard());
+		
+		c.setTurn(Turn.WHITE);
+		
+		XYWho a22 = ab.makeDecision(c);
+		c.setPawn(a22.getX(), a22.getY(), Pawn.WHITE);
+		c.setPawn(a22.getWho()[0], a22.getWho()[1], Pawn.EMPTY);
+		printBoard(c.getBoard());
+		
+		
+//		TicTacToeGame ttg = new TicTacToeGame();
+//		TicTacToeState ss = ttg.getInitialState();
+//		AlphaBetaSearch<TicTacToeState, XYLocation, String> ab = new AlphaBetaSearch<TicTacToeState, XYLocation, String> (ttg);
+//		XYLocation a = ab.makeDecision(ss);
+//		System.out.println(ss);
+	}
+	
+	static void printBoard(Pawn[][] c) {
+		for(int i=0; i < 9; i++) {
+			for(int j=0; j < 9; j++) {
+				System.out.print(c[i][j]+ "  ");
+			}
+			System.out.println("\n");
+		}
 	}
 }
-/*XYWho actionToPerform = this.alpha_beta.makeDecision(this.getCurrentState());
-String from = this.getCurrentState().getBox(actionToPerform.getX(), actionToPerform.getY());
-String to = this.getCurrentState().getBox(actionToPerform.getWho()[0], actionToPerform.getWho()[1]);
-System.out.println("PPPPPPPPP from: " + from + "to: " +  to);
-try {
-	Action action = new Action(from, to, Turn.WHITE);
-	super.write(action);
-} catch (Exception e) {
-	e.printStackTrace();
-
-}*/

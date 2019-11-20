@@ -9,6 +9,7 @@ import java.security.InvalidParameterException;
 
 import com.google.gson.Gson;
 
+import it.unibo.ai.didattica.competition.tablut.client.petru.State.Turn;
 import it.unibo.ai.didattica.competition.tablut.domain.Action;
 import it.unibo.ai.didattica.competition.tablut.util.StreamUtils;
 import it.unibo.ai.didattica.competition.tablut.server.Server;
@@ -21,7 +22,6 @@ import it.unibo.ai.didattica.competition.tablut.server.Server;
  */
 public abstract class TablutClient implements Runnable {
 
-	private StateTablut.Turn player;
 	private String name;
 	private Socket playerSocket;
 	private DataInputStream in;
@@ -29,9 +29,16 @@ public abstract class TablutClient implements Runnable {
 	private Gson gson;
 	private int timeout;
 	private String serverIp;
-	protected TablutGame game;
-
-
+	private StateTablut currentState;
+	private State.Turn player;
+	
+	public void setPlayer(State.Turn player) {
+		this.player = player;
+	}
+	
+	public State.Turn getPlayer() {
+		return this.player;
+	}
 	/**
 	 * Creates a new player initializing the sockets and the logger
 	 * 
@@ -53,10 +60,10 @@ public abstract class TablutClient implements Runnable {
 		this.timeout = timeout;
 		this.gson = new Gson();
 		if (player.toLowerCase().equals("white")) {
-			this.player = State.Turn.WHITE;
+			this.player = StateTablut.Turn.WHITE;
 			port = Server.whitePort;
 		} else if (player.toLowerCase().equals("black")) {
-			this.player = State.Turn.BLACK;
+			this.player = StateTablut.Turn.BLACK;
 			port = Server.blackPort;
 		} else {
 			throw new InvalidParameterException("Player role must be BLACK or WHITE");
@@ -125,6 +132,10 @@ public abstract class TablutClient implements Runnable {
 		this.name = name;
 	}
 
+	public StateTablut getCurrentState() {
+		return this.currentState;
+	}
+	
 	/**
 	 * Write an action to the server
 	 */
@@ -143,6 +154,6 @@ public abstract class TablutClient implements Runnable {
 	 * Read the state from the server
 	 */
 	public void read() throws ClassNotFoundException, IOException {
-		this.game.setState(this.gson.fromJson(StreamUtils.readString(in), StateTablut.class)); 
+		this.currentState = this.gson.fromJson(StreamUtils.readString(in), StateTablut.class);
 	}
 }

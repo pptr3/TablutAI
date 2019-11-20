@@ -5,6 +5,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import java.util.List;
+import java.util.Random;
+
+import it.unibo.ai.didattica.competition.tablut.client.petru.State.Pawn;
+import it.unibo.ai.didattica.competition.tablut.client.petru.State.Turn;
 
 
 
@@ -12,14 +16,42 @@ public class StateTablut extends State implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	public int depth;
+	public int utility = 0;
+	
 	public StateTablut() {
 		super();
 		super.setBoard(new Pawn[State.WIDTH][State.HEIGHT]);
 		super.setBoardArea(new Area[State.WIDTH][State.WIDTH]);
 		this.initBoard();
 		this.depth = 0;
+		super.setTurn(Turn.WHITE);
 	}
 	
+	public int getUtility() {
+		return this.utility;
+	}
+	
+	public Turn getPlayerToMove() {
+		return super.getTurn();
+	}
+	
+	public void mark(XYWho action) {
+		if(super.getTurn().equals(Turn.WHITE)) {
+			super.setPawn(action.getX(), action.getY(), Pawn.WHITE);
+			super.setPawn(action.getWho()[0], action.getWho()[1], Pawn.EMPTY);
+			this.analyzeUtility();
+			super.setTurn(Turn.BLACK);
+		} else {
+			super.setPawn(action.getX(), action.getY(), Pawn.BLACK);
+			super.setPawn(action.getWho()[0], action.getWho()[1], Pawn.EMPTY);
+			this.analyzeUtility();
+			super.setTurn(Turn.WHITE);
+		}
+	}
+	
+	private void analyzeUtility() {
+		this.utility = new Random().nextInt(100);
+	}
 	
 	public List<XYWho> getAllLegalMoves() {
 		Pawn[][] currentBoardState = super.getBoard();
@@ -234,7 +266,7 @@ public class StateTablut extends State implements Serializable {
 			//System.out.println("who: (" + white.get(i).getWho()[0] + ", " + white.get(i).getWho()[1] +") x: "+white.get(i).getX()+ " y: " + white.get(i).getY());
 		}
 		s.printBoard();
-		s.printBoardArea();
+		//s.printBoardArea();
 		//System.out.println(white.size());
 		
 	}

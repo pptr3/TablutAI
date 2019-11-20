@@ -16,14 +16,7 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 	public TablutGame() {
 		this.initialState = new StateTablut();
 	}
-	
-	public StateTablut getState() {
-		return this.initialState;
-	}
-	
-	public void setState(StateTablut newState) {
-		 this.initialState = newState;
-	}
+
 	
 	@Override
 	public List<XYWho> getActions(StateTablut state) {
@@ -57,7 +50,7 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 	@Override
 	public boolean isTerminal(StateTablut state) {
 		//int a =  new Random().nextInt(100);
-		if(state.depth == 2) {
+		if(state.depth == 10) {
 			return true;
 		} else {
 			state.depth++;
@@ -67,17 +60,8 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 
 	@Override
 	public StateTablut getResult(StateTablut state, XYWho action) {
-		//change player
-		if(this.getPlayer(state).equals(Turn.WHITE)) {
-			state.setPawn(action.getX(), action.getX(), Pawn.WHITE);
-			state.setPawn(action.getWho()[0], action.getWho()[1], Pawn.EMPTY);
-			//state.setTurn(Turn.BLACK);
-		} else {
-			state.setPawn(action.getX(), action.getX(), Pawn.BLACK);
-			state.setPawn(action.getWho()[0], action.getWho()[1], Pawn.EMPTY);
-			//state.setTurn(Turn.WHITE);
-		}
-		//System.out.println(state);
+		StateTablut result = state.clone();
+		result.mark(action);
 		return state;
 	}
 	

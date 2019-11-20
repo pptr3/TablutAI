@@ -8,6 +8,7 @@ import aima.core.search.adversarial.AlphaBetaSearch;
 import aima.core.search.adversarial.MinimaxSearch;
 import it.unibo.ai.didattica.competition.tablut.client.TablutHumanClient;
 import it.unibo.ai.didattica.competition.tablut.client.TablutRandomClient;
+import it.unibo.ai.didattica.competition.tablut.client.petru.State.Pawn;
 import it.unibo.ai.didattica.competition.tablut.client.petru.State.Turn;
 import it.unibo.ai.didattica.competition.tablut.domain.*;
 import it.unibo.ai.didattica.competition.tablut.util.StreamUtils;
@@ -19,13 +20,14 @@ import it.unibo.ai.didattica.competition.tablut.util.StreamUtils;
  */
 public class TablutPetruClient extends TablutClient {
 	
-	private AlphaBetaSearch<StateTablut, XYWho, Turn> alpha_beta;
+	private TablutGame game;
+	TablutGame st = new TablutGame();
+	StateTablut c = st.getInitialState();
+	AlphaBetaSearch<StateTablut, XYWho, Turn> ab = new AlphaBetaSearch<StateTablut, XYWho, Turn> (st);
 
+		
 	public TablutPetruClient(String player) throws UnknownHostException, IOException {
 		super(player, "humanInterface");
-		super.game = new TablutGame();
-		this.alpha_beta = new AlphaBetaSearch<StateTablut, XYWho, Turn> (super.game);
-		super.game.getInitialState().setTurn(Turn.WHITE);
 	}
 
 	public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException {
@@ -46,26 +48,53 @@ public class TablutPetruClient extends TablutClient {
 	@Override
 	public void run() {
 		while(true) {
-			/*try {
-				//super.read();
-			} catch (ClassNotFoundException | IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-				System.exit(1);
-			}*/
-			
 			try {
-				this.declareName();
+				super.declareName();
 			} catch (Exception e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			
+			try {
+				super.read();
+			} catch (ClassNotFoundException | IOException e) {
+				// TODO Auto-generated catch block
+				//e.printStackTrace();
+			}
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 			}
-			System.out.println("MOLDIII: \n"+ super.game.getState());
 			
+			if (this.getPlayer().equals(Turn.WHITE)) {
+				// è il mio turno
+				if (this.getCurrentState().getTurn().equals(StateTablut.Turn.WHITE)) {
+					XYWho a2 = ab.makeDecision(this.getCurrentState());
+					
+					String from = this.getCurrentState().getBox(a2.getWho()[0], a2.getWho()[1]);
+					String to = this.getCurrentState().getBox(a2.getX(), a2.getY());
+					Action a = null;
+					try {
+						a = new Action(from, to, State.Turn.WHITE);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					System.out.println("WHITE MOVE from: " + from + "to: " +  to);
+				}
+			} else if (this.getCurrentState().getTurn().equals(StateTablut.Turn.BLACK)) {
+				XYWho a2 = ab.makeDecision(this.getCurrentState());
+				
+				String from = this.getCurrentState().getBox(a2.getWho()[0], a2.getWho()[1]);
+				String to = this.getCurrentState().getBox(a2.getX(), a2.getY());
+				Action a = null;
+				try {
+					a = new Action(from, to, State.Turn.BLACK);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				System.out.println("BLACK MOVE from: " + from + "to: " +  to);
+			}
 		}
 	}
 }
