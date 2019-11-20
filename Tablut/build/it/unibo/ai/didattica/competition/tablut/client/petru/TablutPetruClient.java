@@ -40,6 +40,12 @@ public class TablutPetruClient extends TablutClient {
 	@Override
 	public void run() {
 		while(true) {
+
+			try {
+				this.declareName();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			try {
 				Thread.sleep(3000);
 			} catch (InterruptedException e) {
