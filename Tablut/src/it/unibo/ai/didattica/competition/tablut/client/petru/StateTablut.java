@@ -94,7 +94,7 @@ public class StateTablut implements Serializable {
 			
 			//check if BLACK won
 			if(this.hasBlackWon()) {
-				
+				this.utility = -1; // -1 means that black won
 			}
 			
 			if(this.isDraw()) {
@@ -157,12 +157,51 @@ public class StateTablut implements Serializable {
 			}
 		}
 		
-		
-		
-		
-		
-		
-		
+		// case if the king is adjacent to a camp, it is sufficient to surround it with a checker on the opposite side of the camp.
+		for(int i=0; i < this.getBoard().length; i++) {
+			for(int j=0; j < this.getBoard().length; j++) {
+				if(this.getPawn(i, j).equals(Pawn.KING)) {
+					// normal case
+					if(this.getArea(i + 1, j).equals(Area.CAMPS) && this.getPawn(i - 1, j).equals(Pawn.BLACK)) {
+						return true;
+					} else if(this.getArea(i - 1, j).equals(Area.CAMPS) && this.getPawn(i + 1, j).equals(Pawn.BLACK)) {
+						return true;
+					} else if(this.getArea(i, j - 1).equals(Area.CAMPS) && this.getPawn(i, j + 1).equals(Pawn.BLACK)) {
+						return true;
+					} else if(this.getArea(i, j + 1).equals(Area.CAMPS) && this.getPawn(i, j - 1).equals(Pawn.BLACK)) {
+						return true;
+					}
+					
+					// angle case
+					if(this.getArea(i - 1, j).equals(Area.CAMPS) && this.getArea(i, j + 1).equals(Area.CAMPS)
+							&& (this.getPawn(i + 1, j).equals(Pawn.BLACK) || this.getPawn(i, j - 1).equals(Pawn.BLACK))) {
+						return true;
+					} else if(this.getArea(i - 1, j).equals(Area.CAMPS) && this.getArea(i, j - 1).equals(Area.CAMPS)
+							&& (this.getPawn(i + 1, j).equals(Pawn.BLACK) || this.getPawn(i, j + 1).equals(Pawn.BLACK))) {
+						return true;
+					} else if(this.getArea(i, j + 1).equals(Area.CAMPS) && this.getArea(i + 1, j).equals(Area.CAMPS)
+							&& (this.getPawn(i - 1, j).equals(Pawn.BLACK) || this.getPawn(i, j - 1).equals(Pawn.BLACK))) {
+						return true;
+					} else if(this.getArea(i - 1, j).equals(Area.CAMPS) && this.getArea(i, j + 1).equals(Area.CAMPS)
+							&& (this.getPawn(i, j - 1).equals(Pawn.BLACK) || this.getPawn(i + 1, j).equals(Pawn.BLACK))) {
+						return true;
+					} else if(this.getArea(i + 1, j).equals(Area.CAMPS) && this.getArea(i, j - 1).equals(Area.CAMPS)
+							&& (this.getPawn(i - 1, j).equals(Pawn.BLACK) || this.getPawn(i, j + 1).equals(Pawn.BLACK))) {
+						return true;
+					} else if(this.getArea(i + 1, j).equals(Area.CAMPS) && this.getArea(i, j + 1).equals(Area.CAMPS)
+							&& (this.getPawn(i - 1, j).equals(Pawn.BLACK) || this.getPawn(i, j - 1).equals(Pawn.BLACK))) {
+						return true;
+					} else if(this.getArea(i, j - 1).equals(Area.CAMPS) && this.getArea(i - 1, j).equals(Area.CAMPS)
+							&& (this.getPawn(i + 1, j).equals(Pawn.BLACK) || this.getPawn(i, j + 1).equals(Pawn.BLACK))) {
+						return true;
+					} else if(this.getArea(i, j - 1).equals(Area.CAMPS) && this.getArea(i + 1, j).equals(Area.CAMPS)
+							&& (this.getPawn(i - 1, j).equals(Pawn.BLACK) || this.getPawn(i, j + 1).equals(Pawn.BLACK))) {
+						return true;
+					}
+				}
+			}
+		}
+		// return false whether any of the previous conditions aren't satisfied
 		return false;
 	}
 
