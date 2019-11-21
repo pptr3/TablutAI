@@ -37,38 +37,29 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 
 	@Override
 	public double getUtility(StateTablut state, Turn player) { // given a specific state and the player, return the heuristic for that player. If
-//		if((player).equals(Turn.WHITE)) {
-//			return new Random().nextInt(100);
-//		} else {
-//			return new Random().nextInt(10000);
-//		}
-		
-		double result = state.getUtility();
-		if (result != -1) { // if is different from -1, it means
-			
+		if((player).equals(Turn.WHITE)) {
+			return new Random().nextInt(100);
+		} else {
+			return new Random().nextInt(10000);
 		}
-		return 0.0;
+		
+//		double result = state.getUtility();
+//		if (result != -1) { // if is different from -1, it means
+//			
+//		}
+//		return 0.0;
 	}
 
 	@Override
 	public boolean isTerminal(StateTablut state) { // returns true if a state is terminal (namely a WHITEWIN, BLACKWIN or a DRAW)
-		//int a =  new Random().nextInt(100);
-//		if(state.depth == 10) {
-//			return true;
-//		} else {
-//			state.depth++;
-//			return false;
-//		}
-		return state.getUtility() != -1;
+		int a =  new Random().nextInt(100);
+		return a > 10;
+		//return state.getUtility() != -1;
 	}
 
 	@Override
 	public StateTablut getResult(StateTablut state, XYWho action) {
 		if(state.getUtility() == -1) {
-//			System.out.println("start state");
-//			printBoard(state.getBoard());
-//			System.out.println("finsh, with action:" + action);
-			
 			if(state.getTurn().equals(Turn.WHITE)) {
 				if(state.getPawn(action.getWho()[0], action.getWho()[1]).equals(Pawn.KING)) {
 					state.setPawn(action.getX(), action.getY(), Pawn.KING);
@@ -82,31 +73,11 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 				state.setPawn(action.getWho()[0], action.getWho()[1], Pawn.EMPTY);
 				state.setTurn(Turn.WHITE);
 			}
-//			System.out.println("\n");
-//			System.out.println("start Result");
-//			printBoard(state.getBoard());
-//			System.out.println("finish Result");
-			
-			
-			// analyze utility
-			int a =  new Random().nextInt(101);
-			if(a >= 99) {
-				state.setUtility(state.getTurn().equals(Turn.WHITE) ? 1 : 0);
-			}
-			
+			// if an action on the state triggers a WIN, DRAW or LOSE, change accordingly the utility
+			state.checkGameStatus();
 			return state;
 		}
-		state.checkGameStatus(); // if an action on the state triggers a WIN, DRAW or LOSE, change accordingly the utility
 		return state;
-	}
-	
-	static void printBoard(Pawn[][] c) {
-		for(int i=0; i < 9; i++) {
-			for(int j=0; j < 9; j++) {
-				System.out.print(c[i][j]);
-			}
-			System.out.println("");
-		}
 	}
 	
 }

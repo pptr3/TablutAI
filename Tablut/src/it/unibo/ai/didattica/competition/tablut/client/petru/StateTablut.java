@@ -90,17 +90,15 @@ public class StateTablut implements Serializable {
 			//check if WHITE won
 			if(this.hasWhiteWon()) {
 				this.utility = 1; // 1 means that white won
-			}
-			
-			//check if BLACK won
+			} else
+			//check if BLACK won 
 			if(this.hasBlackWon()) {
-				this.utility = -1; // -1 means that black won
-			}
-			
-			if(this.isDraw()) {
-				
-			}
+				this.utility = 0; // 0 means that black won
+			} else
 			//check if DRAW
+			if(this.isDraw()) {
+				this.utility = -1; // // 0.5 means that black won
+			}
 		}
 	}
 	
@@ -158,8 +156,8 @@ public class StateTablut implements Serializable {
 		}
 		
 		// case if the king is adjacent to a camp, it is sufficient to surround it with a checker on the opposite side of the camp.
-		for(int i=0; i < this.getBoard().length; i++) {
-			for(int j=0; j < this.getBoard().length; j++) {
+		for(int i=0; i < this.getBoard().length; i++) { // i=1 and this.getBoard().length - 1
+			for(int j=0; j < this.getBoard().length; j++) { // j=1 and this.getBoard().length - 1
 				if(this.getPawn(i, j).equals(Pawn.KING)) {
 					// normal case
 					if(this.getArea(i + 1, j).equals(Area.CAMPS) && this.getPawn(i - 1, j).equals(Pawn.BLACK)) {
