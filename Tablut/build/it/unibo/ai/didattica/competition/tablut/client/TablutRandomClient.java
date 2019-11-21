@@ -141,7 +141,6 @@ public class TablutRandomClient extends TablutClient {
 					Action a = null;
 					
 					XYWho a2 = ab.makeDecision(this.getCurrentState());
-					System.out.println("MOOOO\n"+c);
 					String from = this.getCurrentState().getBox(a2.getWho()[0], a2.getWho()[1]);
 					String to = this.getCurrentState().getBox(a2.getX(), a2.getY());
 					System.out.println(" WHITE my debug:\n" + from + " "+ to+ ", hasleft " + a2.hasLeftTheCamp());
@@ -206,7 +205,6 @@ public class TablutRandomClient extends TablutClient {
 
 					Action a = null;
 					XYWho a2 = ab.makeDecision(this.getCurrentState());
-					System.out.println("MOOOO\n"+c);
 					String from = this.getCurrentState().getBox(a2.getWho()[0], a2.getWho()[1]);
 					String to = this.getCurrentState().getBox(a2.getX(), a2.getY());
 					System.out.println("BLACK my debug:\n" + from + " "+ to+ ", hasleft " + a2.hasLeftTheCamp());

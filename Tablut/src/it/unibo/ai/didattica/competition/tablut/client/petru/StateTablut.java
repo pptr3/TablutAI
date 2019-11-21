@@ -111,7 +111,7 @@ public class StateTablut implements Serializable {
 			XYWho buf;
 			for (int i = 0; i < currentBoardState.length; i++) {
 				for (int j = 0; j < currentBoardState.length; j++) {
-					if (this.getPawn(i, j).equalsPawn(StateTablut.Pawn.WHITE.toString()))  {
+					if (this.getPawn(i, j).equalsPawn(StateTablut.Pawn.WHITE.toString()) || this.getPawn(i, j).equalsPawn(StateTablut.Pawn.KING.toString()))  {
 						buf = new XYWho(i, j, new int[]{i, j}, false);
 						whitePositions.add(buf);
 					}
@@ -176,27 +176,27 @@ public class StateTablut implements Serializable {
 					
 			}
 			// add all possible moves for the king. If he leaves the castle, he cannot enter anymore
-			int[] king_position = this.getKingPosition();
-			for (int j = 0; j < currentBoardState.length; j++) {
-				// (x, y - j) UP
-				if(((king_position[1] - j) >= 0) && this.getPawn(king_position[0], king_position[1] - j) == Pawn.EMPTY && (this.getArea(king_position[0], king_position[1] - j) != Area.CAMPS) && (king_position[0] != StateTablut.KING_POSITION || (king_position[1] - j) != StateTablut.KING_POSITION)) {
-					whiteLegalMoves.add(new XYWho(king_position[0], king_position[1] - j, new int[]{king_position[0], king_position[1]}, false));
-				}
-				// (x, y + j) DOWN
-				if(((king_position[1] + j) < currentBoardState.length) && this.getPawn(king_position[0], king_position[1] + j) == Pawn.EMPTY && (this.getArea(king_position[0], king_position[1] + j) != Area.CAMPS) && (king_position[0] != StateTablut.KING_POSITION | (king_position[1] + j) != StateTablut.KING_POSITION)) {
-					whiteLegalMoves.add(new XYWho(king_position[0], king_position[1] + j, new int[]{king_position[0], king_position[1]}, false));
-				}
-			}
-			for (int i = 0; i < currentBoardState.length; i++) {
-				// (x - i, y) LEFT
-				if(((king_position[0] - i) >= 0) && this.getPawn(king_position[0] - i, king_position[1]) == Pawn.EMPTY && (this.getArea(king_position[0] - i, king_position[1]) != Area.CAMPS) && ((king_position[0] - i) != StateTablut.KING_POSITION || (king_position[1]) != StateTablut.KING_POSITION)) {
-					whiteLegalMoves.add(new XYWho(king_position[0] - i, king_position[1], new int[]{king_position[0], king_position[1]}, false));
-				}
-				// (x + i, y) RIGHT
-				if(((king_position[0] + i) < currentBoardState.length) && this.getPawn(king_position[0] + i, king_position[1]) == Pawn.EMPTY && (this.getArea(king_position[0] + i, king_position[1]) != Area.CAMPS) && ((king_position[0] + i) != StateTablut.KING_POSITION || (king_position[1]) != StateTablut.KING_POSITION)) {
-					whiteLegalMoves.add(new XYWho(king_position[0] + i, king_position[1], new int[]{king_position[0], king_position[1]}, false));
-				}
-			}
+//			int[] king_position = this.getKingPosition();
+//			for (int j = 0; j < currentBoardState.length; j++) {
+//				// (x, y - j) UP
+//				if(((king_position[1] - j) >= 0) && this.getPawn(king_position[0], king_position[1] - j) == Pawn.EMPTY && (this.getArea(king_position[0], king_position[1] - j) != Area.CAMPS) && (king_position[0] != StateTablut.KING_POSITION || (king_position[1] - j) != StateTablut.KING_POSITION)) {
+//					whiteLegalMoves.add(new XYWho(king_position[0], king_position[1] - j, new int[]{king_position[0], king_position[1]}, false));
+//				}
+//				// (x, y + j) DOWN
+//				if(((king_position[1] + j) < currentBoardState.length) && this.getPawn(king_position[0], king_position[1] + j) == Pawn.EMPTY && (this.getArea(king_position[0], king_position[1] + j) != Area.CAMPS) && (king_position[0] != StateTablut.KING_POSITION | (king_position[1] + j) != StateTablut.KING_POSITION)) {
+//					whiteLegalMoves.add(new XYWho(king_position[0], king_position[1] + j, new int[]{king_position[0], king_position[1]}, false));
+//				}
+//			}
+//			for (int i = 0; i < currentBoardState.length; i++) {
+//				// (x - i, y) LEFT
+//				if(((king_position[0] - i) >= 0) && this.getPawn(king_position[0] - i, king_position[1]) == Pawn.EMPTY && (this.getArea(king_position[0] - i, king_position[1]) != Area.CAMPS) && ((king_position[0] - i) != StateTablut.KING_POSITION || (king_position[1]) != StateTablut.KING_POSITION)) {
+//					whiteLegalMoves.add(new XYWho(king_position[0] - i, king_position[1], new int[]{king_position[0], king_position[1]}, false));
+//				}
+//				// (x + i, y) RIGHT
+//				if(((king_position[0] + i) < currentBoardState.length) && this.getPawn(king_position[0] + i, king_position[1]) == Pawn.EMPTY && (this.getArea(king_position[0] + i, king_position[1]) != Area.CAMPS) && ((king_position[0] + i) != StateTablut.KING_POSITION || (king_position[1]) != StateTablut.KING_POSITION)) {
+//					whiteLegalMoves.add(new XYWho(king_position[0] + i, king_position[1], new int[]{king_position[0], king_position[1]}, false));
+//				}
+//			}
 			return whiteLegalMoves;
 			
 			
