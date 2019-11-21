@@ -75,7 +75,7 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 			System.out.println("\n");
 			System.out.println("Result");
 			printBoard(state.getBoard());
-			System.exit(0);
+			
 			
 			// analyze utility
 			int a =  new Random().nextInt(100);

@@ -110,7 +110,7 @@ public class TablutRandomClient extends TablutClient {
 			state = this.getCurrentState();
 			System.out.println(state.toString());
 			try {
-				Thread.sleep(100);
+				Thread.sleep(10);
 			} catch (InterruptedException e) {
 			}
 
@@ -141,10 +141,9 @@ public class TablutRandomClient extends TablutClient {
 					Action a = null;
 					
 					XYWho a2 = ab.makeDecision(this.getCurrentState());
-					System.out.println("MOOOO\n"+c);
 					String from = this.getCurrentState().getBox(a2.getWho()[0], a2.getWho()[1]);
 					String to = this.getCurrentState().getBox(a2.getX(), a2.getY());
-					System.out.println("my debug:\n" + a2.getWho()[0] + " "+ a2.getWho()[1]+ ", hasleft " + a2.hasLeftTheCamp());
+					System.out.println(" WHITE my debug:\n" + from + " "+ to+ ", hasleft " + a2.hasLeftTheCamp());
 					try {
 						a = new Action(from, to, StateTablut.Turn.WHITE);
 					} catch (IOException e1) {
@@ -206,9 +205,9 @@ public class TablutRandomClient extends TablutClient {
 
 					Action a = null;
 					XYWho a2 = ab.makeDecision(this.getCurrentState());
-					System.out.println("MOOOO\n"+c);
 					String from = this.getCurrentState().getBox(a2.getWho()[0], a2.getWho()[1]);
 					String to = this.getCurrentState().getBox(a2.getX(), a2.getY());
+					System.out.println("BLACK my debug:\n" + from + " "+ to+ ", hasleft " + a2.hasLeftTheCamp());
 					try {
 						a = new Action(from, to, StateTablut.Turn.WHITE);
 					} catch (IOException e1) {

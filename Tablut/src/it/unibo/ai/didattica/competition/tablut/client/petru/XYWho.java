@@ -21,7 +21,7 @@ public class XYWho {
 		this.x = x;
 		this.y = y;
 		this.who = who;
-		this.hasLeftTheCamp = false;
+		this.hasLeftTheCamp = hasLeftTheCamp;
 	}
 
 	/**

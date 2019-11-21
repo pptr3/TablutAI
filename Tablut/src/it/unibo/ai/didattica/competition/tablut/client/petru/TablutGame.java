@@ -59,9 +59,9 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 	@Override
 	public StateTablut getResult(StateTablut state, XYWho action) {
 		if(state.getUtility() == -1) {
-//			System.out.println("StatePOTRIIII");
-//			printBoard(state.getBoard());
-//			System.out.println("actionPOTRIIII:" + action);
+			System.out.println("StatePOTRIIII");
+			printBoard(state.getBoard());
+			System.out.println("actionPOTRIIII:" + action);
 			
 			if(state.getTurn().equals(Turn.WHITE)) {
 				state.setPawn(action.getX(), action.getY(), Pawn.WHITE);
@@ -72,9 +72,9 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 				state.setPawn(action.getWho()[0], action.getWho()[1], Pawn.EMPTY);
 				state.setTurn(Turn.WHITE);
 			}
-//			System.out.println("\n");
-//			System.out.println("Result");
-//			printBoard(state.getBoard());
+			System.out.println("\n");
+			System.out.println("Result");
+			printBoard(state.getBoard());
 			
 			
 			// analyze utility
