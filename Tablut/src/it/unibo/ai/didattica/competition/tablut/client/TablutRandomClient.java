@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 import aima.core.search.adversarial.AlphaBetaSearch;
+import aima.core.search.adversarial.IterativeDeepeningAlphaBetaSearch;
 import it.unibo.ai.didattica.competition.tablut.client.petru.StateTablut;
 import it.unibo.ai.didattica.competition.tablut.client.petru.StateTablut.Turn;
 import it.unibo.ai.didattica.competition.tablut.client.petru.StateTablut;
@@ -26,7 +27,8 @@ public class TablutRandomClient extends TablutClient {
 	TablutGame st = new TablutGame();
 	StateTablut c = st.getInitialState();
 	AlphaBetaSearch<StateTablut, XYWho, Turn> ab = new AlphaBetaSearch<StateTablut, XYWho, Turn> (st);
-
+	//IterativeDeepeningAlphaBetaSearch<StateTablut, XYWho, Turn> ab = new IterativeDeepeningAlphaBetaSearch<StateTablut, XYWho, Turn> (st, 10, -100, 300);
+	
 	public TablutRandomClient(String player, String name, int gameChosen) throws UnknownHostException, IOException {
 		super(player, name);
 		game = gameChosen;
