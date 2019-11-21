@@ -36,16 +36,22 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 	}
 
 	@Override
-	public double getUtility(StateTablut state, Turn player) {
-		if((player).equals(Turn.WHITE)) {
-			return new Random().nextInt(100);
-		} else {
-			return new Random().nextInt(10000);
+	public double getUtility(StateTablut state, Turn player) { // given a specific state and the player, return the heuristic for that player. If
+//		if((player).equals(Turn.WHITE)) {
+//			return new Random().nextInt(100);
+//		} else {
+//			return new Random().nextInt(10000);
+//		}
+		
+		double result = state.getUtility();
+		if (result != -1) { // if is different from -1, it means
+			
 		}
+		return 0.0;
 	}
 
 	@Override
-	public boolean isTerminal(StateTablut state) {
+	public boolean isTerminal(StateTablut state) { // returns true if a state is terminal (namely a WHITEWIN, BLACKWIN or a DRAW)
 		//int a =  new Random().nextInt(100);
 //		if(state.depth == 10) {
 //			return true;
@@ -59,9 +65,9 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 	@Override
 	public StateTablut getResult(StateTablut state, XYWho action) {
 		if(state.getUtility() == -1) {
-			System.out.println("start state");
-			printBoard(state.getBoard());
-			System.out.println("finsh, with action:" + action);
+//			System.out.println("start state");
+//			printBoard(state.getBoard());
+//			System.out.println("finsh, with action:" + action);
 			
 			if(state.getTurn().equals(Turn.WHITE)) {
 				if(state.getPawn(action.getWho()[0], action.getWho()[1]).equals(Pawn.KING)) {
@@ -76,10 +82,10 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 				state.setPawn(action.getWho()[0], action.getWho()[1], Pawn.EMPTY);
 				state.setTurn(Turn.WHITE);
 			}
-			System.out.println("\n");
-			System.out.println("start Result");
-			printBoard(state.getBoard());
-			System.out.println("finish Result");
+//			System.out.println("\n");
+//			System.out.println("start Result");
+//			printBoard(state.getBoard());
+//			System.out.println("finish Result");
 			
 			
 			// analyze utility
@@ -90,6 +96,7 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 			
 			return state;
 		}
+		state.checkGameStatus(); // if an action on the state triggers a WIN, DRAW or LOSE, change accordingly the utility
 		return state;
 	}
 	
