@@ -1,16 +1,14 @@
 package it.unibo.ai.didattica.competition.tablut.client;
 import java.io.IOException;
 
+
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-import aima.core.search.adversarial.AlphaBetaSearch;
-import aima.core.search.adversarial.IterativeDeepeningAlphaBetaSearch;
+import it.unibo.ai.didattica.competition.tablut.client.ab.AlphaBetaSearch;
 import it.unibo.ai.didattica.competition.tablut.client.petru.StateTablut;
 import it.unibo.ai.didattica.competition.tablut.client.petru.StateTablut.Turn;
-import it.unibo.ai.didattica.competition.tablut.client.petru.StateTablut;
 import it.unibo.ai.didattica.competition.tablut.client.petru.TablutClient;
 import it.unibo.ai.didattica.competition.tablut.client.petru.TablutGame;
 import it.unibo.ai.didattica.competition.tablut.client.petru.XYWho;
@@ -26,8 +24,8 @@ public class TablutRandomClient extends TablutClient {
 	private int game;
 	TablutGame st = new TablutGame();
 	StateTablut c = st.getInitialState();
-	//AlphaBetaSearch<StateTablut, XYWho, Turn> ab = new AlphaBetaSearch<StateTablut, XYWho, Turn> (st);
-	IterativeDeepeningAlphaBetaSearch<StateTablut, XYWho, Turn> ab = new IterativeDeepeningAlphaBetaSearch<StateTablut, XYWho, Turn> (st, 10, -100, 300);
+	AlphaBetaSearch<StateTablut, XYWho, Turn> ab = new AlphaBetaSearch<StateTablut, XYWho, Turn> (st, 4);
+	//IterativeDeepeningAlphaBetaSearch<StateTablut, XYWho, Turn> ab = new IterativeDeepeningAlphaBetaSearch<StateTablut, XYWho, Turn> (st, 10, -100, 300);
 	
 	public TablutRandomClient(String player, String name, int gameChosen) throws UnknownHostException, IOException {
 		super(player, name);

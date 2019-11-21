@@ -53,6 +53,7 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 	@Override
 	public boolean isTerminal(StateTablut state) { // returns true if a state is terminal (namely a WHITEWIN, BLACKWIN or a DRAW)
 		return state.getUtility() != -1;
+		//return new Random().nextInt(100) > 10;
 	}
 
 	@Override
