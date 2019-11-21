@@ -59,12 +59,16 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 	@Override
 	public StateTablut getResult(StateTablut state, XYWho action) {
 		if(state.getUtility() == -1) {
-			System.out.println("StatePOTRIIII");
+			System.out.println("start state");
 			printBoard(state.getBoard());
-			System.out.println("actionPOTRIIII:" + action);
+			System.out.println("finsh, with action:" + action);
 			
 			if(state.getTurn().equals(Turn.WHITE)) {
-				state.setPawn(action.getX(), action.getY(), Pawn.WHITE);
+				if(state.getPawn(action.getWho()[0], action.getWho()[1]).equals(Pawn.KING)) {
+					state.setPawn(action.getX(), action.getY(), Pawn.KING);
+				} else {
+					state.setPawn(action.getX(), action.getY(), Pawn.WHITE);
+				}
 				state.setPawn(action.getWho()[0], action.getWho()[1], Pawn.EMPTY);
 				state.setTurn(Turn.BLACK);
 			} else {
@@ -73,13 +77,14 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 				state.setTurn(Turn.WHITE);
 			}
 			System.out.println("\n");
-			System.out.println("Result");
+			System.out.println("start Result");
 			printBoard(state.getBoard());
+			System.out.println("finish Result");
 			
 			
 			// analyze utility
-			int a =  new Random().nextInt(100);
-			if(a >= 90) {
+			int a =  new Random().nextInt(101);
+			if(a >= 99) {
 				state.setUtility(state.getTurn().equals(Turn.WHITE) ? 1 : 0);
 			}
 			
@@ -91,9 +96,9 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 	static void printBoard(Pawn[][] c) {
 		for(int i=0; i < 9; i++) {
 			for(int j=0; j < 9; j++) {
-				System.out.print(c[i][j]+ "  ");
+				System.out.print(c[i][j]);
 			}
-			System.out.println("\n");
+			System.out.println("");
 		}
 	}
 	
