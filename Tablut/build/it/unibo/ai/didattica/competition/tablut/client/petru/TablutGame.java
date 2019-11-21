@@ -47,31 +47,44 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 	@Override
 	public boolean isTerminal(StateTablut state) {
 		//int a =  new Random().nextInt(100);
-		if(state.depth == 10) {
-			return true;
-		} else {
-			state.depth++;
-			return false;
-		}
+//		if(state.depth == 10) {
+//			return true;
+//		} else {
+//			state.depth++;
+//			return false;
+//		}
+		return state.getUtility() != -1;
 	}
 
 	@Override
 	public StateTablut getResult(StateTablut state, XYWho action) {
-		System.out.println("State");
-		printBoard(state.getBoard());
-		System.out.println("action:" + action);
-		if(state.getTurn().equals(Turn.WHITE)) {
-			//state.setPawn(action.getX(), action.getY(), Pawn.WHITE);
-			//state.setPawn(action.getWho()[0], action.getWho()[1], Pawn.EMPTY);
-			//state.setTurn(Turn.BLACK);
-		} else {
-			//state.setPawn(action.getX(), action.getY(), Pawn.BLACK);
-			//state.setPawn(action.getWho()[0], action.getWho()[1], Pawn.EMPTY);
-			//state.setTurn(Turn.WHITE);
+		if(state.getUtility() == -1) {
+			System.out.println("StatePOTRIIII");
+			printBoard(state.getBoard());
+			System.out.println("actionPOTRIIII:" + action);
+			
+			if(state.getTurn().equals(Turn.WHITE)) {
+				state.setPawn(action.getX(), action.getY(), Pawn.WHITE);
+				state.setPawn(action.getWho()[0], action.getWho()[1], Pawn.EMPTY);
+				state.setTurn(Turn.BLACK);
+			} else {
+				state.setPawn(action.getX(), action.getY(), Pawn.BLACK);
+				state.setPawn(action.getWho()[0], action.getWho()[1], Pawn.EMPTY);
+				state.setTurn(Turn.WHITE);
+			}
+			System.out.println("\n");
+			System.out.println("Result");
+			printBoard(state.getBoard());
+			System.exit(0);
+			
+			// analyze utility
+			int a =  new Random().nextInt(100);
+			if(a >= 90) {
+				state.setUtility(state.getTurn().equals(Turn.WHITE) ? 1 : 0);
+			}
+			
+			return state;
 		}
-		System.out.println("\n");
-		System.out.println("Result");
-		printBoard(state.getBoard());
 		return state;
 	}
 	

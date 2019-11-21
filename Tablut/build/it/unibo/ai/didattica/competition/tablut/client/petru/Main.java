@@ -16,11 +16,11 @@ public class Main {
 		TablutGame st = new TablutGame();
 		StateTablut c = st.getInitialState();
 		AlphaBetaSearch<StateTablut, XYWho, Turn> ab = new AlphaBetaSearch<StateTablut, XYWho, Turn> (st);
-		
 		XYWho a = ab.makeDecision(c);
 		//System.out.println(a.getX() + " " + a.getY() + " | " + a.getWho()[0] + ", " + a.getWho()[1]);
-		//printBoard(c.getBoard());
-		System.out.println(ab.getMetrics());
+		printBoard(c.getBoard());
+		
+		
 //		c.setTurn(Turn.BLACK);
 //		
 //		XYWho a2 = ab.makeDecision(c);

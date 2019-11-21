@@ -1,8 +1,6 @@
 package it.unibo.ai.didattica.competition.tablut.client.petru;
 
 import java.io.Serializable;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -14,7 +12,6 @@ import java.util.Random;
 public class StateTablut implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	public int depth;
 	
 	public enum Turn {
 		WHITE("W"), BLACK("B"), WHITEWIN("WW"), BLACKWIN("BW"), DRAW("D");
@@ -75,10 +72,9 @@ public class StateTablut implements Serializable {
 	private Pawn board[][];
 	private Area boardArea[][];
 	private Turn turn;
-	private boolean boolBlackCamps[][];
+	public int depth;
+	private double utility = -1; // 1: win for X, 0: win for O, 0.5: draw
 	
-	
-	//
 	
 	public StateTablut() {
 		this.setBoard(new Pawn[StateTablut.WIDTH][StateTablut.HEIGHT]);
@@ -88,10 +84,23 @@ public class StateTablut implements Serializable {
 		this.setTurn(Turn.WHITE);
 	}
 	
+	
+	public StateTablut(Pawn[][] board, Turn playerToMove) {
+		this.setBoard(board);
+		this.setTurn(playerToMove);
+	}
+	
 	public Turn getPlayerToMove() {
 		return this.getTurn();
 	}
 	
+	public double getUtility() {
+		return this.utility;
+	}
+	
+	public void setUtility(double u) {
+		this.utility = u;
+	}
 	
 	public List<XYWho> getAllLegalMoves() {
 		Pawn[][] currentBoardState = this.getBoard();
@@ -303,7 +312,7 @@ public class StateTablut implements Serializable {
 				this.setPawn(i,  j, Pawn.EMPTY);
 			}
 		}
-		
+		this.setPawn(StateTablut.KING_POSITION,  StateTablut.KING_POSITION, Pawn.THRONE);
 		this.setPawn(StateTablut.KING_POSITION,  StateTablut.KING_POSITION, Pawn.KING);
 		
 		this.setPawn(2,  4, Pawn.WHITE);
@@ -441,14 +450,6 @@ public class StateTablut implements Serializable {
 
 	public void setArea(int row, int column, Area area) {
 		this.boardArea[row][column] = area;
-	}
-	
-	public boolean getBoolBlackCamps(int row, int column) {
-		return this.boolBlackCamps[row][column];
-	}
-
-	public void setBoolBlackCamps(int row, int column, boolean hasBlackLeftTheCamp) {
-		this.boolBlackCamps[row][column] = hasBlackLeftTheCamp;
 	}
 	
 	
