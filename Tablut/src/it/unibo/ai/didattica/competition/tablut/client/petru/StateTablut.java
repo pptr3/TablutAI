@@ -129,6 +129,33 @@ public class StateTablut implements Serializable {
 	}
 	
 	private boolean hasBlackWon(XYWho action) {
+		// normal capture
+		for(int i=0; i < this.getBoard().length; i++) {
+			for(int j=0; j < this.getBoard().length; j++) {
+				if(this.getPawn(i, j).equals(Pawn.KING)) {
+					// case B K B
+					if(this.getPawn(i - 1, j).equals(Pawn.BLACK) && this.getPawn(i + 1, j).equals(Pawn.BLACK)) {
+						if((action.getX() == (i - 1) && action.getY() == (j)) || ((action.getX() == (i + 1) && action.getY() == (j)))) {
+							return true;
+						}
+					}
+					/*case
+					 * B
+					 * K
+					 * B
+					 */
+					if(this.getPawn(i, j - 1).equals(Pawn.BLACK) && this.getPawn(i, j + 1).equals(Pawn.BLACK)) {
+						if((action.getX() == (i) && action.getY() == (j - 1)) || ((action.getX() == (i) && action.getY() == (j + 1)))) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+		
+		
+		
+		
 		// case where the king is in the castle and is surrounded by 4 blacks
 		for(int i=0; i < this.getBoard().length; i++) {
 			for(int j=0; j < this.getBoard().length; j++) {
