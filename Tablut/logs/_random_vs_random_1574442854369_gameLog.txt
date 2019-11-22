@@ -1,0 +1,22 @@
+Nov 22, 2019 6:14:14 PM it.unibo.ai.didattica.competition.tablut.domain.GameAshtonTablut <init>
+FINE: Players:	random	vs	random
+Nov 22, 2019 6:14:14 PM it.unibo.ai.didattica.competition.tablut.domain.GameAshtonTablut <init>
+FINE: Repeated moves allowed:	0	Cache:	-1
+Nov 22, 2019 6:14:14 PM it.unibo.ai.didattica.competition.tablut.domain.GameAshtonTablut <init>
+FINE: Inizio partita
+Nov 22, 2019 6:14:14 PM it.unibo.ai.didattica.competition.tablut.domain.GameAshtonTablut <init>
+FINE: Stato:
+   BBB   
+    B    
+    W    
+B   W   B
+BBWWKWWBB
+B   W   B
+    W    
+    B    
+   BBB   
+-------
+W
+-------
+Nov 22, 2019 6:14:15 PM it.unibo.ai.didattica.competition.tablut.domain.GameAshtonTablut checkMove
+FINE: Turn: W Pawn from null to null

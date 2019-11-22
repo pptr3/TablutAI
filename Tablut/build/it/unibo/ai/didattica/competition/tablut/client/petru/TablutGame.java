@@ -42,18 +42,11 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 		} else {
 			return new Random().nextInt(10000);
 		}
-		
-//		double result = state.getUtility();
-//		if (result != -1) { // if is different from -1, it means
-//			
-//		}
-//		return 0.0;
 	}
 
 	@Override
 	public boolean isTerminal(StateTablut state) { // returns true if a state is terminal (namely a WHITEWIN, BLACKWIN or a DRAW)
 		return state.getUtility() != -1;
-		//return new Random().nextInt(100) > 10;
 	}
 
 	@Override
@@ -73,7 +66,7 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 				state.setTurn(Turn.WHITE);
 			}
 			// if an action on the state triggers a WIN, DRAW or LOSE, change accordingly the utility
-			state.checkGameStatus();
+			state.checkGameStatus(action);
 			return state;
 		}
 		return state;

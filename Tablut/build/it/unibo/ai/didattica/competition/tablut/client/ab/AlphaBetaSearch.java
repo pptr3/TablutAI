@@ -48,7 +48,7 @@ public class AlphaBetaSearch<S, A, P> implements AdversarialSearch<S, A> {
     public final static String METRICS_NODES_EXPANDED = "nodesExpanded";
     Game<S, A, P> game;
     private Metrics metrics = new Metrics();
-    private int depth = 1;
+    private int depth = 3;
 
     /**
      * Creates a new search object for a given game.
