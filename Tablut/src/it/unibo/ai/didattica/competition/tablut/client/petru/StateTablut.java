@@ -258,11 +258,34 @@ public class StateTablut implements Serializable {
 				}
 			}
 		}
+		
+		int blackMovesCount = 0;
+		// if the black cannot move any pawn, white wins
+		for(int i=0; i < this.getBoard().length; i++) {
+			for(int j=0; j < this.getBoard().length; j++) {
+				if(this.getPawn(i, j).equals(Pawn.BLACK)) {
+					if(this.getPawn(i + 1, j).equals(Pawn.EMPTY)) {
+						blackMovesCount++;
+					} else if(this.getPawn(i - 1, j).equals(Pawn.EMPTY)) {
+						blackMovesCount++;
+					} else if(this.getPawn(i, j + 1).equals(Pawn.EMPTY)) {
+						blackMovesCount++;
+					} else if(this.getPawn(i, j - 1).equals(Pawn.EMPTY)) {
+						blackMovesCount++;
+					}
+				}
+				
+			}
+		}
+		if(blackMovesCount > 0) {
+			return true;
+		}
+		
 		return false;
 	}
 	
 	private boolean hasBlackWon(XYWho action) {
-		// normal capture
+		// normal capture of the king
 		for(int i=0; i < this.getBoard().length; i++) {
 			for(int j=0; j < this.getBoard().length; j++) {
 				if(this.getPawn(i, j).equals(Pawn.KING)) {
@@ -394,7 +417,29 @@ public class StateTablut implements Serializable {
 				}
 			}
 		}
-		// return false whether any of the previous conditions aren't satisfied
+		int whiteMovesCount = 0;
+		// if the white cannot move any pawn, black wins
+		for(int i=0; i < this.getBoard().length; i++) {
+			for(int j=0; j < this.getBoard().length; j++) {
+				if(this.getPawn(i, j).equals(Pawn.WHITE)) {
+					if(this.getPawn(i + 1, j).equals(Pawn.EMPTY)) {
+						whiteMovesCount++;
+					} else if(this.getPawn(i - 1, j).equals(Pawn.EMPTY)) {
+						whiteMovesCount++;
+					} else if(this.getPawn(i, j + 1).equals(Pawn.EMPTY)) {
+						whiteMovesCount++;
+					} else if(this.getPawn(i, j - 1).equals(Pawn.EMPTY)) {
+						whiteMovesCount++;
+					}
+				}
+				
+			}
+		}
+		if(whiteMovesCount > 0) {
+			return true;
+		}
+		
+		// return false whether any of the previous conditions are satisfied
 		return false;
 	}
 
