@@ -96,22 +96,155 @@ public class StateTablut implements Serializable {
 			//check if BLACK won 
 			if(this.hasBlackWon(action)) {
 				this.utility = 0; // 0 means that black won
-			} /*else
-			check if DRAW
+			}
+			//check if DRAW
 			if(this.isDraw()) {
-				this.utility = 0.5; // // 0.5 means that black won
-			}*/
+				this.utility = 0.5; // 0.5 means that black won
+			}
 		}
 	}
 	
 	
 	private void checkCaptures(XYWho action) {
-		for(int i=0; i < this.getBoard().length; i++) {
-			for(int j=0; j < this.getBoard().length; j++) {
-				if(this.getPawn(i, j).equals(Pawn.KING)) {
-					
+		if(this.getTurn().equals(Turn.WHITE)) {
+			for(int i=0; i < this.getBoard().length; i++) {
+				for(int j=0; j < this.getBoard().length; j++) {
+					if(this.getPawn(i, j).equals(Pawn.WHITE)) {
+						// normal capture
+						// case B W B
+						if(this.getPawn(i - 1, j).equals(Pawn.BLACK) && this.getPawn(i + 1, j).equals(Pawn.BLACK)) {
+							if((action.getX() == (i - 1) && action.getY() == (j)) || ((action.getX() == (i + 1) && action.getY() == (j)))) {
+								this.setPawn(i, j, Pawn.EMPTY);
+							}
+						}
+						/*case
+						 * B
+						 * W
+						 * B
+						 */
+						if(this.getPawn(i, j - 1).equals(Pawn.BLACK) && this.getPawn(i, j + 1).equals(Pawn.BLACK)) {
+							if((action.getX() == (i) && action.getY() == (j - 1)) || ((action.getX() == (i) && action.getY() == (j + 1)))) {
+								this.setPawn(i, j, Pawn.EMPTY);
+							}
+						}
+						
+						
+						// soldier captured with the castle as barrier
+						if(this.getPawn(i - 1, j).equals(Pawn.THRONE) && this.getPawn(i + 1, j).equals(Pawn.BLACK)) {
+							if((action.getX() == (i + 1) && action.getY() == (j))) {
+								this.setPawn(i, j, Pawn.EMPTY);
+							}
+						}
+						if(this.getPawn(i + 1, j).equals(Pawn.THRONE) && this.getPawn(i - 1, j).equals(Pawn.BLACK)) {
+							if((action.getX() == (i - 1) && action.getY() == (j))) {
+								this.setPawn(i, j, Pawn.EMPTY);
+							}
+						}
+						if(this.getPawn(i, j - 1).equals(Pawn.THRONE) && this.getPawn(i, j + 1).equals(Pawn.BLACK)) {
+							if((action.getX() == (i) && action.getY() == (j + 1))) {
+								this.setPawn(i, j, Pawn.EMPTY);
+							}
+						}
+						if(this.getPawn(i, j + 1).equals(Pawn.THRONE) && this.getPawn(i, j - 1).equals(Pawn.BLACK)) {
+							if((action.getX() == (i) && action.getY() == (j - 1))) {
+								this.setPawn(i, j, Pawn.EMPTY);
+							}
+						}
+						
+						// soldier captured by camp
+						if(this.getArea(i - 1, j).equals(Area.CAMPS) && this.getPawn(i + 1, j).equals(Pawn.BLACK)) {
+							if((action.getX() == (i + 1) && action.getY() == (j))) {
+								this.setPawn(i, j, Pawn.EMPTY);
+							}
+						}
+						if(this.getArea(i + 1, j).equals(Area.CAMPS) && this.getPawn(i - 1, j).equals(Pawn.BLACK)) {
+							if((action.getX() == (i - 1) && action.getY() == (j))) {
+								this.setPawn(i, j, Pawn.EMPTY);
+							}
+						}
+						if(this.getArea(i, j - 1).equals(Area.CAMPS) && this.getPawn(i, j + 1).equals(Pawn.BLACK)) {
+							if((action.getX() == (i) && action.getY() == (j + 1))) {
+								this.setPawn(i, j, Pawn.EMPTY);
+							}
+						}
+						if(this.getArea(i, j + 1).equals(Area.CAMPS) && this.getPawn(i, j - 1).equals(Pawn.BLACK)) {
+							if((action.getX() == (i) && action.getY() == (j - 1))) {
+								this.setPawn(i, j, Pawn.EMPTY);
+							}
+						}
+					}
 				}
 			}
+		} else {
+			for(int i=0; i < this.getBoard().length; i++) {
+				for(int j=0; j < this.getBoard().length; j++) {
+					if(this.getPawn(i, j).equals(Pawn.BLACK)) {
+						// normal capture
+						// case W B W
+						if(this.getPawn(i - 1, j).equals(Pawn.WHITE) && this.getPawn(i + 1, j).equals(Pawn.WHITE)) {
+							if((action.getX() == (i - 1) && action.getY() == (j)) || ((action.getX() == (i + 1) && action.getY() == (j)))) {
+								this.setPawn(i, j, Pawn.EMPTY);
+							}
+						}
+						/*case
+						 * W
+						 * B
+						 * W
+						 */
+						if(this.getPawn(i, j - 1).equals(Pawn.WHITE) && this.getPawn(i, j + 1).equals(Pawn.WHITE)) {
+							if((action.getX() == (i) && action.getY() == (j - 1)) || ((action.getX() == (i) && action.getY() == (j + 1)))) {
+								this.setPawn(i, j, Pawn.EMPTY);
+							}
+						}
+						
+						
+						// soldier captured with the castle as barrier
+						if(this.getPawn(i - 1, j).equals(Pawn.THRONE) && this.getPawn(i + 1, j).equals(Pawn.WHITE)) {
+							if((action.getX() == (i + 1) && action.getY() == (j))) {
+								this.setPawn(i, j, Pawn.EMPTY);
+							}
+						}
+						if(this.getPawn(i + 1, j).equals(Pawn.THRONE) && this.getPawn(i - 1, j).equals(Pawn.WHITE)) {
+							if((action.getX() == (i - 1) && action.getY() == (j))) {
+								this.setPawn(i, j, Pawn.EMPTY);
+							}
+						}
+						if(this.getPawn(i, j - 1).equals(Pawn.THRONE) && this.getPawn(i, j + 1).equals(Pawn.WHITE)) {
+							if((action.getX() == (i) && action.getY() == (j + 1))) {
+								this.setPawn(i, j, Pawn.EMPTY);
+							}
+						}
+						if(this.getPawn(i, j + 1).equals(Pawn.THRONE) && this.getPawn(i, j - 1).equals(Pawn.WHITE)) {
+							if((action.getX() == (i) && action.getY() == (j - 1))) {
+								this.setPawn(i, j, Pawn.EMPTY);
+							}
+						}
+						
+						// soldier captured by camp
+						if(this.getArea(i - 1, j).equals(Area.CAMPS) && this.getPawn(i + 1, j).equals(Pawn.WHITE)) {
+							if((action.getX() == (i + 1) && action.getY() == (j))) {
+								this.setPawn(i, j, Pawn.EMPTY);
+							}
+						}
+						if(this.getArea(i + 1, j).equals(Area.CAMPS) && this.getPawn(i - 1, j).equals(Pawn.WHITE)) {
+							if((action.getX() == (i - 1) && action.getY() == (j))) {
+								this.setPawn(i, j, Pawn.EMPTY);
+							}
+						}
+						if(this.getArea(i, j - 1).equals(Area.CAMPS) && this.getPawn(i, j + 1).equals(Pawn.WHITE)) {
+							if((action.getX() == (i) && action.getY() == (j + 1))) {
+								this.setPawn(i, j, Pawn.EMPTY);
+							}
+						}
+						if(this.getArea(i, j + 1).equals(Area.CAMPS) && this.getPawn(i, j - 1).equals(Pawn.WHITE)) {
+							if((action.getX() == (i) && action.getY() == (j - 1))) {
+								this.setPawn(i, j, Pawn.EMPTY);
+							}
+						}
+					}
+				}
+			}
+			
 		}
 		
 	}
@@ -152,9 +285,6 @@ public class StateTablut implements Serializable {
 				}
 			}
 		}
-		
-		
-		
 		
 		// case where the king is in the castle and is surrounded by 4 blacks
 		for(int i=0; i < this.getBoard().length; i++) {
