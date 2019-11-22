@@ -72,7 +72,6 @@ public class StateTablut implements Serializable {
 	private Pawn board[][];
 	private Area boardArea[][];
 	private Turn turn;
-	public int depth;
 	private double utility = -1;
 	
 	
@@ -80,26 +79,41 @@ public class StateTablut implements Serializable {
 		this.setBoard(new Pawn[StateTablut.WIDTH][StateTablut.HEIGHT]);
 		this.setBoardArea(new Area[StateTablut.WIDTH][StateTablut.WIDTH]);
 		this.initBoard();
-		this.depth = 0;
 		this.setTurn(Turn.WHITE);
 	}
 	
 	
-	public void checkGameStatus() {
+	public void checkGameStatus(XYWho action) {
+		
+		this.checkCaptures(action);
+		
+		
 		if(this.getUtility() == -1) {
 			//check if WHITE won
 			if(this.hasWhiteWon()) {
 				this.utility = 1; // 1 means that white won
 			} else
 			//check if BLACK won 
-			if(this.hasBlackWon()) {
+			if(this.hasBlackWon(action)) {
 				this.utility = 0; // 0 means that black won
-			} else
-			//check if DRAW
+			} /*else
+			check if DRAW
 			if(this.isDraw()) {
-				this.utility = -1; // // 0.5 means that black won
+				this.utility = 0.5; // // 0.5 means that black won
+			}*/
+		}
+	}
+	
+	
+	private void checkCaptures(XYWho action) {
+		for(int i=0; i < this.getBoard().length; i++) {
+			for(int j=0; j < this.getBoard().length; j++) {
+				if(this.getPawn(i, j).equals(Pawn.KING)) {
+					
+				}
 			}
 		}
+		
 	}
 	
 	private boolean hasWhiteWon() {
@@ -114,7 +128,7 @@ public class StateTablut implements Serializable {
 		return false;
 	}
 	
-	private boolean hasBlackWon() {
+	private boolean hasBlackWon(XYWho action) {
 		// case where the king is in the castle and is surrounded by 4 blacks
 		for(int i=0; i < this.getBoard().length; i++) {
 			for(int j=0; j < this.getBoard().length; j++) {
@@ -128,29 +142,45 @@ public class StateTablut implements Serializable {
 		}
 		// case if the king is adjacent to the Castle, it must be surround on all the three free sides
 		if(this.getPawn(StateTablut.KING_POSITION, StateTablut.KING_POSITION - 1).equals(Pawn.KING)) {
-			if(this.getPawn(StateTablut.KING_POSITION, StateTablut.KING_POSITION - 2).equals(Pawn.BLACK)
+			if((this.getPawn(StateTablut.KING_POSITION, StateTablut.KING_POSITION - 2).equals(Pawn.BLACK)
 					&& this.getPawn(StateTablut.KING_POSITION - 1, StateTablut.KING_POSITION - 1).equals(Pawn.BLACK)
-					&& this.getPawn(StateTablut.KING_POSITION + 1, StateTablut.KING_POSITION - 1).equals(Pawn.BLACK)) {
+					&& this.getPawn(StateTablut.KING_POSITION + 1, StateTablut.KING_POSITION - 1).equals(Pawn.BLACK))
+					&& ((action.getX() == StateTablut.KING_POSITION && action.getY() == (StateTablut.KING_POSITION - 2)) // check whether the king has been captured with and "active" move
+						|| (action.getX() == (StateTablut.KING_POSITION - 1) && action.getY() == (StateTablut.KING_POSITION - 1))
+						|| (action.getX() == (StateTablut.KING_POSITION + 1) && action.getY() == (StateTablut.KING_POSITION - 1))
+					)) {
 				return true;
 			}
 			
 		} else if(this.getPawn(StateTablut.KING_POSITION, StateTablut.KING_POSITION + 1).equals(Pawn.KING)) {
-			if(this.getPawn(StateTablut.KING_POSITION, StateTablut.KING_POSITION + 2).equals(Pawn.BLACK)
+			if((this.getPawn(StateTablut.KING_POSITION, StateTablut.KING_POSITION + 2).equals(Pawn.BLACK)
 					&& this.getPawn(StateTablut.KING_POSITION + 1, StateTablut.KING_POSITION + 1).equals(Pawn.BLACK)
-					&& this.getPawn(StateTablut.KING_POSITION - 1, StateTablut.KING_POSITION + 1).equals(Pawn.BLACK)) {
+					&& this.getPawn(StateTablut.KING_POSITION - 1, StateTablut.KING_POSITION + 1).equals(Pawn.BLACK)) 
+					&& ((action.getX() == StateTablut.KING_POSITION && action.getY() == (StateTablut.KING_POSITION + 2)) 
+							|| (action.getX() == (StateTablut.KING_POSITION + 1) && action.getY() == (StateTablut.KING_POSITION + 1))
+							|| (action.getX() == (StateTablut.KING_POSITION - 1) && action.getY() == (StateTablut.KING_POSITION + 1))
+					)) {
 				return true;
 			}
 		} else if(this.getPawn(StateTablut.KING_POSITION - 1, StateTablut.KING_POSITION).equals(Pawn.KING)) {
-			if(this.getPawn(StateTablut.KING_POSITION - 1, StateTablut.KING_POSITION - 1).equals(Pawn.BLACK)
+			if((this.getPawn(StateTablut.KING_POSITION - 1, StateTablut.KING_POSITION - 1).equals(Pawn.BLACK)
 					&& this.getPawn(StateTablut.KING_POSITION - 2, StateTablut.KING_POSITION).equals(Pawn.BLACK)
-					&& this.getPawn(StateTablut.KING_POSITION - 1, StateTablut.KING_POSITION + 1).equals(Pawn.BLACK)) {
+					&& this.getPawn(StateTablut.KING_POSITION - 1, StateTablut.KING_POSITION + 1).equals(Pawn.BLACK))
+					&& ((action.getX() == (StateTablut.KING_POSITION - 1) && action.getY() == (StateTablut.KING_POSITION - 1)) 
+							|| (action.getX() == (StateTablut.KING_POSITION - 2) && action.getY() == (StateTablut.KING_POSITION))
+							|| (action.getX() == (StateTablut.KING_POSITION - 1) && action.getY() == (StateTablut.KING_POSITION + 1))
+					)) {
 				return true;
 			}
 			
 		} else if(this.getPawn(StateTablut.KING_POSITION + 1, StateTablut.KING_POSITION).equals(Pawn.KING)) {
-			if(this.getPawn(StateTablut.KING_POSITION + 1, StateTablut.KING_POSITION + 1).equals(Pawn.BLACK)
+			if((this.getPawn(StateTablut.KING_POSITION + 1, StateTablut.KING_POSITION + 1).equals(Pawn.BLACK)
 					&& this.getPawn(StateTablut.KING_POSITION + 2, StateTablut.KING_POSITION).equals(Pawn.BLACK)
-					&& this.getPawn(StateTablut.KING_POSITION + 1, StateTablut.KING_POSITION - 1).equals(Pawn.BLACK)) {
+					&& this.getPawn(StateTablut.KING_POSITION + 1, StateTablut.KING_POSITION - 1).equals(Pawn.BLACK))
+					&& ((action.getX() == (StateTablut.KING_POSITION + 1) && action.getY() == (StateTablut.KING_POSITION + 1)) 
+							|| (action.getX() == (StateTablut.KING_POSITION + 2) && action.getY() == (StateTablut.KING_POSITION))
+							|| (action.getX() == (StateTablut.KING_POSITION + 1) && action.getY() == (StateTablut.KING_POSITION - 1))
+					)) {
 				return true;
 			}
 		}
@@ -204,7 +234,7 @@ public class StateTablut implements Serializable {
 	}
 
 	private boolean isDraw() {
-		return false;
+		return false; //TODO: do draw
 	}
 	
 	

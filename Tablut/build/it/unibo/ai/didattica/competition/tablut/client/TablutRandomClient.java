@@ -24,7 +24,7 @@ public class TablutRandomClient extends TablutClient {
 	private int game;
 	TablutGame st = new TablutGame();
 	StateTablut c = st.getInitialState();
-	AlphaBetaSearch<StateTablut, XYWho, Turn> ab = new AlphaBetaSearch<StateTablut, XYWho, Turn> (st, 4);
+	AlphaBetaSearch<StateTablut, XYWho, Turn> ab = new AlphaBetaSearch<StateTablut, XYWho, Turn> (st, 7);
 	//IterativeDeepeningAlphaBetaSearch<StateTablut, XYWho, Turn> ab = new IterativeDeepeningAlphaBetaSearch<StateTablut, XYWho, Turn> (st, 10, -100, 300);
 	
 	public TablutRandomClient(String player, String name, int gameChosen) throws UnknownHostException, IOException {

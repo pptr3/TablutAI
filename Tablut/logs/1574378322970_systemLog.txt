@@ -1,0 +1,30 @@
+Nov 22, 2019 12:18:43 AM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Accensione server
+Nov 22, 2019 12:18:43 AM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Partita di Tablut
+Nov 22, 2019 12:18:46 AM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Accettata connessione con client giocatore Bianco
+Nov 22, 2019 12:18:46 AM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Lettura nome player bianco in corso..
+Nov 22, 2019 12:18:47 AM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: White player name:	random
+Nov 22, 2019 12:18:48 AM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Accettata connessione con client giocatore Nero
+Nov 22, 2019 12:18:48 AM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Lettura nome player nero in corso..
+Nov 22, 2019 12:18:49 AM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Black player name:	random
+Nov 22, 2019 12:18:49 AM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Invio messaggio ai giocatori
+Nov 22, 2019 12:18:49 AM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Lettura mossa player W in corso..
+Nov 22, 2019 12:19:49 AM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Move received.	Turn: W Pawn from e4 to c4
+Nov 22, 2019 12:19:49 AM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Invio messaggio ai client
+Nov 22, 2019 12:19:49 AM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Lettura mossa player B in corso..
+Nov 22, 2019 12:20:49 AM it.unibo.ai.didattica.competition.tablut.server.Server run
+WARNING: Timeout! Player B lose!
+Nov 22, 2019 12:20:49 AM it.unibo.ai.didattica.competition.tablut.server.Server run
+WARNING: Chiusura sistema per timeout
