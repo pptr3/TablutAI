@@ -23,7 +23,7 @@ public class TablutRandomClient extends TablutClient {
 
 	private int game;
 	TablutGame tablutGame = new TablutGame();
-	AlphaBetaSearch<StateTablut, XYWho, Turn> ab = new AlphaBetaSearch<StateTablut, XYWho, Turn> (this.tablutGame, 3);
+	AlphaBetaSearch<StateTablut, XYWho, Turn> ab = new AlphaBetaSearch<StateTablut, XYWho, Turn> (this.tablutGame, 4);
 	
 	public TablutRandomClient(String player, String name, int gameChosen) throws UnknownHostException, IOException {
 		super(player, name);

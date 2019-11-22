@@ -48,15 +48,15 @@ public class AlphaBetaSearch<S, A, P> implements AdversarialSearch<S, A> {
     public final static String METRICS_NODES_EXPANDED = "nodesExpanded";
     Game<S, A, P> game;
     private Metrics metrics = new Metrics();
-    private int depth = 3;
+    private int depth;
 
     /**
      * Creates a new search object for a given game.
      */
-    public static <STATE, ACTION, PLAYER> AlphaBetaSearch<STATE, ACTION, PLAYER> createFor(
+    /*public static <STATE, ACTION, PLAYER> AlphaBetaSearch<STATE, ACTION, PLAYER> createFor(
             Game<STATE, ACTION, PLAYER> game) {
         return new AlphaBetaSearch<STATE, ACTION, PLAYER>(game, 3);
-    }
+    }*/
 
     public AlphaBetaSearch(Game<S, A, P> game, int depth) {
         this.game = game;

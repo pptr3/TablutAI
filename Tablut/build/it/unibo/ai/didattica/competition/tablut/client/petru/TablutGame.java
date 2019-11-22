@@ -38,7 +38,7 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 	@Override
 	public double getUtility(StateTablut state, Turn player) { // given a specific state and the player, return the heuristic for that player. If
 		if((player).equals(Turn.WHITE)) {
-			return new Random().nextInt(100);
+			return new Random().nextInt(10000);
 		} else {
 			return new Random().nextInt(10000);
 		}
@@ -47,29 +47,31 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 	@Override
 	public boolean isTerminal(StateTablut state) { // returns true if a state is terminal (namely a WHITEWIN, BLACKWIN or a DRAW)
 		return state.getUtility() != -1;
+		//return new Random().nextInt(100) > 40;
 	}
 
 	@Override
 	public StateTablut getResult(StateTablut state, XYWho action) {
-		if(state.getUtility() == -1) {
-			if(state.getTurn().equals(Turn.WHITE)) {
-				if(state.getPawn(action.getWho()[0], action.getWho()[1]).equals(Pawn.KING)) {
-					state.setPawn(action.getX(), action.getY(), Pawn.KING);
+		StateTablut state2 = state.clone();
+		if(state2.getUtility() == -1) {
+			if(state2.getTurn().equals(Turn.WHITE)) {
+				if(state2.getPawn(action.getWho()[0], action.getWho()[1]).equals(Pawn.KING)) {
+					state2.setPawn(action.getX(), action.getY(), Pawn.KING);
 				} else {
-					state.setPawn(action.getX(), action.getY(), Pawn.WHITE);
+					state2.setPawn(action.getX(), action.getY(), Pawn.WHITE);
 				}
-				state.setPawn(action.getWho()[0], action.getWho()[1], Pawn.EMPTY);
-				state.setTurn(Turn.BLACK);
+				state2.setPawn(action.getWho()[0], action.getWho()[1], Pawn.EMPTY);
+				state2.setTurn(Turn.BLACK);
 			} else {
-				state.setPawn(action.getX(), action.getY(), Pawn.BLACK);
-				state.setPawn(action.getWho()[0], action.getWho()[1], Pawn.EMPTY);
-				state.setTurn(Turn.WHITE);
+				state2.setPawn(action.getX(), action.getY(), Pawn.BLACK);
+				state2.setPawn(action.getWho()[0], action.getWho()[1], Pawn.EMPTY);
+				state2.setTurn(Turn.WHITE);
 			}
-			// if an action on the state triggers a WIN, DRAW or LOSE, change accordingly the utility
-			state.checkGameStatus(action);
-			return state;
+			//System.out.println("PETRUUU"+state2);
+			state2.checkGameStatus(action);
 		}
 		return state;
+		
 	}
 	
 }

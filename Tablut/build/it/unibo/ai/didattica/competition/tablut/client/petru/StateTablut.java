@@ -1,15 +1,18 @@
 package it.unibo.ai.didattica.competition.tablut.client.petru;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import aima.core.agent.State;
+import it.unibo.ai.didattica.competition.tablut.client.petru.StateTablut.Pawn;
+import it.unibo.ai.didattica.competition.tablut.client.petru.StateTablut.Turn;
 
 
 
-public class StateTablut implements Serializable {
+
+public class StateTablut {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -99,11 +102,10 @@ public class StateTablut implements Serializable {
 			}
 			//check if DRAW
 			if(this.isDraw()) {
-				this.utility = 0.5; // 0.5 means that black won
+				this.utility = 0.5; // 0.5 means draw
 			}
 		}
 	}
-	
 	
 	private void checkCaptures(XYWho action) {
 		if(this.getTurn().equals(Turn.WHITE)) {
@@ -277,7 +279,7 @@ public class StateTablut implements Serializable {
 				
 			}
 		}
-		if(blackMovesCount > 0) {
+		if(blackMovesCount == 0) {
 			return true;
 		}
 		
@@ -435,7 +437,7 @@ public class StateTablut implements Serializable {
 				
 			}
 		}
-		if(whiteMovesCount > 0) {
+		if(whiteMovesCount == 0) {
 			return true;
 		}
 		
@@ -451,6 +453,7 @@ public class StateTablut implements Serializable {
 	public StateTablut(Pawn[][] board, Turn playerToMove) {
 		this.setBoard(board);
 		this.setTurn(playerToMove);
+		this.initBoard();
 	}
 	
 	public Turn getPlayerToMove() {
@@ -668,7 +671,8 @@ public class StateTablut implements Serializable {
 	
 	
 	
-	private void initBoard() {
+	public void initBoard() {
+
 		// initialize pawns on board
 		for (int i = 0; i < this.getBoard().length; i++) {
 			for (int j = 0; j < this.getBoard().length; j++) {
@@ -870,47 +874,18 @@ public class StateTablut implements Serializable {
 	}
 	
 	
-	public String boardString() {
-		StringBuffer result = new StringBuffer();
-		for (int i = 0; i < this.board.length; i++) {
-			for (int j = 0; j < this.board.length; j++) {
-				result.append(this.board[i][j].toString());
-				if (j == 8) {
-					result.append("\n");
-				}
-			}
-		}
-		return result.toString();
-	}
 
 	@Override
 	public String toString() {
-		StringBuffer result = new StringBuffer();
-
-		// board
-		result.append("");
-		result.append(this.boardString());
-
-		result.append("-------");
-		result.append("\n");
-
-		// TURNO
-		result.append(this.turn.toString()+"\n");
-		result.append("-------");
-		return result.toString();
+		for(int i=0; i < this.getBoard().length; i++) {
+			for(int j=0; j < this.getBoard().length; j++) {
+				System.out.print(this.getBoard()[i][j]+ "|");
+			}
+			System.out.println("");
+		}
+		return "";
 	}
 
-	public String toLinearString() {
-		StringBuffer result = new StringBuffer();
-
-		// board
-		result.append("");
-		result.append(this.boardString().replace("\n", ""));
-		result.append(this.turn.toString());
-
-		return result.toString();
-	}
-	
 
 	public String getBox(int row, int column) {
 		String ret;
