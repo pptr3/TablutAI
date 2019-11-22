@@ -190,40 +190,48 @@ public class StateTablut implements Serializable {
 			for(int j=0; j < this.getBoard().length; j++) { // j=1 and this.getBoard().length - 1
 				if(this.getPawn(i, j).equals(Pawn.KING)) {
 					// normal case
-					if(this.getArea(i + 1, j).equals(Area.CAMPS) && this.getPawn(i - 1, j).equals(Pawn.BLACK)) {
+					if(this.getArea(i + 1, j).equals(Area.CAMPS) && this.getPawn(i - 1, j).equals(Pawn.BLACK) && (action.getX() == (i - 1) && action.getY() == (j))) {
 						return true;
-					} else if(this.getArea(i - 1, j).equals(Area.CAMPS) && this.getPawn(i + 1, j).equals(Pawn.BLACK)) {
+					} else if(this.getArea(i - 1, j).equals(Area.CAMPS) && this.getPawn(i + 1, j).equals(Pawn.BLACK) && (action.getX() == (i + 1) && action.getY() == (j))) {
 						return true;
-					} else if(this.getArea(i, j - 1).equals(Area.CAMPS) && this.getPawn(i, j + 1).equals(Pawn.BLACK)) {
+					} else if(this.getArea(i, j - 1).equals(Area.CAMPS) && this.getPawn(i, j + 1).equals(Pawn.BLACK) && (action.getX() == (i) && action.getY() == (j + 1))) {
 						return true;
-					} else if(this.getArea(i, j + 1).equals(Area.CAMPS) && this.getPawn(i, j - 1).equals(Pawn.BLACK)) {
+					} else if(this.getArea(i, j + 1).equals(Area.CAMPS) && this.getPawn(i, j - 1).equals(Pawn.BLACK) && (action.getX() == (i) && action.getY() == (j - 1))) {
 						return true;
 					}
 					
 					// angle case
 					if(this.getArea(i - 1, j).equals(Area.CAMPS) && this.getArea(i, j + 1).equals(Area.CAMPS)
-							&& (this.getPawn(i + 1, j).equals(Pawn.BLACK) || this.getPawn(i, j - 1).equals(Pawn.BLACK))) {
+							&& ((this.getPawn(i + 1, j).equals(Pawn.BLACK) && (action.getX() == (i + 1) && action.getY() == (j)))
+									|| (this.getPawn(i, j - 1).equals(Pawn.BLACK) && (action.getX() == (i) && action.getY() == (j - 1))))) {
 						return true;
 					} else if(this.getArea(i - 1, j).equals(Area.CAMPS) && this.getArea(i, j - 1).equals(Area.CAMPS)
-							&& (this.getPawn(i + 1, j).equals(Pawn.BLACK) || this.getPawn(i, j + 1).equals(Pawn.BLACK))) {
+							&& ((this.getPawn(i + 1, j).equals(Pawn.BLACK) && (action.getX() == (i + 1) && action.getY() == (j))) 
+									|| (this.getPawn(i, j + 1).equals(Pawn.BLACK) && (action.getX() == (i) && action.getY() == (j + 1))))) {
 						return true;
 					} else if(this.getArea(i, j + 1).equals(Area.CAMPS) && this.getArea(i + 1, j).equals(Area.CAMPS)
-							&& (this.getPawn(i - 1, j).equals(Pawn.BLACK) || this.getPawn(i, j - 1).equals(Pawn.BLACK))) {
+							&& ((this.getPawn(i - 1, j).equals(Pawn.BLACK) && (action.getX() == (i - 1) && action.getY() == (j))) 
+									|| (this.getPawn(i, j - 1).equals(Pawn.BLACK) && (action.getX() == (i) && action.getY() == (j - 1))))) {
 						return true;
 					} else if(this.getArea(i - 1, j).equals(Area.CAMPS) && this.getArea(i, j + 1).equals(Area.CAMPS)
-							&& (this.getPawn(i, j - 1).equals(Pawn.BLACK) || this.getPawn(i + 1, j).equals(Pawn.BLACK))) {
+							&& ((this.getPawn(i, j - 1).equals(Pawn.BLACK) && (action.getX() == (i) && action.getY() == (j - 1)))
+									|| (this.getPawn(i + 1, j).equals(Pawn.BLACK) && (action.getX() == (i + 1) && action.getY() == (j))))) {
 						return true;
 					} else if(this.getArea(i + 1, j).equals(Area.CAMPS) && this.getArea(i, j - 1).equals(Area.CAMPS)
-							&& (this.getPawn(i - 1, j).equals(Pawn.BLACK) || this.getPawn(i, j + 1).equals(Pawn.BLACK))) {
+							&& ((this.getPawn(i - 1, j).equals(Pawn.BLACK) && (action.getX() == (i - 1) && action.getY() == (j)))
+									|| (this.getPawn(i, j + 1).equals(Pawn.BLACK) && (action.getX() == (i) && action.getY() == (j + 1))))) {
 						return true;
 					} else if(this.getArea(i + 1, j).equals(Area.CAMPS) && this.getArea(i, j + 1).equals(Area.CAMPS)
-							&& (this.getPawn(i - 1, j).equals(Pawn.BLACK) || this.getPawn(i, j - 1).equals(Pawn.BLACK))) {
+							&& ((this.getPawn(i - 1, j).equals(Pawn.BLACK) && (action.getX() == (i - 1) && action.getY() == (j)))
+									|| (this.getPawn(i, j - 1).equals(Pawn.BLACK) && (action.getX() == (i) && action.getY() == (j - 1))))) {
 						return true;
 					} else if(this.getArea(i, j - 1).equals(Area.CAMPS) && this.getArea(i - 1, j).equals(Area.CAMPS)
-							&& (this.getPawn(i + 1, j).equals(Pawn.BLACK) || this.getPawn(i, j + 1).equals(Pawn.BLACK))) {
+							&& ((this.getPawn(i + 1, j).equals(Pawn.BLACK) && (action.getX() == (i + 1) && action.getY() == (j)))
+									|| (this.getPawn(i, j + 1).equals(Pawn.BLACK) && (action.getX() == (i) && action.getY() == (j + 1))))) {
 						return true;
 					} else if(this.getArea(i, j - 1).equals(Area.CAMPS) && this.getArea(i + 1, j).equals(Area.CAMPS)
-							&& (this.getPawn(i - 1, j).equals(Pawn.BLACK) || this.getPawn(i, j + 1).equals(Pawn.BLACK))) {
+							&& ((this.getPawn(i - 1, j).equals(Pawn.BLACK) & (action.getX() == (i - 1) && action.getY() == (j)))
+									|| (this.getPawn(i, j + 1).equals(Pawn.BLACK) && (action.getX() == (i) && action.getY() == (j + 1))))) {
 						return true;
 					}
 				}
