@@ -2,10 +2,12 @@ package it.unibo.ai.didattica.competition.tablut.client.petru;
 
 
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Random;
 
 import aima.core.agent.State;
+import it.unibo.ai.didattica.competition.tablut.client.petru.StateTablut.Area;
 import it.unibo.ai.didattica.competition.tablut.client.petru.StateTablut.Pawn;
 import it.unibo.ai.didattica.competition.tablut.client.petru.StateTablut.Turn;
 
@@ -82,16 +84,26 @@ public class StateTablut {
 	private Area boardArea[][];
 	private Turn turn;
 	private int utility;
+	private int currentDepth;
 	
 	
-	public StateTablut() {
+	public StateTablut(int depth) {
 		this.setBoard(new Pawn[StateTablut.WIDTH][StateTablut.HEIGHT]);
 		this.setBoardArea(new Area[StateTablut.WIDTH][StateTablut.WIDTH]);
 		this.initBoard();
 		this.setTurn(Turn.WHITE);
 		this.setUtility(STATE_IS_NOT_YET_FINISHED);
+		this.setCurrentDepth(depth);
 	}
 	
+	
+	public int getCurrentDepth() {
+		return this.currentDepth;
+	}
+	
+	public void setCurrentDepth(int currentDepth) {
+		this.currentDepth = currentDepth;
+	}
 	
 	public void checkGameStatus(XYWho action) {
 		
@@ -112,7 +124,118 @@ public class StateTablut {
 		}
 	}
 	
+	public int getWhiteHeuristic() {
+		//getDistance from KING position to closest ESCAPE area
+		int h_white = 0;
+		int[] kingPosition = this.getKingPosition();
+		// checking ring around the throne
+		if(kingPosition[0] == StateTablut.KING_POSITION && kingPosition[1] == StateTablut.KING_POSITION) {
+			h_white = 0;
+		} 
+		
+		if((kingPosition[0] == 3 && kingPosition[1] == 3) ||
+		(kingPosition[0] == 3 && kingPosition[1] == 5) ||
+		(kingPosition[0] == 5 && kingPosition[1] == 5) ||
+		(kingPosition[0] == 5 && kingPosition[1] == 3) ||
+		(kingPosition[0] == 4 && kingPosition[1] == 3) ||
+		(kingPosition[0] == 4 && kingPosition[1] == 5) ||
+		(kingPosition[0] == 5 && kingPosition[1] == 4) ||
+		(kingPosition[0] == 3 && kingPosition[1] == 4)) {
+			h_white = 4;
+		}
+			
+		
+		// checking second ring
+		if((kingPosition[0] == 2 && kingPosition[1] == 2) ||
+		(kingPosition[0] == 3 && kingPosition[1] == 2) ||		
+		(kingPosition[0] == 4 && kingPosition[1] == 2) ||			
+		(kingPosition[0] == 5 && kingPosition[1] == 2) ||			
+		(kingPosition[0] == 6 && kingPosition[1] == 2) ||			
+		(kingPosition[0] == 2 && kingPosition[1] == 6) ||			
+		(kingPosition[0] == 3 && kingPosition[1] == 6) ||			
+		(kingPosition[0] == 4 && kingPosition[1] == 6) ||			
+		(kingPosition[0] == 5 && kingPosition[1] == 6) ||			
+		(kingPosition[0] == 6 && kingPosition[1] == 6) ||			
+		(kingPosition[0] == 2 && kingPosition[1] == 3) ||			
+		(kingPosition[0] == 2 && kingPosition[1] == 4) ||		
+		(kingPosition[0] == 2 && kingPosition[1] == 5) ||			
+		(kingPosition[0] == 6 && kingPosition[1] == 3) ||			
+		(kingPosition[0] == 6 && kingPosition[1] == 4) ||			
+		(kingPosition[0] == 6 && kingPosition[1] == 5)) {
+			h_white = 10;
+		}
+		
+		// checking third ring
+		if((kingPosition[0] == 1 && kingPosition[1] == 1) ||
+		(kingPosition[0] == 2 && kingPosition[1] == 1) ||
+		(kingPosition[0] == 3 && kingPosition[1] == 1) ||
+		(kingPosition[0] == 5 && kingPosition[1] == 1) ||
+		(kingPosition[0] == 6 && kingPosition[1] == 1) ||
+		(kingPosition[0] == 7 && kingPosition[1] == 1) ||
+		(kingPosition[0] == 1 && kingPosition[1] == 7) ||
+		(kingPosition[0] == 2 && kingPosition[1] == 7) ||
+		(kingPosition[0] == 3 && kingPosition[1] == 7) ||
+		(kingPosition[0] == 5 && kingPosition[1] == 7) ||
+		(kingPosition[0] == 6 && kingPosition[1] == 7) ||
+		(kingPosition[0] == 7 && kingPosition[1] == 7) ||
+		(kingPosition[0] == 1 && kingPosition[1] == 2) ||
+		(kingPosition[0] == 1 && kingPosition[1] == 3) ||
+		(kingPosition[0] == 1 && kingPosition[1] == 5) ||
+		(kingPosition[0] == 1 && kingPosition[1] == 6) ||
+		(kingPosition[0] == 1 && kingPosition[1] == 7) ||
+		(kingPosition[0] == 7 && kingPosition[1] == 2) ||
+		(kingPosition[0] == 7 && kingPosition[1] == 3) ||
+		(kingPosition[0] == 7 && kingPosition[1] == 5) ||
+		(kingPosition[0] == 7 && kingPosition[1] == 6) ||
+		(kingPosition[0] == 7 && kingPosition[1] == 7)) {
+			h_white = 15;
+		}
+		
+		// checking if it is in the escape area
+		if(this.getArea(kingPosition[0], kingPosition[1]).equals(Area.ESCAPES)) {
+			h_white = 17;
+		}
+		
+		int whiteThatSurrounKing = 0;
+		// get number of white pawns that surround the king
+		if(this.getPawn(kingPosition[0], kingPosition[1] - 1).equals(Pawn.WHITE)) {
+			whiteThatSurrounKing++;
+		}
+		if(this.getPawn(kingPosition[0], kingPosition[1] + 1).equals(Pawn.WHITE)) {
+			whiteThatSurrounKing++;
+		}
+		if(this.getPawn(kingPosition[0] - 1, kingPosition[1]).equals(Pawn.WHITE)) {
+			whiteThatSurrounKing++;
+		}
+		if(this.getPawn(kingPosition[0] + 1, kingPosition[1]).equals(Pawn.WHITE)) {
+			whiteThatSurrounKing++;
+		}
+		if(whiteThatSurrounKing == 0 || whiteThatSurrounKing == 4) {
+			h_white--;
+		} else if(whiteThatSurrounKing == 1) {
+			h_white--;
+		} else if(whiteThatSurrounKing == 2) {
+			h_white = h_white + 1;
+		} else if(whiteThatSurrounKing == 3) {
+			h_white = h_white + 2;
+		}
+		if(h_white > 17) {
+			h_white = 17;
+		}
 	
+		return h_white;
+	}
+	
+	private int[] getKingPosition() {
+		for (int i = 0; i < this.getBoard().length; i++) {
+			for (int j = 0; j < this.getBoard().length; j++) {
+				if(this.getPawn(i, j) == Pawn.KING) {
+					return new int[] {i,j};
+				}
+			}
+		}
+		return null;
+	}
 	
 	private void checkCaptures(XYWho action) {
 		if(this.getTurn().equals(Turn.WHITE)) {
@@ -663,18 +786,7 @@ public class StateTablut {
 		}
 			
 	} 
-	//TODO: check whether for each white and black they do their legal moves (check it before add contraints and when I will add constraints)
-	public static void main(String[] args) {
-		StateTablut s = new StateTablut();
-		List<XYWho> white = s.getAllLegalMoves();
-		for(int i = 0; i < white.size(); i++) {
-			//System.out.println("who: (" + white.get(i).getWho()[0] + ", " + white.get(i).getWho()[1] +") x: "+white.get(i).getX()+ " y: " + white.get(i).getY());
-		}
-		s.printBoard();
-		//s.printBoardArea();
-		//System.out.println(white.size());
-		
-	}
+
 	
 	
 	
@@ -768,7 +880,7 @@ public class StateTablut {
 	
 
 	public StateTablut clone() {
-		StateTablut result = new StateTablut();
+		StateTablut result = new StateTablut(this.getCurrentDepth());
 
 		Pawn oldboard[][] = this.getBoard();
 		Pawn newboard[][] = result.getBoard();
@@ -781,6 +893,7 @@ public class StateTablut {
 
 		result.setBoard(newboard);
 		result.setTurn(this.getTurn());
+		result.setCurrentDepth(this.getCurrentDepth());
 		return result;
 	}
 	
@@ -830,17 +943,7 @@ public class StateTablut {
 	public void removePawn(int row, int column) {
 		this.board[row][column] = Pawn.EMPTY;
 	}
-	
-	public int[] getKingPosition() {
-		for (int i = 0; i < this.getBoard().length; i++) {
-			for (int j = 0; j < this.getBoard().length; j++) {
-				if(this.getPawn(i, j) == Pawn.KING) {
-					return new int[] {i,j};
-				}
-			}
-		}
-		return null;
-	}
+
 	
 	/**
 	 * Counts the number of checkers of a specific color on the board. Note: the king is not taken into account for white, it must be checked separately

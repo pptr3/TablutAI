@@ -40,7 +40,7 @@ public class GameAshtonTablut implements Game {
 
 	public GameAshtonTablut(int repeated_moves_allowed, int cache_size, String logs_folder, String whiteName,
 			String blackName) {
-		this(new StateTablut(), repeated_moves_allowed, cache_size, logs_folder, whiteName, blackName);
+		this(new StateTablut(3), repeated_moves_allowed, cache_size, logs_folder, whiteName, blackName);
 	}
 
 	public GameAshtonTablut(StateTablut state, int repeated_moves_allowed, int cache_size, String logs_folder,

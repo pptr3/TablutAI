@@ -8,10 +8,10 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-
-		TablutGame st = new TablutGame();
+		int depth = 5;
+		TablutGame st = new TablutGame(depth);
 		StateTablut c = st.getInitialState();
-		AlphaBetaSearch<StateTablut, XYWho, Turn> ab = new AlphaBetaSearch<StateTablut, XYWho, Turn> (st, 4);
+		AlphaBetaSearch<StateTablut, XYWho, Turn> ab = new AlphaBetaSearch<StateTablut, XYWho, Turn> (st, depth);
 		
 		XYWho a = ab.makeDecision(c);
 		System.out.println(ab.getMetrics());
