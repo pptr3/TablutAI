@@ -72,10 +72,16 @@ public class StateTablut {
 	public static final int HEIGHT = 9; 
 	public static final int KING_POSITION = 4; // this 4 is meant as the initial king position which is [4, 4]
 	
+	public static final int STATE_IS_NOT_YET_FINISHED = -1;
+	public static final int BLACK_WON = 0;
+	public static final int WHITE_WON = 17;
+	public static final int DRAW = 9;
+	
+
 	private Pawn board[][];
 	private Area boardArea[][];
 	private Turn turn;
-	private double utility = -1;
+	private int utility;
 	
 	
 	public StateTablut() {
@@ -83,29 +89,30 @@ public class StateTablut {
 		this.setBoardArea(new Area[StateTablut.WIDTH][StateTablut.WIDTH]);
 		this.initBoard();
 		this.setTurn(Turn.WHITE);
+		this.setUtility(STATE_IS_NOT_YET_FINISHED);
 	}
 	
 	
 	public void checkGameStatus(XYWho action) {
 		
-		this.checkCaptures(action);
-		
-		
-		if(this.getUtility() == -1) {
+		this.checkCaptures(action);	
+		if(this.getUtility() == STATE_IS_NOT_YET_FINISHED) {
 			//check if WHITE won
 			if(this.hasWhiteWon()) {
-				this.utility = 1; // 1 means that white won
+				this.setUtility(WHITE_WON);
 			} else
 			//check if BLACK won 
 			if(this.hasBlackWon(action)) {
-				this.utility = 0; // 0 means that black won
+				this.setUtility(BLACK_WON);
 			}
 			//check if DRAW
 			if(this.isDraw()) {
-				this.utility = 0.5; // 0.5 means draw
+				this.setUtility(DRAW);
 			}
 		}
 	}
+	
+	
 	
 	private void checkCaptures(XYWho action) {
 		if(this.getTurn().equals(Turn.WHITE)) {
@@ -460,11 +467,11 @@ public class StateTablut {
 		return this.getTurn();
 	}
 	
-	public double getUtility() {
+	public int getUtility() {
 		return this.utility;
 	}
 	
-	public void setUtility(double u) {
+	public void setUtility(int u) {
 		this.utility = u;
 	}
 	
@@ -822,10 +829,6 @@ public class StateTablut {
 	
 	public void removePawn(int row, int column) {
 		this.board[row][column] = Pawn.EMPTY;
-	}
-
-	public boolean hasTheKingMoved() {
-		return this.getKingPosition()[0] == KING_POSITION;
 	}
 	
 	public int[] getKingPosition() {
