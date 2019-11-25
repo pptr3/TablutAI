@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import aima.core.search.adversarial.AlphaBetaSearch;
 import aima.core.search.adversarial.Game;
+import aima.core.search.adversarial.MinimaxSearch;
 import aima.core.util.datastructure.XYLocation;
 import it.unibo.ai.didattica.competition.tablut.client.petru.StateTablut;
 import it.unibo.ai.didattica.competition.tablut.client.petru.TablutGame;
@@ -56,14 +57,14 @@ public class TicTacToeGame implements Game<TicTacToeState, XYLocation, String> {
 
 	@Override
 	public double getUtility(TicTacToeState state, String player) {
-		System.out.println(player);
+		System.out.println(state.getPlayerToMove());
 		double result = state.getUtility();
 		if (result != -1) {
 			if (Objects.equals(player, TicTacToeState.O)) {
 				result = 1 - result;
 				//System.out.println("always");
 			} else {
-				System.out.println("here");
+				//System.out.println("here");
 			}
 		} else {
 			throw new IllegalArgumentException("State is not terminal.");
@@ -75,7 +76,7 @@ public class TicTacToeGame implements Game<TicTacToeState, XYLocation, String> {
 		TicTacToeGame st = new TicTacToeGame();
 		TicTacToeState c = st.getInitialState();
 		
-		AlphaBetaSearch<TicTacToeState, XYLocation, String> ab = new AlphaBetaSearch<TicTacToeState, XYLocation, String> (st);
+		MinimaxSearch<TicTacToeState, XYLocation, String> ab = new MinimaxSearch<TicTacToeState, XYLocation, String> (st);
 		
 		XYLocation a = ab.makeDecision(c);
 		System.out.println(ab.getMetrics());

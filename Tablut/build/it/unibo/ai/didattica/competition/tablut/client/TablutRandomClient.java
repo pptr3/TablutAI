@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import it.unibo.ai.didattica.competition.tablut.client.ab.AlphaBetaSearch;
 import it.unibo.ai.didattica.competition.tablut.client.petru.StateTablut;
+import it.unibo.ai.didattica.competition.tablut.client.petru.StateTablut.Pawn;
 import it.unibo.ai.didattica.competition.tablut.client.petru.StateTablut.Turn;
 import it.unibo.ai.didattica.competition.tablut.client.petru.TablutClient;
 import it.unibo.ai.didattica.competition.tablut.client.petru.TablutGame;
@@ -22,8 +24,8 @@ import it.unibo.ai.didattica.competition.tablut.domain.*;
 public class TablutRandomClient extends TablutClient {
 
 	private int game;
-	TablutGame tablutGame = new TablutGame(2);
-	AlphaBetaSearch<StateTablut, XYWho, Turn> ab = new AlphaBetaSearch<StateTablut, XYWho, Turn> (this.tablutGame, 2);
+	TablutGame tablutGame = new TablutGame(3);
+	AlphaBetaSearch<StateTablut, XYWho, Turn> ab = new AlphaBetaSearch<StateTablut, XYWho, Turn> (this.tablutGame, 4);
 	
 	public TablutRandomClient(String player, String name, int gameChosen) throws UnknownHostException, IOException {
 		super(player, name);
@@ -108,34 +110,13 @@ public class TablutRandomClient extends TablutClient {
 			state = this.getCurrentState();
 			System.out.println(state.toString());
 			try {
-				Thread.sleep(10);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 			}
 
 			if (this.getPlayer().equals(Turn.WHITE)) {
 				// è il mio turno
 				if (this.getCurrentState().getTurn().equals(StateTablut.Turn.WHITE)) {
-					int[] buf;
-					for (int i = 0; i < state.getBoard().length; i++) {
-						for (int j = 0; j < state.getBoard().length; j++) {
-							if (state.getPawn(i, j).equalsPawn(StateTablut.Pawn.WHITE.toString())
-									|| state.getPawn(i, j).equalsPawn(StateTablut.Pawn.KING.toString())) {
-								buf = new int[2];
-								buf[0] = i;
-								buf[1] = j;
-								pawns.add(buf);
-							} else if (state.getPawn(i, j).equalsPawn(StateTablut.Pawn.EMPTY.toString())) {
-								buf = new int[2];
-								buf[0] = i;
-								buf[1] = j;
-								empty.add(buf);
-							}
-						}
-					}
-
-					int[] selected = null;
-
-					boolean found = false;
 					Action a = null;
 					
 					XYWho a2 = ab.makeDecision(this.getCurrentState());
@@ -181,25 +162,9 @@ public class TablutRandomClient extends TablutClient {
 
 			} else {
 
-				// è il mio turno
-				if (this.getCurrentState().getTurn().equals(StateTablut.Turn.BLACK)) {
-					int[] buf;
-					for (int i = 0; i < state.getBoard().length; i++) {
-						for (int j = 0; j < state.getBoard().length; j++) {
-							if (state.getPawn(i, j).equalsPawn(StateTablut.Pawn.BLACK.toString())) {
-								buf = new int[2];
-								buf[0] = i;
-								buf[1] = j;
-								pawns.add(buf);
-							} else if (state.getPawn(i, j).equalsPawn(StateTablut.Pawn.EMPTY.toString())) {
-								buf = new int[2];
-								buf[0] = i;
-								buf[1] = j;
-								empty.add(buf);
-							}
-						}
-					}
-
+				// my class
+				/*if (this.getCurrentState().getTurn().equals(StateTablut.Turn.BLACK)) {
+					
 					Action a = null;
 					XYWho a2 = ab.makeDecision(this.getCurrentState());
 					String from = this.getCurrentState().getBox(a2.getWho()[0], a2.getWho()[1]);
@@ -210,6 +175,92 @@ public class TablutRandomClient extends TablutClient {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
+					System.out.println("Mossa scelta: " + a.toString());
+					try {
+						this.write(a);
+					} catch (ClassNotFoundException | IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					pawns.clear();
+					empty.clear();
+
+				}
+
+				else if (state.getTurn().equals(StateTablut.Turn.WHITE)) {
+					System.out.println("Waiting for your opponent move... ");
+				} else if (state.getTurn().equals(StateTablut.Turn.WHITEWIN)) {
+					System.out.println("YOU LOSE!");
+					System.exit(0);
+				} else if (state.getTurn().equals(StateTablut.Turn.BLACKWIN)) {
+					System.out.println("YOU WIN!");
+					System.exit(0);
+				} else if (state.getTurn().equals(StateTablut.Turn.DRAW)) {
+					System.out.println("DRAW!");
+					System.exit(0);
+				}*/
+				
+				
+				
+				
+				
+				
+				
+				// teacher class
+				// è il mio turno
+				if (this.getCurrentState().getTurn().equals(StateTablut.Turn.BLACK)) {
+					int[] buf;
+					for (int i = 0; i < state.getBoard().length; i++) {
+						for (int j = 0; j < state.getBoard().length; j++) {
+							if (state.getPawn(i, j).equalsPawn(Pawn.BLACK.toString())) {
+								buf = new int[2];
+								buf[0] = i;
+								buf[1] = j;
+								pawns.add(buf);
+							} else if (state.getPawn(i, j).equalsPawn(Pawn.EMPTY.toString())) {
+								buf = new int[2];
+								buf[0] = i;
+								buf[1] = j;
+								empty.add(buf);
+							}
+						}
+					}
+
+					int[] selected = null;
+
+					boolean found = false;
+					Action a = null;
+					try {
+						a = new Action("z0", "z0", Turn.BLACK);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					;
+					while (!found) {
+						selected = pawns.get(new Random().nextInt(pawns.size() - 1));
+						String from = this.getCurrentState().getBox(selected[0], selected[1]);
+
+						selected = empty.get(new Random().nextInt(empty.size() - 1));
+						String to = this.getCurrentState().getBox(selected[0], selected[1]);
+
+						try {
+							a = new Action(from, to, Turn.BLACK);
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+
+						System.out.println("try: " + a.toString());
+						try {
+							rules.checkMove(state, a);
+							found = true;
+						} catch (Exception e) {
+
+						}
+
+					}
+
 					System.out.println("Mossa scelta: " + a.toString());
 					try {
 						this.write(a);

@@ -39,22 +39,20 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 	}
 
 	@Override
-	public double getUtility(StateTablut state, Turn player) { // given a specific state and the player, return the heuristic for that player in that state
-		double result = state.getUtility();
-		if (result != -1 || state.getCurrentDepth() == 0) {
-			if (Objects.equals(player, Turn.BLACK)) {
-				result = 1 - result;
-			}
-		} else {
-			throw new IllegalArgumentException("State is not terminal.");
+	public double getUtility(StateTablut state, Turn player) {
+		int result = state.getUtility();
+		System.out.println(player);
+		if (result != StateTablut.STATE_IS_NOT_YET_FINISHED) { // white max, black min
+			//return result;
+		} else if(state.getCurrentDepth() == 0) {
+			
 		}
-		return new Random().nextInt(15);
-		//return result;
+		return result;
 	}
 
 	@Override
-	public boolean isTerminal(StateTablut state) { // returns true if a state is terminal (namely a WHITEWIN, BLACKWIN or a DRAW)
-		return state.getCurrentDepth() == -1;
+	public boolean isTerminal(StateTablut state) {
+		return state.getCurrentDepth() == 0 || state.getUtility() != StateTablut.STATE_IS_NOT_YET_FINISHED;
 	}
 
 	@Override

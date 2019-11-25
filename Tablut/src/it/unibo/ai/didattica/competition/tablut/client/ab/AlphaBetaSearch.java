@@ -3,45 +3,6 @@ package it.unibo.ai.didattica.competition.tablut.client.ab;
 import aima.core.search.adversarial.AdversarialSearch;
 import aima.core.search.framework.Metrics;
 
-/**
- * Artificial Intelligence A Modern Approach (3rd Ed.): Page 173.<br>
- * <p>
- * <pre>
- * <code>
- * function ALPHA-BETA-SEARCH(state) returns an action
- *   v = MAX-VALUE(state, -infinity, +infinity)
- *   return the action in ACTIONS(state) with value v
- *
- * function MAX-VALUE(state, alpha, beta) returns a utility value
- *   if TERMINAL-TEST(state) then return UTILITY(state)
- *   v = -infinity
- *   for each a in ACTIONS(state) do
- *     v = MAX(v, MIN-VALUE(RESULT(s, a), alpha, beta))
- *     if v >= beta then return v
- *     alpha = MAX(alpha, v)
- *   return v
- *
- * function MIN-VALUE(state, alpha, beta) returns a utility value
- *   if TERMINAL-TEST(state) then return UTILITY(state)
- *   v = infinity
- *   for each a in ACTIONS(state) do
- *     v = MIN(v, MAX-VALUE(RESULT(s,a), alpha, beta))
- *     if v <= alpha then return v
- *     beta = MIN(beta, v)
- *   return v
- * </code>
- * </pre>
- * <p>
- * Figure 5.7 The alpha-beta search algorithm. Notice that these routines are
- * the same as the MINIMAX functions in Figure 5.3, except for the two lines in
- * each of MIN-VALUE and MAX-VALUE that maintain alpha and beta (and the
- * bookkeeping to pass these parameters along).
- *
- * @param <S> Type which is used for states in the game.
- * @param <A> Type which is used for actions in the game.
- * @param <P> Type which is used for players in the game.
- * @author Ruediger Lunde
- */
 public class AlphaBetaSearch<S, A, P> implements AdversarialSearch<S, A> {
 
     public final static String METRICS_NODES_EXPANDED = "nodesExpanded";

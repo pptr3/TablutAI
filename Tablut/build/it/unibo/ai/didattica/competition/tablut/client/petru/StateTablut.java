@@ -72,12 +72,12 @@ public class StateTablut {
 
 	public static final int WIDTH = 9; 
 	public static final int HEIGHT = 9; 
-	public static final int KING_POSITION = 4; // this 4 is meant as the initial king position which is [4, 4]
+	public static final int KING_POSITION = 4;
 	
 	public static final int STATE_IS_NOT_YET_FINISHED = -1;
 	public static final int BLACK_WON = 0;
-	public static final int WHITE_WON = 1;
-	public static final double DRAW = 0.5;
+	public static final int WHITE_WON = 1000;
+	public static final int DRAW = 500;
 	
 
 	private Pawn board[][];
@@ -98,8 +98,7 @@ public class StateTablut {
 	
 	
 	public void applyMove(XYWho action) {
-		
-		if(this.getUtility() == -1 || this.getCurrentDepth() != 0) {
+		if(this.getUtility() == STATE_IS_NOT_YET_FINISHED && this.getCurrentDepth() != 0) {
 			if(this.getTurn().equals(Turn.WHITE)) {
 				if(this.getPawn(action.getWho()[0], action.getWho()[1]).equals(Pawn.KING)) {
 					this.setPawn(action.getX(), action.getY(), Pawn.KING);
@@ -107,30 +106,19 @@ public class StateTablut {
 					this.setPawn(action.getX(), action.getY(), Pawn.WHITE);
 				}
 				this.setPawn(action.getWho()[0], action.getWho()[1], Pawn.EMPTY);
-				this.checkGameStatus(action);
 				this.setTurn(Turn.BLACK);
 			} else {
 				this.setPawn(action.getX(), action.getY(), Pawn.BLACK);
 				this.setPawn(action.getWho()[0], action.getWho()[1], Pawn.EMPTY);
-				this.checkGameStatus(action);
 				this.setTurn(Turn.WHITE);
 			}
+			this.updateUtility(action);
 		}
 	}
 	
-	public int getCurrentDepth() {
-		return this.currentDepth;
-	}
-	
-	public void setCurrentDepth(int currentDepth) {
-		this.currentDepth = currentDepth;
-	}
-	
-	public void checkGameStatus(XYWho action) {
-		
-		this.checkCaptures(action);	
+	public void updateUtility(XYWho action) {	
+		this.eat(action);	
 		if(this.getUtility() == STATE_IS_NOT_YET_FINISHED) {
-			
 			//check if WHITE won
 			if(this.hasWhiteWon()) {
 				System.out.println("white won");
@@ -138,23 +126,13 @@ public class StateTablut {
 			} else
 			//check if BLACK won 
 			if(this.hasBlackWon(action)) {
-				System.out.println("black won");
+				//System.out.println("black won");
 				this.setUtility(BLACK_WON);
 			}
 			//check if DRAW
 			if(this.isDraw()) {
 				System.out.println("ddraw");
-				//this.setUtility(DRAW);
-			}
-		}
-		System.out.println(this.getCurrentDepth());
-		if(this.getCurrentDepth() == 0) {
-			double c = new Random().nextDouble();
-			if(c > 0.5) {
-				//System.out.println("CCCCC "+c);
-				this.setUtility(WHITE_WON);
-			} else {
-				this.setUtility(BLACK_WON);
+				this.setUtility(DRAW);
 			}
 		}
 	}
@@ -176,7 +154,7 @@ public class StateTablut {
 		(kingPosition[0] == 4 && kingPosition[1] == 5) ||
 		(kingPosition[0] == 5 && kingPosition[1] == 4) ||
 		(kingPosition[0] == 3 && kingPosition[1] == 4)) {
-			h_white = 4;
+			h_white = 0;
 		}
 			
 		
@@ -197,7 +175,7 @@ public class StateTablut {
 		(kingPosition[0] == 6 && kingPosition[1] == 3) ||			
 		(kingPosition[0] == 6 && kingPosition[1] == 4) ||			
 		(kingPosition[0] == 6 && kingPosition[1] == 5)) {
-			h_white = 10;
+			h_white = 0;
 		}
 		
 		// checking third ring
@@ -223,12 +201,12 @@ public class StateTablut {
 		(kingPosition[0] == 7 && kingPosition[1] == 5) ||
 		(kingPosition[0] == 7 && kingPosition[1] == 6) ||
 		(kingPosition[0] == 7 && kingPosition[1] == 7)) {
-			h_white = 15;
+			h_white = 0;
 		}
 		
 		// checking if it is in the escape area
 		if(this.getArea(kingPosition[0], kingPosition[1]).equals(Area.ESCAPES)) {
-			h_white = 17;
+			h_white = 1000;
 		}
 		
 		int whiteThatSurrounKing = 0;
@@ -246,18 +224,18 @@ public class StateTablut {
 			whiteThatSurrounKing++;
 		}
 		if(whiteThatSurrounKing == 0 || whiteThatSurrounKing == 4) {
-			h_white--;
+			h_white = h_white - 600;
 		} else if(whiteThatSurrounKing == 1) {
-			h_white--;
+			h_white = h_white + 0;
 		} else if(whiteThatSurrounKing == 2) {
-			h_white = h_white + 1;
+			h_white = h_white + 0;
 		} else if(whiteThatSurrounKing == 3) {
-			h_white = h_white + 2;
+			h_white = h_white + 0;
 		}
-		if(h_white > 17) {
-			h_white = 17;
+		if(h_white > 1000) {
+			h_white = 900;
 		}
-	
+		//System.out.println(h_white);
 		return h_white;
 	}
 	
@@ -272,7 +250,7 @@ public class StateTablut {
 		return null;
 	}
 	
-	private void checkCaptures(XYWho action) {
+	private void eat(XYWho action) {
 		if(this.getTurn().equals(Turn.WHITE)) {
 			for(int i=0; i < this.getBoard().length; i++) {
 				for(int j=0; j < this.getBoard().length; j++) {
@@ -901,7 +879,14 @@ public class StateTablut {
 		return result;
 	}
 	
-
+	
+	public int getCurrentDepth() {
+		return this.currentDepth;
+	}
+	
+	public void setCurrentDepth(int currentDepth) {
+		this.currentDepth = currentDepth;
+	}
 	
 	public Pawn[][] getBoard() {
 		return this.board;
