@@ -1,6 +1,7 @@
 package it.unibo.ai.didattica.competition.tablut.client.petru;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 import it.unibo.ai.didattica.competition.tablut.client.ab.Game;
@@ -39,49 +40,27 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 
 	@Override
 	public double getUtility(StateTablut state, Turn player) { // given a specific state and the player, return the heuristic for that player in that state
-		int result = state.getUtility();
-		if (state.getCurrentDepth() == 0 || result != -1) {
-			if (player.equals(Turn.WHITE)) {
-//				result = 1 - result;
-//				return Integer.MAX_VALUE;
-			} else {
-//				System.exit(0);
-//				return Integer.MIN_VALUE;
+		double result = state.getUtility();
+		if (result != -1 || state.getCurrentDepth() == 0) {
+			if (Objects.equals(player, Turn.BLACK)) {
+				result = 1 - result;
 			}
 		} else {
 			throw new IllegalArgumentException("State is not terminal.");
 		}
-		//return Integer.MAX_VALUE;
+		return new Random().nextInt(15);
 		//return result;
-		return new Random().nextInt(100); 
 	}
 
 	@Override
 	public boolean isTerminal(StateTablut state) { // returns true if a state is terminal (namely a WHITEWIN, BLACKWIN or a DRAW)
-		return state.getCurrentDepth() == 0;
+		return state.getCurrentDepth() == -1;
 	}
 
 	@Override
 	public StateTablut getResult(StateTablut state, XYWho action) {
 		StateTablut result = state.clone();
-		System.out.println(result.getTurn());
-		if(result.getCurrentDepth() != 0 || result.getUtility() == -1) {
-			if(result.getTurn().equals(Turn.WHITE)) {
-				if(result.getPawn(action.getWho()[0], action.getWho()[1]).equals(Pawn.KING)) {
-					result.setPawn(action.getX(), action.getY(), Pawn.KING);
-				} else {
-					result.setPawn(action.getX(), action.getY(), Pawn.WHITE);
-				}
-				result.setPawn(action.getWho()[0], action.getWho()[1], Pawn.EMPTY);
-				//result.checkGameStatus(action);
-				result.setTurn(Turn.BLACK);
-			} else {
-				result.setPawn(action.getX(), action.getY(), Pawn.BLACK);
-				result.setPawn(action.getWho()[0], action.getWho()[1], Pawn.EMPTY);
-				//result.checkGameStatus(action);
-				result.setTurn(Turn.WHITE);
-			}
-		}
+		result.applyMove(action);
 		return result;
 	}
 

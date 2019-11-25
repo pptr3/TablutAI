@@ -22,8 +22,8 @@ import it.unibo.ai.didattica.competition.tablut.domain.*;
 public class TablutRandomClient extends TablutClient {
 
 	private int game;
-	TablutGame tablutGame = new TablutGame(3);
-	AlphaBetaSearch<StateTablut, XYWho, Turn> ab = new AlphaBetaSearch<StateTablut, XYWho, Turn> (this.tablutGame, 3);
+	TablutGame tablutGame = new TablutGame(2);
+	AlphaBetaSearch<StateTablut, XYWho, Turn> ab = new AlphaBetaSearch<StateTablut, XYWho, Turn> (this.tablutGame, 2);
 	
 	public TablutRandomClient(String player, String name, int gameChosen) throws UnknownHostException, IOException {
 		super(player, name);
@@ -141,7 +141,6 @@ public class TablutRandomClient extends TablutClient {
 					XYWho a2 = ab.makeDecision(this.getCurrentState());
 					String from = this.getCurrentState().getBox(a2.getWho()[0], a2.getWho()[1]);
 					String to = this.getCurrentState().getBox(a2.getX(), a2.getY());
-					System.out.println(" WHITE my debug:\n" + from + " "+ to+ ", hasleft " + a2.hasLeftTheCamp());
 					try {
 						a = new Action(from, to, StateTablut.Turn.WHITE);
 					} catch (IOException e1) {
@@ -205,9 +204,8 @@ public class TablutRandomClient extends TablutClient {
 					XYWho a2 = ab.makeDecision(this.getCurrentState());
 					String from = this.getCurrentState().getBox(a2.getWho()[0], a2.getWho()[1]);
 					String to = this.getCurrentState().getBox(a2.getX(), a2.getY());
-					System.out.println("BLACK my debug:\n" + from + " "+ to+ ", hasleft " + a2.hasLeftTheCamp());
 					try {
-						a = new Action(from, to, StateTablut.Turn.WHITE);
+						a = new Action(from, to, StateTablut.Turn.BLACK);
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();

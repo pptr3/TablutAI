@@ -91,11 +91,32 @@ public class StateTablut {
 		this.setBoard(new Pawn[StateTablut.WIDTH][StateTablut.HEIGHT]);
 		this.setBoardArea(new Area[StateTablut.WIDTH][StateTablut.WIDTH]);
 		this.initBoard();
-		//this.setTurn(Turn.WHITE);
+		this.setTurn(Turn.WHITE);
 		this.setUtility(STATE_IS_NOT_YET_FINISHED);
 		this.setCurrentDepth(depth);
 	}
 	
+	
+	public void applyMove(XYWho action) {
+		
+		if(this.getUtility() == -1 || this.getCurrentDepth() != 0) {
+			if(this.getTurn().equals(Turn.WHITE)) {
+				if(this.getPawn(action.getWho()[0], action.getWho()[1]).equals(Pawn.KING)) {
+					this.setPawn(action.getX(), action.getY(), Pawn.KING);
+				} else {
+					this.setPawn(action.getX(), action.getY(), Pawn.WHITE);
+				}
+				this.setPawn(action.getWho()[0], action.getWho()[1], Pawn.EMPTY);
+				this.checkGameStatus(action);
+				this.setTurn(Turn.BLACK);
+			} else {
+				this.setPawn(action.getX(), action.getY(), Pawn.BLACK);
+				this.setPawn(action.getWho()[0], action.getWho()[1], Pawn.EMPTY);
+				this.checkGameStatus(action);
+				this.setTurn(Turn.WHITE);
+			}
+		}
+	}
 	
 	public int getCurrentDepth() {
 		return this.currentDepth;
@@ -124,6 +145,16 @@ public class StateTablut {
 			if(this.isDraw()) {
 				System.out.println("ddraw");
 				//this.setUtility(DRAW);
+			}
+		}
+		System.out.println(this.getCurrentDepth());
+		if(this.getCurrentDepth() == 0) {
+			double c = new Random().nextDouble();
+			if(c > 0.5) {
+				//System.out.println("CCCCC "+c);
+				this.setUtility(WHITE_WON);
+			} else {
+				this.setUtility(BLACK_WON);
 			}
 		}
 	}
@@ -586,7 +617,7 @@ public class StateTablut {
 	
 	public StateTablut(Pawn[][] board, Turn playerToMove) {
 		this.setBoard(board);
-		//this.setTurn(playerToMove);
+		this.setTurn(playerToMove);
 		this.initBoard();
 	}
 
@@ -917,22 +948,6 @@ public class StateTablut {
 		this.board[row][column] = Pawn.EMPTY;
 	}
 
-	
-	/**
-	 * Counts the number of checkers of a specific color on the board. Note: the king is not taken into account for white, it must be checked separately
-	 * @param color The color of the checker that will be counted. It is possible also to use EMPTY to count empty cells.
-	 * @return The number of cells of the board that contains a checker of that color.
-	 */
-	public int getNumberOf(Pawn color) {
-		int count = 0;
-		for (int i = 0; i < board.length; i++) {
-			for (int j = 0; j < board[i].length; j++) {
-				if (board[i][j] == color)
-					count++;
-			}
-		}
-		return count;
-	}
 	
 	public void printBoardArea() {
 		for(int i=0; i < this.getBoardArea().length; i++) {
