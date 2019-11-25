@@ -20,18 +20,18 @@ public class StateTablut {
 	
 	public enum Turn {
 		WHITE("W"), BLACK("B"), WHITEWIN("WW"), BLACKWIN("BW"), DRAW("D");
-		private final String turn;
+		private final String inner_turn;
 
 		private Turn(String s) {
-			this.turn = s;
+			this.inner_turn = s;
 		}
 
 		public boolean equalsTurn(String otherName) {
-			return (otherName == null) ? false : this.turn.equals(otherName);
+			return (otherName == null) ? false : this.inner_turn.equals(otherName);
 		}
 
 		public String toString() {
-			return this.turn;
+			return this.inner_turn;
 		}
 	}
 
@@ -76,8 +76,8 @@ public class StateTablut {
 	
 	public static final int STATE_IS_NOT_YET_FINISHED = -1;
 	public static final int BLACK_WON = 0;
-	public static final int WHITE_WON = 17;
-	public static final int DRAW = 9;
+	public static final int WHITE_WON = 1;
+	public static final double DRAW = 0.5;
 	
 
 	private Pawn board[][];
@@ -91,7 +91,7 @@ public class StateTablut {
 		this.setBoard(new Pawn[StateTablut.WIDTH][StateTablut.HEIGHT]);
 		this.setBoardArea(new Area[StateTablut.WIDTH][StateTablut.WIDTH]);
 		this.initBoard();
-		this.setTurn(Turn.WHITE);
+		//this.setTurn(Turn.WHITE);
 		this.setUtility(STATE_IS_NOT_YET_FINISHED);
 		this.setCurrentDepth(depth);
 	}
@@ -109,17 +109,21 @@ public class StateTablut {
 		
 		this.checkCaptures(action);	
 		if(this.getUtility() == STATE_IS_NOT_YET_FINISHED) {
+			
 			//check if WHITE won
 			if(this.hasWhiteWon()) {
+				System.out.println("white won");
 				this.setUtility(WHITE_WON);
 			} else
 			//check if BLACK won 
 			if(this.hasBlackWon(action)) {
+				System.out.println("black won");
 				this.setUtility(BLACK_WON);
 			}
 			//check if DRAW
 			if(this.isDraw()) {
-				this.setUtility(DRAW);
+				System.out.println("ddraw");
+				//this.setUtility(DRAW);
 			}
 		}
 	}
@@ -198,16 +202,16 @@ public class StateTablut {
 		
 		int whiteThatSurrounKing = 0;
 		// get number of white pawns that surround the king
-		if(this.getPawn(kingPosition[0], kingPosition[1] - 1).equals(Pawn.WHITE)) {
+		if((kingPosition[1] - 1) >= 0 && this.getPawn(kingPosition[0], kingPosition[1] - 1).equals(Pawn.WHITE)) {
 			whiteThatSurrounKing++;
 		}
-		if(this.getPawn(kingPosition[0], kingPosition[1] + 1).equals(Pawn.WHITE)) {
+		if((kingPosition[1] + 1) < (StateTablut.KING_POSITION  * 2 + 1) && this.getPawn(kingPosition[0], kingPosition[1] + 1).equals(Pawn.WHITE)) {
 			whiteThatSurrounKing++;
 		}
-		if(this.getPawn(kingPosition[0] - 1, kingPosition[1]).equals(Pawn.WHITE)) {
+		if((kingPosition[0] - 1) >= 0 && this.getPawn(kingPosition[0] - 1, kingPosition[1]).equals(Pawn.WHITE)) {
 			whiteThatSurrounKing++;
 		}
-		if(this.getPawn(kingPosition[0] + 1, kingPosition[1]).equals(Pawn.WHITE)) {
+		if((kingPosition[0] + 1) < (StateTablut.KING_POSITION  * 2 + 1) && this.getPawn(kingPosition[0] + 1, kingPosition[1]).equals(Pawn.WHITE)) {
 			whiteThatSurrounKing++;
 		}
 		if(whiteThatSurrounKing == 0 || whiteThatSurrounKing == 4) {
@@ -582,13 +586,10 @@ public class StateTablut {
 	
 	public StateTablut(Pawn[][] board, Turn playerToMove) {
 		this.setBoard(board);
-		this.setTurn(playerToMove);
+		//this.setTurn(playerToMove);
 		this.initBoard();
 	}
-	
-	public Turn getPlayerToMove() {
-		return this.getTurn();
-	}
+
 	
 	public int getUtility() {
 		return this.utility;
@@ -671,28 +672,6 @@ public class StateTablut {
 				}
 					
 			}
-			// add all possible moves for the king. If he leaves the castle, he cannot enter anymore
-//			int[] king_position = this.getKingPosition();
-//			for (int j = 0; j < currentBoardState.length; j++) {
-//				// (x, y - j) UP
-//				if(((king_position[1] - j) >= 0) && this.getPawn(king_position[0], king_position[1] - j) == Pawn.EMPTY && (this.getArea(king_position[0], king_position[1] - j) != Area.CAMPS) && (king_position[0] != StateTablut.KING_POSITION || (king_position[1] - j) != StateTablut.KING_POSITION)) {
-//					whiteLegalMoves.add(new XYWho(king_position[0], king_position[1] - j, new int[]{king_position[0], king_position[1]}, false));
-//				}
-//				// (x, y + j) DOWN
-//				if(((king_position[1] + j) < currentBoardState.length) && this.getPawn(king_position[0], king_position[1] + j) == Pawn.EMPTY && (this.getArea(king_position[0], king_position[1] + j) != Area.CAMPS) && (king_position[0] != StateTablut.KING_POSITION | (king_position[1] + j) != StateTablut.KING_POSITION)) {
-//					whiteLegalMoves.add(new XYWho(king_position[0], king_position[1] + j, new int[]{king_position[0], king_position[1]}, false));
-//				}
-//			}
-//			for (int i = 0; i < currentBoardState.length; i++) {
-//				// (x - i, y) LEFT
-//				if(((king_position[0] - i) >= 0) && this.getPawn(king_position[0] - i, king_position[1]) == Pawn.EMPTY && (this.getArea(king_position[0] - i, king_position[1]) != Area.CAMPS) && ((king_position[0] - i) != StateTablut.KING_POSITION || (king_position[1]) != StateTablut.KING_POSITION)) {
-//					whiteLegalMoves.add(new XYWho(king_position[0] - i, king_position[1], new int[]{king_position[0], king_position[1]}, false));
-//				}
-//				// (x + i, y) RIGHT
-//				if(((king_position[0] + i) < currentBoardState.length) && this.getPawn(king_position[0] + i, king_position[1]) == Pawn.EMPTY && (this.getArea(king_position[0] + i, king_position[1]) != Area.CAMPS) && ((king_position[0] + i) != StateTablut.KING_POSITION || (king_position[1]) != StateTablut.KING_POSITION)) {
-//					whiteLegalMoves.add(new XYWho(king_position[0] + i, king_position[1], new int[]{king_position[0], king_position[1]}, false));
-//				}
-//			}
 			return whiteLegalMoves;
 			
 			
@@ -787,9 +766,6 @@ public class StateTablut {
 			
 	} 
 
-	
-	
-	
 	public void initBoard() {
 
 		// initialize pawns on board
@@ -875,9 +851,6 @@ public class StateTablut {
 		this.setArea(5, 8, Area.CAMPS);
 		this.setArea(4, 7, Area.CAMPS);
 	}
-	
-
-	
 
 	public StateTablut clone() {
 		StateTablut result = new StateTablut(this.getCurrentDepth());

@@ -1,7 +1,6 @@
 package it.unibo.ai.didattica.competition.tablut.client.ab;
 
 import aima.core.search.adversarial.AdversarialSearch;
-import aima.core.search.adversarial.Game;
 import aima.core.search.framework.Metrics;
 
 /**
@@ -83,7 +82,8 @@ public class AlphaBetaSearch<S, A, P> implements AdversarialSearch<S, A> {
 
     public double maxValue(S state, P player, double alpha, double beta, int depth) {
         metrics.incrementInt(METRICS_NODES_EXPANDED);
-        if (game.isTerminal(state) || depth == 0)
+        this.game.setCurrentDepth(state, depth);
+        if (game.isTerminal(state))
             return game.getUtility(state, player);
         double value = Double.NEGATIVE_INFINITY;
         for (A action : game.getActions(state)) {
@@ -98,7 +98,8 @@ public class AlphaBetaSearch<S, A, P> implements AdversarialSearch<S, A> {
 
     public double minValue(S state, P player, double alpha, double beta, int depth) {
         metrics.incrementInt(METRICS_NODES_EXPANDED);
-        if (game.isTerminal(state) || depth == 0)
+        this.game.setCurrentDepth(state, depth);
+        if (game.isTerminal(state))
             return game.getUtility(state, player);
         double value = Double.POSITIVE_INFINITY;
         for (A action : game.getActions(state)) {

@@ -1,6 +1,7 @@
 package it.unibo.ai.didattica.competition.tablut.client.petru;
 
 import java.util.List;
+import java.util.Random;
 
 import it.unibo.ai.didattica.competition.tablut.client.ab.Game;
 import it.unibo.ai.didattica.competition.tablut.client.petru.StateTablut.Area;
@@ -39,27 +40,32 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 	@Override
 	public double getUtility(StateTablut state, Turn player) { // given a specific state and the player, return the heuristic for that player in that state
 		int result = state.getUtility();
-		if (state.getCurrentDepth() == 0) {
-			// heuristic for white (MIN)
-			if(player.equals(Turn.WHITE)) { // actually I have to put here whether my player is white or black and calculate accordingly the heuristic
-				result = StateTablut.WHITE_WON - state.getWhiteHeuristic();					
+		if (state.getCurrentDepth() == 0 || result != -1) {
+			if (player.equals(Turn.WHITE)) {
+//				result = 1 - result;
+//				return Integer.MAX_VALUE;
+			} else {
+//				System.exit(0);
+//				return Integer.MIN_VALUE;
 			}
 		} else {
 			throw new IllegalArgumentException("State is not terminal.");
 		}
-		return result;
+		//return Integer.MAX_VALUE;
+		//return result;
+		return new Random().nextInt(100); 
 	}
 
 	@Override
 	public boolean isTerminal(StateTablut state) { // returns true if a state is terminal (namely a WHITEWIN, BLACKWIN or a DRAW)
-		//System.out.println("isTerminal: "+state.getCurrentDepth() == 0 + " " + state.getCurrentDepth());
 		return state.getCurrentDepth() == 0;
 	}
 
 	@Override
 	public StateTablut getResult(StateTablut state, XYWho action) {
 		StateTablut result = state.clone();
-		if(result.getCurrentDepth() != 0) {
+		System.out.println(result.getTurn());
+		if(result.getCurrentDepth() != 0 || result.getUtility() == -1) {
 			if(result.getTurn().equals(Turn.WHITE)) {
 				if(result.getPawn(action.getWho()[0], action.getWho()[1]).equals(Pawn.KING)) {
 					result.setPawn(action.getX(), action.getY(), Pawn.KING);
@@ -67,13 +73,14 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 					result.setPawn(action.getX(), action.getY(), Pawn.WHITE);
 				}
 				result.setPawn(action.getWho()[0], action.getWho()[1], Pawn.EMPTY);
+				//result.checkGameStatus(action);
 				result.setTurn(Turn.BLACK);
 			} else {
 				result.setPawn(action.getX(), action.getY(), Pawn.BLACK);
 				result.setPawn(action.getWho()[0], action.getWho()[1], Pawn.EMPTY);
+				//result.checkGameStatus(action);
 				result.setTurn(Turn.WHITE);
 			}
-			result.checkGameStatus(action);
 		}
 		return result;
 	}

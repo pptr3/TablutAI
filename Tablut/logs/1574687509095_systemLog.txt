@@ -1,0 +1,4 @@
+Nov 25, 2019 2:11:49 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Accensione server
+Nov 25, 2019 2:11:49 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Partita di Tablut

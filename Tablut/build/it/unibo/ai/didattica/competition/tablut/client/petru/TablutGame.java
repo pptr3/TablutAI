@@ -1,20 +1,22 @@
 package it.unibo.ai.didattica.competition.tablut.client.petru;
 
 import java.util.List;
-import aima.core.search.adversarial.Game;
+import java.util.Random;
+
+import it.unibo.ai.didattica.competition.tablut.client.ab.Game;
+import it.unibo.ai.didattica.competition.tablut.client.petru.StateTablut.Area;
 import it.unibo.ai.didattica.competition.tablut.client.petru.StateTablut.Pawn;
 import it.unibo.ai.didattica.competition.tablut.client.petru.StateTablut.Turn;
-import java.util.Random;
+
 
 public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 
 	private StateTablut initialState;
 	
-	public TablutGame() {
-		this.initialState = new StateTablut();
+	public TablutGame(int depth) {
+		this.initialState = new StateTablut(depth);
 	}
 
-	
 	@Override
 	public List<XYWho> getActions(StateTablut state) {
 		return state.getAllLegalMoves();
@@ -36,41 +38,62 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 	}
 
 	@Override
-	public double getUtility(StateTablut state, Turn player) { // given a specific state and the player, return the heuristic for that player. If
-		if((player).equals(Turn.WHITE)) {
-			return new Random().nextInt(10000);
+	public double getUtility(StateTablut state, Turn player) { // given a specific state and the player, return the heuristic for that player in that state
+		int result = state.getUtility();
+		if (state.getCurrentDepth() == 0 || result != -1) {
+			if (player.equals(Turn.WHITE)) {
+				result = 1 - result;
+				System.out.println(result);
+				return Integer.MAX_VALUE;
+			} else {
+				return Integer.MIN_VALUE;
+			}
 		} else {
-			return new Random().nextInt(10000);
+			throw new IllegalArgumentException("State is not terminal.");
 		}
+		//return Integer.MAX_VALUE;
+		//return result;
+		//return new Random().nextInt(100); 
 	}
 
 	@Override
 	public boolean isTerminal(StateTablut state) { // returns true if a state is terminal (namely a WHITEWIN, BLACKWIN or a DRAW)
-		return state.getUtility() != -1;
-		//return new Random().nextInt(100) > 40;
+		return state.getCurrentDepth() == 0;
 	}
 
 	@Override
 	public StateTablut getResult(StateTablut state, XYWho action) {
-		StateTablut state2 = state.clone();
-		if(state2.getUtility() == -1) {
-			if(state2.getTurn().equals(Turn.WHITE)) {
-				if(state2.getPawn(action.getWho()[0], action.getWho()[1]).equals(Pawn.KING)) {
-					state2.setPawn(action.getX(), action.getY(), Pawn.KING);
+		StateTablut result = state.clone();
+		if(result.getCurrentDepth() != 0) {
+			if(result.getTurn().equals(Turn.WHITE)) {
+				if(result.getPawn(action.getWho()[0], action.getWho()[1]).equals(Pawn.KING)) {
+					result.setPawn(action.getX(), action.getY(), Pawn.KING);
 				} else {
-					state2.setPawn(action.getX(), action.getY(), Pawn.WHITE);
+					result.setPawn(action.getX(), action.getY(), Pawn.WHITE);
 				}
-				state2.setPawn(action.getWho()[0], action.getWho()[1], Pawn.EMPTY);
-				state2.setTurn(Turn.BLACK);
+				result.setPawn(action.getWho()[0], action.getWho()[1], Pawn.EMPTY);
+				result.checkGameStatus(action);
+				result.setTurn(Turn.BLACK);
 			} else {
-				state2.setPawn(action.getX(), action.getY(), Pawn.BLACK);
-				state2.setPawn(action.getWho()[0], action.getWho()[1], Pawn.EMPTY);
-				state2.setTurn(Turn.WHITE);
+				result.setPawn(action.getX(), action.getY(), Pawn.BLACK);
+				result.setPawn(action.getWho()[0], action.getWho()[1], Pawn.EMPTY);
+				result.checkGameStatus(action);
+				result.setTurn(Turn.WHITE);
 			}
-			//System.out.println("PETRUUU"+state2);
-			state2.checkGameStatus(action);
 		}
-		return state;
+		//result.checkGameStatus(action);
+		return result;
+	}
+
+	
+	@Override
+	public int getCurrentDepth(StateTablut state) {
+		return state.getCurrentDepth();
+	}
+
+	@Override
+	public void setCurrentDepth(StateTablut state, int depth) {
+		state.setCurrentDepth(depth);
 		
 	}
 	

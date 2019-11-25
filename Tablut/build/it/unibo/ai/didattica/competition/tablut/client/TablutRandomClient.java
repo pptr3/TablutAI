@@ -22,8 +22,8 @@ import it.unibo.ai.didattica.competition.tablut.domain.*;
 public class TablutRandomClient extends TablutClient {
 
 	private int game;
-	TablutGame tablutGame = new TablutGame();
-	AlphaBetaSearch<StateTablut, XYWho, Turn> ab = new AlphaBetaSearch<StateTablut, XYWho, Turn> (this.tablutGame, 4);
+	TablutGame tablutGame = new TablutGame(3);
+	AlphaBetaSearch<StateTablut, XYWho, Turn> ab = new AlphaBetaSearch<StateTablut, XYWho, Turn> (this.tablutGame, 3);
 	
 	public TablutRandomClient(String player, String name, int gameChosen) throws UnknownHostException, IOException {
 		super(player, name);
@@ -81,7 +81,7 @@ public class TablutRandomClient extends TablutClient {
 		Game rules = null;
 		switch (this.game) {
 		case 4:
-			state = new StateTablut();
+			state = new StateTablut(3);
 			state.setTurn(StateTablut.Turn.WHITE);
 			rules = new GameAshtonTablut(99, 0, "garbage", "fake", "fake");
 			System.out.println("Ashton Tablut game");

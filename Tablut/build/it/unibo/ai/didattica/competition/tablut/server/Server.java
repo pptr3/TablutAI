@@ -441,7 +441,7 @@ public class Server implements Runnable {
 
 		switch (this.gameC) {
 		case 4:
-			state = new StateTablut();
+			state = new StateTablut(3);
 			state.setTurn(StateTablut.Turn.WHITE);
 			this.game = new GameAshtonTablut(state, repeated, this.cacheSize, "logs", whiteName, blackName);
 			break;
