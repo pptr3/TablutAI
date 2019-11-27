@@ -107,9 +107,9 @@ public class TablutRandomClient extends TablutClient {
 				e1.printStackTrace();
 				System.exit(1);
 			}
-			System.out.println("Current state:");
+			//System.out.println("Current state:");
 			state = this.getCurrentState();
-			System.out.println(state.toString());
+			//System.out.println(state.toString());
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
