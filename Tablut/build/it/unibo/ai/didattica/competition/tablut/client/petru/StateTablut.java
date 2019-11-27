@@ -76,8 +76,8 @@ public class StateTablut {
 	
 	public static final int STATE_IS_NOT_YET_FINISHED = -1;
 	public static final int BLACK_WON = 0;
-	public static final int WHITE_WON = 1000;
-	public static final int DRAW = 500;
+	public static final int WHITE_WON = 100;
+	public static final int DRAW = 50;
 	
 
 	private Pawn board[][];
@@ -122,7 +122,7 @@ public class StateTablut {
 			//check if WHITE won
 			if(this.hasWhiteWon()) {
 				System.out.println("white won");
-				this.setUtility(WHITE_WON);
+				this.setUtility(Integer.MAX_VALUE);
 			} else
 			//check if BLACK won 
 			if(this.hasBlackWon(action)) {
@@ -136,16 +136,58 @@ public class StateTablut {
 			}
 		}
 	}
+
+	public int freeFirstRing() {
+		
+		int h_white = 0;
+		int whiteThatSurrounKing = 0;
+		
+		int[] kingPosition = this.getKingPosition();
+		
+		if((kingPosition[1] - 1) >= 0 && !this.getPawn(kingPosition[0], kingPosition[1] - 1).equals(Pawn.EMPTY)) {
+			whiteThatSurrounKing++;
+		}
+		if((kingPosition[1] + 1) < (StateTablut.KING_POSITION  * 2 + 1) && !this.getPawn(kingPosition[0], kingPosition[1] + 1).equals(Pawn.EMPTY)) {
+			whiteThatSurrounKing++;
+		}
+		if((kingPosition[0] - 1) >= 0 && !this.getPawn(kingPosition[0] - 1, kingPosition[1]).equals(Pawn.EMPTY)) {
+			whiteThatSurrounKing++;
+		}
+		if((kingPosition[0] + 1) < (StateTablut.KING_POSITION  * 2 + 1) && !this.getPawn(kingPosition[0] + 1, kingPosition[1]).equals(Pawn.EMPTY)) {
+			whiteThatSurrounKing++;
+		}
+		if(whiteThatSurrounKing == 0) {
+			h_white = 40;
+		}
+		if(whiteThatSurrounKing == 1) {
+			h_white = 30;
+		}
+		if(whiteThatSurrounKing == 2) {
+			h_white = 20;
+		}
+		if(whiteThatSurrounKing == 3) {
+			h_white = 10;
+		}
+		if(whiteThatSurrounKing == 4) {
+			h_white = 0;
+		}
+		
+		return h_white;
+				
+	}
+	
 	
 	public int getWhiteHeuristic() {
 		//getDistance from KING position to closest ESCAPE area
 		int h_white = 0;
 		int[] kingPosition = this.getKingPosition();
-		// checking ring around the throne
+		
+		// whether the king is in the throne
 		if(kingPosition[0] == StateTablut.KING_POSITION && kingPosition[1] == StateTablut.KING_POSITION) {
 			h_white = 0;
 		} 
 		
+		// checking ring around the throne
 		if((kingPosition[0] == 3 && kingPosition[1] == 3) ||
 		(kingPosition[0] == 3 && kingPosition[1] == 5) ||
 		(kingPosition[0] == 5 && kingPosition[1] == 5) ||
@@ -154,7 +196,7 @@ public class StateTablut {
 		(kingPosition[0] == 4 && kingPosition[1] == 5) ||
 		(kingPosition[0] == 5 && kingPosition[1] == 4) ||
 		(kingPosition[0] == 3 && kingPosition[1] == 4)) {
-			h_white = 0;
+			h_white = 10;
 		}
 			
 		
@@ -175,7 +217,7 @@ public class StateTablut {
 		(kingPosition[0] == 6 && kingPosition[1] == 3) ||			
 		(kingPosition[0] == 6 && kingPosition[1] == 4) ||			
 		(kingPosition[0] == 6 && kingPosition[1] == 5)) {
-			h_white = 0;
+			h_white = 20;
 		}
 		
 		// checking third ring
@@ -201,41 +243,17 @@ public class StateTablut {
 		(kingPosition[0] == 7 && kingPosition[1] == 5) ||
 		(kingPosition[0] == 7 && kingPosition[1] == 6) ||
 		(kingPosition[0] == 7 && kingPosition[1] == 7)) {
-			h_white = 0;
+			h_white = 50;
 		}
 		
 		// checking if it is in the escape area
-		if(this.getArea(kingPosition[0], kingPosition[1]).equals(Area.ESCAPES)) {
-			h_white = 1000;
+		if(kingPosition[0] == 8 || kingPosition[1] == 8) {
+			h_white = 100;
 		}
 		
-		int whiteThatSurrounKing = 0;
-		// get number of white pawns that surround the king
-		if((kingPosition[1] - 1) >= 0 && this.getPawn(kingPosition[0], kingPosition[1] - 1).equals(Pawn.WHITE)) {
-			whiteThatSurrounKing++;
+		if(h_white > 100) {
+			h_white = 100;
 		}
-		if((kingPosition[1] + 1) < (StateTablut.KING_POSITION  * 2 + 1) && this.getPawn(kingPosition[0], kingPosition[1] + 1).equals(Pawn.WHITE)) {
-			whiteThatSurrounKing++;
-		}
-		if((kingPosition[0] - 1) >= 0 && this.getPawn(kingPosition[0] - 1, kingPosition[1]).equals(Pawn.WHITE)) {
-			whiteThatSurrounKing++;
-		}
-		if((kingPosition[0] + 1) < (StateTablut.KING_POSITION  * 2 + 1) && this.getPawn(kingPosition[0] + 1, kingPosition[1]).equals(Pawn.WHITE)) {
-			whiteThatSurrounKing++;
-		}
-		if(whiteThatSurrounKing == 0 || whiteThatSurrounKing == 4) {
-			h_white = h_white - 600;
-		} else if(whiteThatSurrounKing == 1) {
-			h_white = h_white + 0;
-		} else if(whiteThatSurrounKing == 2) {
-			h_white = h_white + 0;
-		} else if(whiteThatSurrounKing == 3) {
-			h_white = h_white + 0;
-		}
-		if(h_white > 1000) {
-			h_white = 900;
-		}
-		//System.out.println(h_white);
 		return h_white;
 	}
 	
@@ -617,7 +635,7 @@ public class StateTablut {
 			XYWho buf;
 			for (int i = 0; i < currentBoardState.length; i++) {
 				for (int j = 0; j < currentBoardState.length; j++) {
-					if (this.getPawn(i, j).equalsPawn(StateTablut.Pawn.WHITE.toString()) || this.getPawn(i, j).equalsPawn(StateTablut.Pawn.KING.toString()))  {
+					if (this.getPawn(i, j).equals(StateTablut.Pawn.WHITE) || this.getPawn(i, j).equals(StateTablut.Pawn.KING))  {
 						buf = new XYWho(i, j, new int[]{i, j}, false);
 						whitePositions.add(buf);
 					}
@@ -681,6 +699,14 @@ public class StateTablut {
 				}
 					
 			}
+			int[] kingPosition = this.getKingPosition();
+			
+			for (int i = 0; i < whiteLegalMoves.size(); i++) {
+				if(whiteLegalMoves.get(i).getWho()[0] == kingPosition[0] && whiteLegalMoves.get(i).getWho()[1] == kingPosition[1]) {
+					System.out.println(whiteLegalMoves.get(i).getX()+ " " +whiteLegalMoves.get(i).getY());
+				}
+			}
+			
 			return whiteLegalMoves;
 			
 			

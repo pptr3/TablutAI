@@ -41,12 +41,20 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 	@Override
 	public double getUtility(StateTablut state, Turn player) {
 		int result = state.getUtility();
-		System.out.println(player);
-		if (result != StateTablut.STATE_IS_NOT_YET_FINISHED) { // white max, black min //TODO: zero sum, +1 for each good thing, -1 for bad. If are the contrary, switch
-			//return result;
+		//int result = -1;
+		if (result != StateTablut.STATE_IS_NOT_YET_FINISHED) {
+			if(player.equals(Turn.WHITE)) {
+			} else if(player.equals(Turn.BLACK)) {
+				
+			}
 		} else if(state.getCurrentDepth() == 0) {
-			
+			if(player.equals(Turn.WHITE)) {
+				result = state.freeFirstRing() + state.getWhiteHeuristic();
+			} else if(player.equals(Turn.BLACK)) {
+				
+			}
 		}
+		//System.out.println(result);
 		return result;
 	}
 

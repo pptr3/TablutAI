@@ -8,7 +8,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		int depth = 2;
+		int depth = 4;
 		TablutGame st = new TablutGame(depth);
 		StateTablut c = st.getInitialState();
 		AlphaBetaSearch<StateTablut, XYWho, Turn> ab = new AlphaBetaSearch<StateTablut, XYWho, Turn> (st, depth);
