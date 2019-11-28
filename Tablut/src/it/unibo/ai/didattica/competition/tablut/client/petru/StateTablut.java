@@ -115,7 +115,7 @@ public class StateTablut {
 			//check if WHITE won
 			if(this.hasWhiteWon()) {
 				System.out.println("white won");
-				this.setUtility(Integer.MAX_VALUE);
+				//this.setUtility(Integer.MAX_VALUE);
 			} else
 			//check if BLACK won 
 			if(this.hasBlackWon(action)) {
@@ -241,10 +241,6 @@ public class StateTablut {
 		
 		// checking if it is in the escape area
 		if(kingPosition[0] == 8 || kingPosition[1] == 8) {
-			h_white = 100;
-		}
-		
-		if(h_white > 100) {
 			h_white = 100;
 		}
 		return h_white;
@@ -375,7 +371,7 @@ public class StateTablut {
 								this.setPawn(i, j, Pawn.EMPTY);
 							}
 						}
-						if(!this.getArea(i - 1, j).equals(Area.CAMPS)) {
+						if(!this.getArea(i, j).equals(Area.CAMPS)) {
 							// soldier captured by camp
 							if(((i - 1) >= 0 && (i + 1) < this.getBoard().length) && this.getArea(i - 1, j).equals(Area.CAMPS) && this.getPawn(i + 1, j).equals(Pawn.WHITE)) {
 								if((action.getX() == (i + 1) && action.getY() == (j))) {
@@ -693,14 +689,6 @@ public class StateTablut {
 				}
 					
 			}
-			int[] kingPosition = this.getKingPosition();
-			
-			for (int i = 0; i < whiteLegalMoves.size(); i++) {
-				if(whiteLegalMoves.get(i).getWho()[0] == kingPosition[0] && whiteLegalMoves.get(i).getWho()[1] == kingPosition[1]) {
-					System.out.println(whiteLegalMoves.get(i).getX()+ " " +whiteLegalMoves.get(i).getY());
-				}
-			}
-			
 			return whiteLegalMoves;
 			
 			
