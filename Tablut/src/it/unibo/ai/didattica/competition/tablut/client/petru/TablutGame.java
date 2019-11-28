@@ -38,7 +38,10 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 		int result = state.getUtility();
 		if (result != StateTablut.STATE_IS_NOT_YET_FINISHED) {
 			if(player.equals(Turn.WHITE)) {
-				return result;
+				//System.out.println("gh"+result);
+				if(result == 0) {
+					return Integer.MIN_VALUE;
+				}
 			} else if(player.equals(Turn.BLACK)) {
 				
 			}
