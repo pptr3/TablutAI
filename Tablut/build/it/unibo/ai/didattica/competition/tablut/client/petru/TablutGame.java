@@ -35,16 +35,16 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 
 	@Override
 	public double getUtility(StateTablut state, Turn player) {
-		//int result = state.getUtility();
-		int result = -1;
-		/*if (result != StateTablut.STATE_IS_NOT_YET_FINISHED) {
+		int result = state.getUtility();
+		if (result != StateTablut.STATE_IS_NOT_YET_FINISHED) {
 			if(player.equals(Turn.WHITE)) {
+				return result;
 			} else if(player.equals(Turn.BLACK)) {
-				
+				System.out.println("no");
 			}
-		} else*/ if(state.getCurrentDepth() == 0) {
+		} else if(state.getCurrentDepth() == 0) {
 			if(player.equals(Turn.WHITE)) {
-				result = state.freeFirstRing() + state.getWhiteHeuristic();
+				result = state.freeFirstRing() + state.getDistanceFromKingToClosestEscapeArea();
 			} else if(player.equals(Turn.BLACK)) {
 				
 			}

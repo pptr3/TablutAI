@@ -4,6 +4,7 @@ package it.unibo.ai.didattica.competition.tablut.client.petru;
 import java.util.ArrayList;
 
 import java.util.List;
+import java.util.Random;
 
 
 
@@ -69,7 +70,7 @@ public class StateTablut {
 	
 	public static final int STATE_IS_NOT_YET_FINISHED = -1;
 	public static final int BLACK_WON = 0;
-	public static final int WHITE_WON = 100;
+	public static final int WHITE_WON = Integer.MAX_VALUE;
 	public static final int DRAW = 50;
 	
 
@@ -115,7 +116,7 @@ public class StateTablut {
 			//check if WHITE won
 			if(this.hasWhiteWon()) {
 				System.out.println("white won");
-				//this.setUtility(Integer.MAX_VALUE);
+				this.setUtility(WHITE_WON);
 			} else
 			//check if BLACK won 
 			if(this.hasBlackWon(action)) {
@@ -150,19 +151,19 @@ public class StateTablut {
 			whiteThatSurrounKing++;
 		}
 		if(whiteThatSurrounKing == 0) {
-			h_white = 40;
+			h_white = -1;
 		}
 		if(whiteThatSurrounKing == 1) {
-			h_white = 30;
+			h_white = 1;
 		}
 		if(whiteThatSurrounKing == 2) {
-			h_white = 20;
+			h_white = 2;
 		}
 		if(whiteThatSurrounKing == 3) {
-			h_white = 10;
+			h_white = 0;
 		}
 		if(whiteThatSurrounKing == 4) {
-			h_white = 0;
+			h_white = -2;
 		}
 		
 		return h_white;
@@ -170,78 +171,92 @@ public class StateTablut {
 	}
 	
 	
-	public int getWhiteHeuristic() {
+	public int getDistanceFromKingToClosestEscapeArea() {
 		//getDistance from KING position to closest ESCAPE area
 		int h_white = 0;
 		int[] kingPosition = this.getKingPosition();
 		
 		// whether the king is in the throne
 		if(kingPosition[0] == StateTablut.KING_POSITION && kingPosition[1] == StateTablut.KING_POSITION) {
-			h_white = 0;
-		} 
+			h_white = -1;
+		} else
 		
 		// checking ring around the throne
+		// checking corners
 		if((kingPosition[0] == 3 && kingPosition[1] == 3) ||
 		(kingPosition[0] == 3 && kingPosition[1] == 5) ||
 		(kingPosition[0] == 5 && kingPosition[1] == 5) ||
-		(kingPosition[0] == 5 && kingPosition[1] == 3) ||
-		(kingPosition[0] == 4 && kingPosition[1] == 3) ||
+		(kingPosition[0] == 5 && kingPosition[1] == 3)) {
+			h_white = 2;
+		} else
+		
+		// checking cross
+		if((kingPosition[0] == 4 && kingPosition[1] == 3) ||
 		(kingPosition[0] == 4 && kingPosition[1] == 5) ||
 		(kingPosition[0] == 5 && kingPosition[1] == 4) ||
 		(kingPosition[0] == 3 && kingPosition[1] == 4)) {
-			h_white = 10;
-		}
+			h_white = 1;
+		} else
 			
-		
 		// checking second ring
-		if((kingPosition[0] == 2 && kingPosition[1] == 2) ||
-		(kingPosition[0] == 3 && kingPosition[1] == 2) ||		
-		(kingPosition[0] == 4 && kingPosition[1] == 2) ||			
-		(kingPosition[0] == 5 && kingPosition[1] == 2) ||			
-		(kingPosition[0] == 6 && kingPosition[1] == 2) ||			
-		(kingPosition[0] == 2 && kingPosition[1] == 6) ||			
+		// checking corners
+		if((kingPosition[0] == 6 && kingPosition[1] == 6) ||			
+		(kingPosition[0] == 2 && kingPosition[1] == 2) ||
+		(kingPosition[0] == 6 && kingPosition[1] == 2) ||
+		(kingPosition[0] == 2 && kingPosition[1] == 6)) {
+			h_white = 5;
+		} else
+		// checking cross
+		if((kingPosition[0] == 4 && kingPosition[1] == 2) ||
+		(kingPosition[0] == 4 && kingPosition[1] == 6) ||
+		(kingPosition[0] == 6 && kingPosition[1] == 4) ||
+		(kingPosition[0] == 2 && kingPosition[1] == 4)) {
+			h_white = 4;
+		} else
+		// remained places
+		if((kingPosition[0] == 3 && kingPosition[1] == 2) ||			
+		(kingPosition[0] == 5 && kingPosition[1] == 2) ||					
 		(kingPosition[0] == 3 && kingPosition[1] == 6) ||			
-		(kingPosition[0] == 4 && kingPosition[1] == 6) ||			
 		(kingPosition[0] == 5 && kingPosition[1] == 6) ||			
-		(kingPosition[0] == 6 && kingPosition[1] == 6) ||			
-		(kingPosition[0] == 2 && kingPosition[1] == 3) ||			
-		(kingPosition[0] == 2 && kingPosition[1] == 4) ||		
+		(kingPosition[0] == 2 && kingPosition[1] == 3) ||				
 		(kingPosition[0] == 2 && kingPosition[1] == 5) ||			
-		(kingPosition[0] == 6 && kingPosition[1] == 3) ||			
-		(kingPosition[0] == 6 && kingPosition[1] == 4) ||			
+		(kingPosition[0] == 6 && kingPosition[1] == 3) ||				
 		(kingPosition[0] == 6 && kingPosition[1] == 5)) {
-			h_white = 20;
-		}
+			h_white = 3;
+		} else
+		
 		
 		// checking third ring
+		// corners triplets
 		if((kingPosition[0] == 1 && kingPosition[1] == 1) ||
+		(kingPosition[0] == 1 && kingPosition[1] == 2) ||
 		(kingPosition[0] == 2 && kingPosition[1] == 1) ||
-		(kingPosition[0] == 3 && kingPosition[1] == 1) ||
-		(kingPosition[0] == 5 && kingPosition[1] == 1) ||
 		(kingPosition[0] == 6 && kingPosition[1] == 1) ||
 		(kingPosition[0] == 7 && kingPosition[1] == 1) ||
-		(kingPosition[0] == 1 && kingPosition[1] == 7) ||
-		(kingPosition[0] == 2 && kingPosition[1] == 7) ||
-		(kingPosition[0] == 3 && kingPosition[1] == 7) ||
-		(kingPosition[0] == 5 && kingPosition[1] == 7) ||
-		(kingPosition[0] == 6 && kingPosition[1] == 7) ||
+		(kingPosition[0] == 7 && kingPosition[1] == 2) ||
+		(kingPosition[0] == 7 && kingPosition[1] == 6) ||
 		(kingPosition[0] == 7 && kingPosition[1] == 7) ||
-		(kingPosition[0] == 1 && kingPosition[1] == 2) ||
-		(kingPosition[0] == 1 && kingPosition[1] == 3) ||
-		(kingPosition[0] == 1 && kingPosition[1] == 5) ||
+		(kingPosition[0] == 6 && kingPosition[1] == 7) ||
 		(kingPosition[0] == 1 && kingPosition[1] == 6) ||
 		(kingPosition[0] == 1 && kingPosition[1] == 7) ||
-		(kingPosition[0] == 7 && kingPosition[1] == 2) ||
+		(kingPosition[0] == 3 && kingPosition[1] == 7)) {
+			h_white = 8;
+		} else
+		// 
+		if((kingPosition[0] == 3 && kingPosition[1] == 1) ||
+		(kingPosition[0] == 5 && kingPosition[1] == 1) ||
+		(kingPosition[0] == 2 && kingPosition[1] == 7) ||
+		(kingPosition[0] == 5 && kingPosition[1] == 7) ||
+		(kingPosition[0] == 1 && kingPosition[1] == 3) ||
+		(kingPosition[0] == 1 && kingPosition[1] == 5) ||
 		(kingPosition[0] == 7 && kingPosition[1] == 3) ||
-		(kingPosition[0] == 7 && kingPosition[1] == 5) ||
-		(kingPosition[0] == 7 && kingPosition[1] == 6) ||
-		(kingPosition[0] == 7 && kingPosition[1] == 7)) {
-			h_white = 50;
-		}
+		(kingPosition[0] == 7 && kingPosition[1] == 5)) {
+			h_white = 7;
+		} else
 		
 		// checking if it is in the escape area
 		if(kingPosition[0] == 8 || kingPosition[1] == 8) {
-			h_white = 100;
+			h_white = 9 + new Random().nextInt(24);
 		}
 		return h_white;
 	}
