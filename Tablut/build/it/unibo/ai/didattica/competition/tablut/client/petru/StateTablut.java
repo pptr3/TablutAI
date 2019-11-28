@@ -4,13 +4,6 @@ package it.unibo.ai.didattica.competition.tablut.client.petru;
 import java.util.ArrayList;
 
 import java.util.List;
-import java.util.Random;
-
-import aima.core.agent.State;
-import it.unibo.ai.didattica.competition.tablut.client.petru.StateTablut.Area;
-import it.unibo.ai.didattica.competition.tablut.client.petru.StateTablut.Pawn;
-import it.unibo.ai.didattica.competition.tablut.client.petru.StateTablut.Turn;
-
 
 
 
@@ -118,70 +111,58 @@ public class StateTablut {
 	
 	public void updateUtility(XYWho action) {	
 		this.eat(action);	
-		/*if(this.getUtility() == STATE_IS_NOT_YET_FINISHED) {
+		if(this.getUtility() == STATE_IS_NOT_YET_FINISHED) {
 			//check if WHITE won
 			if(this.hasWhiteWon()) {
 				System.out.println("white won");
-				this.setUtility(99);
+				this.setUtility(Integer.MAX_VALUE);
 			} else
 			//check if BLACK won 
 			if(this.hasBlackWon(action)) {
 				//System.out.println("black won");
 				this.setUtility(BLACK_WON);
-			}
+			} else
 			//check if DRAW
 			if(this.isDraw()) {
 				System.out.println("ddraw");
 				this.setUtility(DRAW);
 			}
-		}*/
+		}
 	}
 
 	public int freeFirstRing() {
 		
 		int h_white = 0;
-		int whiteThatSurroundKing = 0;
+		int whiteThatSurrounKing = 0;
 		
 		int[] kingPosition = this.getKingPosition();
+		
 		if((kingPosition[1] - 1) >= 0 && !this.getPawn(kingPosition[0], kingPosition[1] - 1).equals(Pawn.EMPTY)) {
-			whiteThatSurroundKing++;
+			whiteThatSurrounKing++;
 		}
 		if((kingPosition[1] + 1) < (StateTablut.KING_POSITION  * 2 + 1) && !this.getPawn(kingPosition[0], kingPosition[1] + 1).equals(Pawn.EMPTY)) {
-			whiteThatSurroundKing++;
+			whiteThatSurrounKing++;
 		}
 		if((kingPosition[0] - 1) >= 0 && !this.getPawn(kingPosition[0] - 1, kingPosition[1]).equals(Pawn.EMPTY)) {
-			whiteThatSurroundKing++;
+			whiteThatSurrounKing++;
 		}
 		if((kingPosition[0] + 1) < (StateTablut.KING_POSITION  * 2 + 1) && !this.getPawn(kingPosition[0] + 1, kingPosition[1]).equals(Pawn.EMPTY)) {
-			whiteThatSurroundKing++;
+			whiteThatSurrounKing++;
 		}
-		//System.out.println(whiteThatSurroundKing);
-		if(whiteThatSurroundKing == 0) {
-			h_white = 60;
-		} else 
-		if(whiteThatSurroundKing == 1) {
+		if(whiteThatSurrounKing == 0) {
+			h_white = 40;
+		}
+		if(whiteThatSurrounKing == 1) {
 			h_white = 30;
-		} else 
-		if(whiteThatSurroundKing == 2) {
+		}
+		if(whiteThatSurrounKing == 2) {
 			h_white = 20;
 		}
-		if(whiteThatSurroundKing == 3) {
+		if(whiteThatSurrounKing == 3) {
 			h_white = 10;
-		} else 
-		if(whiteThatSurroundKing == 4) {
-			h_white = 0;
 		}
-		if(whiteThatSurroundKing == 1) {
-			System.out.println("MY WAA");
-			System.out.println(whiteThatSurroundKing);
-			this.printBoard();
-			try {
-				Thread.sleep(10000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			System.exit(0);
+		if(whiteThatSurrounKing == 4) {
+			h_white = 0;
 		}
 		
 		return h_white;
@@ -260,7 +241,11 @@ public class StateTablut {
 		
 		// checking if it is in the escape area
 		if(kingPosition[0] == 8 || kingPosition[1] == 8) {
-			h_white = Integer.MAX_VALUE;
+			h_white = 100;
+		}
+		
+		if(h_white > 100) {
+			h_white = 100;
 		}
 		return h_white;
 	}
@@ -706,7 +691,15 @@ public class StateTablut {
 					}
 				}
 					
-			}			
+			}
+			int[] kingPosition = this.getKingPosition();
+			
+			for (int i = 0; i < whiteLegalMoves.size(); i++) {
+				if(whiteLegalMoves.get(i).getWho()[0] == kingPosition[0] && whiteLegalMoves.get(i).getWho()[1] == kingPosition[1]) {
+					System.out.println(whiteLegalMoves.get(i).getX()+ " " +whiteLegalMoves.get(i).getY());
+				}
+			}
+			
 			return whiteLegalMoves;
 			
 			
@@ -963,18 +956,18 @@ public class StateTablut {
 	public void printBoardArea() {
 		for(int i=0; i < this.getBoardArea().length; i++) {
 			for(int j=0; j < this.getBoardArea().length; j++) {
-				System.out.print(this.getBoardArea()[i][j]+ "|");
+				System.out.print(this.getBoardArea()[i][j]+ "  ");
 			}
-			System.out.println("");
+			System.out.println("\n");
 		}
 	}
 	
 	public void printBoard() {
 		for(int i=0; i < this.getBoard().length; i++) {
 			for(int j=0; j < this.getBoard().length; j++) {
-				System.out.print(this.getBoard()[i][j]+ "|");
+				System.out.print(this.getBoard()[i][j]+ "  ");
 			}
-			System.out.println("");
+			System.out.println("\n");
 		}
 	}
 	
