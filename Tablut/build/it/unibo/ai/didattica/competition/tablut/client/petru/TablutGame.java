@@ -2,6 +2,7 @@ package it.unibo.ai.didattica.competition.tablut.client.petru;
 
 import java.util.List;
 import it.unibo.ai.didattica.competition.tablut.client.ab.Game;
+import it.unibo.ai.didattica.competition.tablut.client.petru.StateTablut.Pawn;
 import it.unibo.ai.didattica.competition.tablut.client.petru.StateTablut.Turn;
 
 
@@ -36,24 +37,23 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 	@Override
 	public double getUtility(StateTablut state, Turn player) {
 		int result = state.getUtility();
+		double toreturn = 0;
 		if (result != StateTablut.STATE_IS_NOT_YET_FINISHED) {
 			if(player.equals(Turn.WHITE)) {
-				//System.out.println("gh"+result);
-				if(result == 0) {
-					return Integer.MIN_VALUE;
-				}
+				toreturn = result;
+				return result;
 			} else if(player.equals(Turn.BLACK)) {
 				
 			}
 		} else if(state.getCurrentDepth() == 0) {
 			if(player.equals(Turn.WHITE)) {
-				result = state.freeFirstRing() + state.getDistanceFromKingToClosestEscapeArea();
+				toreturn = 5*state.getDistanceFromKingToClosestEscapeArea() - 0.5*state.getNumberOfWhiteCloseToKing() - 4*state.getNumberOfBlackCloseToKing()
+				+ 0.5*state.getNumberOf(Pawn.WHITE) - 0.5*state.getNumberOf(Pawn.BLACK);
 			} else if(player.equals(Turn.BLACK)) {
 				
 			}
 		}
-		//System.out.println(result);
-		return result;
+		return toreturn;
 	}
 
 	@Override

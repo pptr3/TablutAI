@@ -2,7 +2,7 @@ package it.unibo.ai.didattica.competition.tablut.client.petru;
 
 
 import java.util.ArrayList;
-
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -69,9 +69,9 @@ public class StateTablut {
 	public static final int KING_POSITION = 4;
 	
 	public static final int STATE_IS_NOT_YET_FINISHED = -1;
-	public static final int BLACK_WON = 0;
-	public static final int WHITE_WON = Integer.MAX_VALUE;
-	public static final int DRAW = 50;
+	public static final int BLACK_WON = -1000;
+	public static final int WHITE_WON = 1000;
+	public static final int DRAW = 0;
 	
 
 	private Pawn board[][];
@@ -130,135 +130,87 @@ public class StateTablut {
 			}
 		}
 	}
-
-	public int freeFirstRing() {
-		
-		int h_white = 0;
-		int whiteThatSurrounKing = 0;
+	
+	public int getNumberOfWhiteCloseToKing() {
+		int whiteThatSurroundKing = 0;
 		
 		int[] kingPosition = this.getKingPosition();
 		
-		if((kingPosition[1] - 1) >= 0 && !this.getPawn(kingPosition[0], kingPosition[1] - 1).equals(Pawn.EMPTY)) {
-			whiteThatSurrounKing++;
+		if((kingPosition[1] - 1) >= 0 && this.getPawn(kingPosition[0], kingPosition[1] - 1).equals(Pawn.WHITE)) {
+			whiteThatSurroundKing++;
 		}
-		if((kingPosition[1] + 1) < (StateTablut.KING_POSITION  * 2 + 1) && !this.getPawn(kingPosition[0], kingPosition[1] + 1).equals(Pawn.EMPTY)) {
-			whiteThatSurrounKing++;
+		if((kingPosition[1] + 1) < (StateTablut.KING_POSITION  * 2 + 1) && this.getPawn(kingPosition[0], kingPosition[1] + 1).equals(Pawn.WHITE)) {
+			whiteThatSurroundKing++;
 		}
-		if((kingPosition[0] - 1) >= 0 && !this.getPawn(kingPosition[0] - 1, kingPosition[1]).equals(Pawn.EMPTY)) {
-			whiteThatSurrounKing++;
+		if((kingPosition[0] - 1) >= 0 && !this.getPawn(kingPosition[0] - 1, kingPosition[1]).equals(Pawn.WHITE)) {
+			whiteThatSurroundKing++;
 		}
-		if((kingPosition[0] + 1) < (StateTablut.KING_POSITION  * 2 + 1) && !this.getPawn(kingPosition[0] + 1, kingPosition[1]).equals(Pawn.EMPTY)) {
-			whiteThatSurrounKing++;
+		if((kingPosition[0] + 1) < (StateTablut.KING_POSITION  * 2 + 1) && this.getPawn(kingPosition[0] + 1, kingPosition[1]).equals(Pawn.WHITE)) {
+			whiteThatSurroundKing++;
 		}
-		if(whiteThatSurrounKing == 0) {
-			h_white = -1;
-		}
-		if(whiteThatSurrounKing == 1) {
-			h_white = 1;
-		}
-		if(whiteThatSurrounKing == 2) {
-			h_white = 2;
-		}
-		if(whiteThatSurrounKing == 3) {
-			h_white = 0;
-		}
-		if(whiteThatSurrounKing == 4) {
-			h_white = -2;
-		}
-		
-		return h_white;
-				
+		return whiteThatSurroundKing;	
 	}
 	
-	
-	public int getDistanceFromKingToClosestEscapeArea() {
-		//getDistance from KING position to closest ESCAPE area
-		int h_white = 0;
+	public int getNumberOfBlackCloseToKing() {
+		
+		int blackThatSurroundKing = 0;
+		
 		int[] kingPosition = this.getKingPosition();
 		
-		// whether the king is in the throne
-		if(kingPosition[0] == StateTablut.KING_POSITION && kingPosition[1] == StateTablut.KING_POSITION) {
-			h_white = -1;
-		} else
-		
-		// checking ring around the throne
-		// checking corners
-		if((kingPosition[0] == 3 && kingPosition[1] == 3) ||
-		(kingPosition[0] == 3 && kingPosition[1] == 5) ||
-		(kingPosition[0] == 5 && kingPosition[1] == 5) ||
-		(kingPosition[0] == 5 && kingPosition[1] == 3)) {
-			h_white = 2;
-		} else
-		
-		// checking cross
-		if((kingPosition[0] == 4 && kingPosition[1] == 3) ||
-		(kingPosition[0] == 4 && kingPosition[1] == 5) ||
-		(kingPosition[0] == 5 && kingPosition[1] == 4) ||
-		(kingPosition[0] == 3 && kingPosition[1] == 4)) {
-			h_white = 1;
-		} else
-			
-		// checking second ring
-		// checking corners
-		if((kingPosition[0] == 6 && kingPosition[1] == 6) ||			
-		(kingPosition[0] == 2 && kingPosition[1] == 2) ||
-		(kingPosition[0] == 6 && kingPosition[1] == 2) ||
-		(kingPosition[0] == 2 && kingPosition[1] == 6)) {
-			h_white = 5;
-		} else
-		// checking cross
-		if((kingPosition[0] == 4 && kingPosition[1] == 2) ||
-		(kingPosition[0] == 4 && kingPosition[1] == 6) ||
-		(kingPosition[0] == 6 && kingPosition[1] == 4) ||
-		(kingPosition[0] == 2 && kingPosition[1] == 4)) {
-			h_white = 4;
-		} else
-		// remained places
-		if((kingPosition[0] == 3 && kingPosition[1] == 2) ||			
-		(kingPosition[0] == 5 && kingPosition[1] == 2) ||					
-		(kingPosition[0] == 3 && kingPosition[1] == 6) ||			
-		(kingPosition[0] == 5 && kingPosition[1] == 6) ||			
-		(kingPosition[0] == 2 && kingPosition[1] == 3) ||				
-		(kingPosition[0] == 2 && kingPosition[1] == 5) ||			
-		(kingPosition[0] == 6 && kingPosition[1] == 3) ||				
-		(kingPosition[0] == 6 && kingPosition[1] == 5)) {
-			h_white = 3;
-		} else
-		
-		
-		// checking third ring
-		// corners triplets
-		if((kingPosition[0] == 1 && kingPosition[1] == 1) ||
-		(kingPosition[0] == 1 && kingPosition[1] == 2) ||
-		(kingPosition[0] == 2 && kingPosition[1] == 1) ||
-		(kingPosition[0] == 6 && kingPosition[1] == 1) ||
-		(kingPosition[0] == 7 && kingPosition[1] == 1) ||
-		(kingPosition[0] == 7 && kingPosition[1] == 2) ||
-		(kingPosition[0] == 7 && kingPosition[1] == 6) ||
-		(kingPosition[0] == 7 && kingPosition[1] == 7) ||
-		(kingPosition[0] == 6 && kingPosition[1] == 7) ||
-		(kingPosition[0] == 1 && kingPosition[1] == 6) ||
-		(kingPosition[0] == 1 && kingPosition[1] == 7) ||
-		(kingPosition[0] == 3 && kingPosition[1] == 7)) {
-			h_white = 8;
-		} else
-		// 
-		if((kingPosition[0] == 3 && kingPosition[1] == 1) ||
-		(kingPosition[0] == 5 && kingPosition[1] == 1) ||
-		(kingPosition[0] == 2 && kingPosition[1] == 7) ||
-		(kingPosition[0] == 5 && kingPosition[1] == 7) ||
-		(kingPosition[0] == 1 && kingPosition[1] == 3) ||
-		(kingPosition[0] == 1 && kingPosition[1] == 5) ||
-		(kingPosition[0] == 7 && kingPosition[1] == 3) ||
-		(kingPosition[0] == 7 && kingPosition[1] == 5)) {
-			h_white = 7;
-		} else
-		
-		// checking if it is in the escape area
-		if(kingPosition[0] == 8 || kingPosition[1] == 8) {
-			h_white = 9 + new Random().nextInt(24);
+		if((kingPosition[1] - 1) >= 0 && this.getPawn(kingPosition[0], kingPosition[1] - 1).equals(Pawn.BLACK)) {
+			blackThatSurroundKing++;
 		}
-		return h_white;
+		if((kingPosition[1] + 1) < (StateTablut.KING_POSITION  * 2 + 1) && this.getPawn(kingPosition[0], kingPosition[1] + 1).equals(Pawn.BLACK)) {
+			blackThatSurroundKing++;
+		}
+		if((kingPosition[0] - 1) >= 0 && !this.getPawn(kingPosition[0] - 1, kingPosition[1]).equals(Pawn.BLACK)) {
+			blackThatSurroundKing++;
+		}
+		if((kingPosition[0] + 1) < (StateTablut.KING_POSITION  * 2 + 1) && this.getPawn(kingPosition[0] + 1, kingPosition[1]).equals(Pawn.BLACK)) {
+			blackThatSurroundKing++;
+		}
+		return blackThatSurroundKing;	
+	}
+		
+	public double getDistanceFromKingToClosestEscapeArea() {
+		int[] kingPosition = this.getKingPosition();
+		if(kingPosition[0] == 4 && kingPosition[1] == 4) { // checking if it is in the throne
+			return -4;
+		}
+	
+		List<int[]> escapeCoord = new ArrayList<>();
+		List<Double> min = new ArrayList<>();
+		
+		for (int i = 0; i < this.getBoard().length; i++) {
+			for (int j = 0; j < this.getBoard().length; j++) {
+				if(this.getArea(i, j).equals(Area.ESCAPES)) {
+					escapeCoord.add(new int[] {i, j});
+				}
+			}
+		}
+		for (int i = 0; i < escapeCoord.size(); i++) {
+			double deltaX = Math.abs(kingPosition[0] - (escapeCoord.get(i)[0]));
+			double deltaY = Math.abs(kingPosition[1] - (escapeCoord.get(i)[1]));
+			min.add(Math.sqrt(deltaX*deltaX + deltaY*deltaY));
+		}
+		return 10 - Collections.min(min);
+	}
+
+	public static void main(String[] args) {
+		StateTablut dd = new StateTablut(2);
+		System.out.println(dd.getDistanceFromKingToClosestEscapeArea());
+	}
+	
+	public int getNumberOf(Pawn color) {
+		int count = 0;
+		for (int i = 0; i < this.getBoard().length; i++) {
+			for (int j = 0; j < this.getBoard().length; j++) {
+				if(this.getPawn(i, j).equals(color)) {
+					count++;
+				}
+			}
+		}
+		return count;
 	}
 	
 	private void eat(XYWho action) {
@@ -451,8 +403,6 @@ public class StateTablut {
 							(!this.getArea(i, j).equals(Area.CASTLE) && (!this.getArea(i, j - 1).equals(Area.CASTLE) &&
 							(!this.getArea(i, j + 1).equals(Area.CASTLE))))) {
 						if((action.getX() == (i - 1) && action.getY() == (j)) || ((action.getX() == (i + 1) && action.getY() == (j)))) {
-							System.out.println("LLLL");
-							this.printBoard();
 							return true;
 						}
 					}
@@ -465,8 +415,6 @@ public class StateTablut {
 							(!this.getArea(i, j).equals(Area.CASTLE) && (!this.getArea(i - 1, j).equals(Area.CASTLE) &&
 							(!this.getArea(i + 1, j).equals(Area.CASTLE))))) {
 						if((action.getX() == (i) && action.getY() == (j - 1)) || ((action.getX() == (i) && action.getY() == (j + 1)))) {
-							System.out.println("PPPP");
-							this.printBoard();
 							return true;
 						}
 					}
@@ -480,7 +428,6 @@ public class StateTablut {
 				if(this.getPawn(i, j).equals(Pawn.KING) && this.getArea(i, j).equals(Area.CASTLE)) {
 					if(this.getPawn(i, j - 1).equals(Pawn.BLACK) && this.getPawn(i, j + 1).equals(Pawn.BLACK)
 							&& this.getPawn(i - 1, j).equals(Pawn.BLACK) && this.getPawn(i + 1, j).equals(Pawn.BLACK)) {
-						System.out.println("c");
 						return true;
 					}
 				}
@@ -505,7 +452,7 @@ public class StateTablut {
 					&& ((action.getX() == StateTablut.KING_POSITION && action.getY() == (StateTablut.KING_POSITION + 2)) 
 							|| (action.getX() == (StateTablut.KING_POSITION + 1) && action.getY() == (StateTablut.KING_POSITION + 1))
 							|| (action.getX() == (StateTablut.KING_POSITION - 1) && action.getY() == (StateTablut.KING_POSITION + 1))
-					)) {System.out.println("e");
+					)) {
 				return true;
 			}
 		} else if(this.getPawn(StateTablut.KING_POSITION - 1, StateTablut.KING_POSITION).equals(Pawn.KING)) {
@@ -515,7 +462,7 @@ public class StateTablut {
 					&& ((action.getX() == (StateTablut.KING_POSITION - 1) && action.getY() == (StateTablut.KING_POSITION - 1)) 
 							|| (action.getX() == (StateTablut.KING_POSITION - 2) && action.getY() == (StateTablut.KING_POSITION))
 							|| (action.getX() == (StateTablut.KING_POSITION - 1) && action.getY() == (StateTablut.KING_POSITION + 1))
-					)) {System.out.println("f");
+					)) {
 				return true;
 			}
 			
@@ -526,7 +473,7 @@ public class StateTablut {
 					&& ((action.getX() == (StateTablut.KING_POSITION + 1) && action.getY() == (StateTablut.KING_POSITION + 1)) 
 							|| (action.getX() == (StateTablut.KING_POSITION + 2) && action.getY() == (StateTablut.KING_POSITION))
 							|| (action.getX() == (StateTablut.KING_POSITION + 1) && action.getY() == (StateTablut.KING_POSITION - 1))
-					)) {System.out.println("g");
+					)) {
 				return true;
 			}
 		}
