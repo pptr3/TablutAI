@@ -261,17 +261,6 @@ public class StateTablut {
 		return h_white;
 	}
 	
-	private int[] getKingPosition() {
-		for (int i = 0; i < this.getBoard().length; i++) {
-			for (int j = 0; j < this.getBoard().length; j++) {
-				if(this.getPawn(i, j) == Pawn.KING) {
-					return new int[] {i,j};
-				}
-			}
-		}
-		return null;
-	}
-	
 	private void eat(XYWho action) {
 		if(this.getTurn().equals(Turn.WHITE)) {
 			for(int i=0; i < this.getBoard().length; i++) {
@@ -458,9 +447,12 @@ public class StateTablut {
 			for(int j=0; j < this.getBoard().length; j++) {
 				if(this.getPawn(i, j).equals(Pawn.KING)) {
 					// case B K B
-					if(this.getPawn(i - 1, j).equals(Pawn.BLACK) && this.getPawn(i + 1, j).equals(Pawn.BLACK)) {
+					if(this.getPawn(i - 1, j).equals(Pawn.BLACK) && this.getPawn(i + 1, j).equals(Pawn.BLACK) && 
+							(!this.getArea(i, j).equals(Area.CASTLE) && (!this.getArea(i, j - 1).equals(Area.CASTLE) &&
+							(!this.getArea(i, j + 1).equals(Area.CASTLE))))) {
 						if((action.getX() == (i - 1) && action.getY() == (j)) || ((action.getX() == (i + 1) && action.getY() == (j)))) {
-							System.out.println("a");
+							System.out.println("LLLL");
+							this.printBoard();
 							return true;
 						}
 					}
@@ -469,9 +461,12 @@ public class StateTablut {
 					 * K
 					 * B
 					 */
-					if(this.getPawn(i, j - 1).equals(Pawn.BLACK) && this.getPawn(i, j + 1).equals(Pawn.BLACK)) {
+					if(this.getPawn(i, j - 1).equals(Pawn.BLACK) && this.getPawn(i, j + 1).equals(Pawn.BLACK) && 
+							(!this.getArea(i, j).equals(Area.CASTLE) && (!this.getArea(i - 1, j).equals(Area.CASTLE) &&
+							(!this.getArea(i + 1, j).equals(Area.CASTLE))))) {
 						if((action.getX() == (i) && action.getY() == (j - 1)) || ((action.getX() == (i) && action.getY() == (j + 1)))) {
-							System.out.println("b");
+							System.out.println("PPPP");
+							this.printBoard();
 							return true;
 						}
 					}
@@ -642,7 +637,7 @@ public class StateTablut {
 			List<XYWho> whiteLegalMoves = new ArrayList<>();
 			List<XYWho> whitePositions = new ArrayList<>();
 			/****************************************************/
-			XYWho buf2;
+			/*XYWho buf2;
 			for (int i = 0; i < currentBoardState.length; i++) {
 				for (int j = 0; j < currentBoardState.length; j++) {
 					if (this.getPawn(i, j).equals(StateTablut.Pawn.KING))  {
@@ -708,12 +703,12 @@ public class StateTablut {
 					}
 				}
 					
-			}
+			}*/
 			/****************************************************/
 			XYWho buf;
 			for (int i = 0; i < currentBoardState.length; i++) {
 				for (int j = 0; j < currentBoardState.length; j++) {
-					if (this.getPawn(i, j).equals(StateTablut.Pawn.WHITE))  {
+					if (this.getPawn(i, j).equals(StateTablut.Pawn.WHITE) || this.getPawn(i, j).equals(StateTablut.Pawn.KING))  {
 						buf = new XYWho(i, j, new int[]{i, j}, false);
 						whitePositions.add(buf);
 					}
@@ -1029,25 +1024,34 @@ public class StateTablut {
 		this.board[row][column] = Pawn.EMPTY;
 	}
 
+	private int[] getKingPosition() {
+		for (int i = 0; i < this.getBoard().length; i++) {
+			for (int j = 0; j < this.getBoard().length; j++) {
+				if(this.getPawn(i, j) == Pawn.KING) {
+					return new int[] {i,j};
+				}
+			}
+		}
+		return null;
+	}
 	
 	public void printBoardArea() {
 		for(int i=0; i < this.getBoardArea().length; i++) {
 			for(int j=0; j < this.getBoardArea().length; j++) {
-				System.out.print(this.getBoardArea()[i][j]+ "  ");
+				System.out.print(this.getBoardArea()[i][j]+ "");
 			}
-			System.out.println("\n");
+			System.out.println("|");
 		}
 	}
 	
 	public void printBoard() {
 		for(int i=0; i < this.getBoard().length; i++) {
 			for(int j=0; j < this.getBoard().length; j++) {
-				System.out.print(this.getBoard()[i][j]+ "  ");
+				System.out.print(this.getBoard()[i][j]+ "|");
 			}
-			System.out.println("\n");
+			System.out.println("");
 		}
 	}
-	
 	
 
 	@Override
