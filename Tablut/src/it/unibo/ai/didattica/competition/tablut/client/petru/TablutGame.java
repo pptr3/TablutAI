@@ -47,8 +47,8 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 			}
 		} else if(state.getCurrentDepth() == 0) {
 			if(player.equals(Turn.WHITE)) {
-				toreturn = 5*state.getDistanceFromKingToClosestEscapeArea() - 0.5*state.getNumberOfWhiteCloseToKing() - 4*state.getNumberOfBlackCloseToKing()
-				+ 0.5*state.getNumberOf(Pawn.WHITE) - 0.5*state.getNumberOf(Pawn.BLACK);
+				toreturn = 10*(state.getDistanceFromKingToClosestEscapeArea()) - 2*state.isTheKingInTheThrone() - 0.5*state.getNumberOfWhiteCloseToKing() - 4*state.getNumberOfBlackCloseToKing()
+				+ 0.5*state.getNumberOf(Pawn.WHITE) - 2*state.getNumberOf(Pawn.BLACK);
 			} else if(player.equals(Turn.BLACK)) {
 				
 			}

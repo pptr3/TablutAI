@@ -172,12 +172,13 @@ public class StateTablut {
 		return blackThatSurroundKing;	
 	}
 		
+	public int isTheKingInTheThrone() {
+		int[] kingPosition = this.getKingPosition();
+		return (kingPosition[0] == 4 && kingPosition[1] == 4) ? 1 : -1;
+	}
+	
 	public double getDistanceFromKingToClosestEscapeArea() {
 		int[] kingPosition = this.getKingPosition();
-		if(kingPosition[0] == 4 && kingPosition[1] == 4) { // checking if it is in the throne
-			return -4;
-		}
-	
 		List<int[]> escapeCoord = new ArrayList<>();
 		List<Double> min = new ArrayList<>();
 		
