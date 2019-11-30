@@ -91,7 +91,7 @@ public class StateTablut {
 	}
 	
 	public void applyMove(XYWho action) {
-		if(this.getUtility() == STATE_IS_NOT_YET_FINISHED && this.getCurrentDepth() != 0) {
+		if(/*this.getUtility() == STATE_IS_NOT_YET_FINISHED && */this.getCurrentDepth() != 0) {
 			if(this.getTurn().equals(Turn.WHITE)) {
 				if(this.getPawn(action.getWho()[0], action.getWho()[1]).equals(Pawn.KING)) {
 					this.setPawn(action.getX(), action.getY(), Pawn.KING);
@@ -111,7 +111,7 @@ public class StateTablut {
 	
 	public void updateUtility(XYWho action) {	
 		this.eat(action);	
-		if(this.getUtility() == STATE_IS_NOT_YET_FINISHED) {
+		/*if(this.getUtility() == STATE_IS_NOT_YET_FINISHED) {
 			//check if WHITE won
 			if(this.hasWhiteWon()) {
 				System.out.println("white won");
@@ -127,7 +127,7 @@ public class StateTablut {
 				System.out.println("ddraw");
 				this.setUtility(DRAW);
 			}
-		}
+		}*/
 	}
 	
 	public int getNumberOfWhiteCloseToKing() {
@@ -353,7 +353,8 @@ public class StateTablut {
 		
 	}
 	
-	private boolean hasWhiteWon() {
+	public boolean hasWhiteWon() {
+
 		// white won when the king is on an escape area
 		for(int i=0; i < this.getBoard().length; i++) {
 			for(int j=0; j < this.getBoard().length; j++) {
@@ -388,7 +389,7 @@ public class StateTablut {
 		return false;
 	}
 	
-	private boolean hasBlackWon(XYWho action) {
+	public boolean hasBlackWon(XYWho action) {
 		// normal capture of the king
 		for(int i=0; i < this.getBoard().length; i++) {
 			for(int j=0; j < this.getBoard().length; j++) {
@@ -552,7 +553,7 @@ public class StateTablut {
 		return false;
 	}
 
-	private boolean isDraw() {
+	public boolean isDraw() {
 		return false; //TODO: do draw
 	}
 
