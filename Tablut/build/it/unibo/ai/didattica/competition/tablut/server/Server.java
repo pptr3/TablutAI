@@ -441,7 +441,7 @@ public class Server implements Runnable {
 
 		switch (this.gameC) {
 		case 4:
-			state = new StateTablut(3);
+			state = new StateTablut(400);
 			state.setTurn(StateTablut.Turn.WHITE);
 			this.game = new GameAshtonTablut(state, repeated, this.cacheSize, "logs", whiteName, blackName);
 			break;
@@ -476,7 +476,7 @@ public class Server implements Runnable {
 		while (!endgame) {
 			// RECEIVE MOVE
 			
-			// System.out.println("State: \n"+state.toString());
+			System.out.println("State: \n"+state.toString());
 			System.out.println("Waiting for " + state.getTurn() + "...");
 
 			// create the process that listen the answer

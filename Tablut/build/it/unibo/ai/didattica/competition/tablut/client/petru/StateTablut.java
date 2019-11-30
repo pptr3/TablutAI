@@ -67,17 +67,9 @@ public class StateTablut {
 	public static final int WIDTH = 9; 
 	public static final int HEIGHT = 9; 
 	public static final int KING_POSITION = 4;
-	
-	public static final int STATE_IS_NOT_YET_FINISHED = -1;
-	public static final int BLACK_WON = -1000;
-	public static final int WHITE_WON = 1000;
-	public static final int DRAW = 0;
-	
-
 	private Pawn board[][];
 	private Area boardArea[][];
 	private Turn turn;
-	private int utility;
 	private int currentDepth;
 	
 	
@@ -86,12 +78,11 @@ public class StateTablut {
 		this.setBoardArea(new Area[StateTablut.WIDTH][StateTablut.WIDTH]);
 		this.initBoard();
 		this.setTurn(Turn.WHITE);
-		this.setUtility(STATE_IS_NOT_YET_FINISHED);
 		this.setCurrentDepth(depth);
 	}
 	
 	public void applyMove(XYWho action) {
-		if(/*this.getUtility() == STATE_IS_NOT_YET_FINISHED && */this.getCurrentDepth() != 0) {
+		if(this.getCurrentDepth() != 0) {
 			if(this.getTurn().equals(Turn.WHITE)) {
 				if(this.getPawn(action.getWho()[0], action.getWho()[1]).equals(Pawn.KING)) {
 					this.setPawn(action.getX(), action.getY(), Pawn.KING);
@@ -105,29 +96,8 @@ public class StateTablut {
 				this.setPawn(action.getWho()[0], action.getWho()[1], Pawn.EMPTY);
 				this.setTurn(Turn.WHITE);
 			}
-			this.updateUtility(action);
+			this.eat(action);
 		}
-	}
-	
-	public void updateUtility(XYWho action) {	
-		this.eat(action);	
-		/*if(this.getUtility() == STATE_IS_NOT_YET_FINISHED) {
-			//check if WHITE won
-			if(this.hasWhiteWon()) {
-				System.out.println("white won");
-				this.setUtility(WHITE_WON);
-			} else
-			//check if BLACK won 
-			if(this.hasBlackWon(action)) {
-				System.out.println("black won");
-				this.setUtility(BLACK_WON);
-			} else
-			//check if DRAW
-			if(this.isDraw()) {
-				System.out.println("ddraw");
-				this.setUtility(DRAW);
-			}
-		}*/
 	}
 	
 	public int getNumberOfWhiteCloseToKing() {
@@ -557,16 +527,6 @@ public class StateTablut {
 		return false; //TODO: do draw
 	}
 
-
-	
-	public int getUtility() {
-		return this.utility;
-	}
-	
-	public void setUtility(int u) {
-		this.utility = u;
-	}
-	
 	public List<XYWho> getAllLegalMoves() {
 		Pawn[][] currentBoardState = this.getBoard();
 		// all possible moves for white
@@ -904,10 +864,8 @@ public class StateTablut {
 		result.setBoard(newboard);
 		result.setTurn(this.getTurn());
 		result.setCurrentDepth(this.getCurrentDepth());
-		result.setUtility(this.getUtility());
 		return result;
 	}
-	
 	
 	public int getCurrentDepth() {
 		return this.currentDepth;
@@ -957,7 +915,6 @@ public class StateTablut {
 		this.boardArea[row][column] = area;
 	}
 	
-	
 	public void removePawn(int row, int column) {
 		this.board[row][column] = Pawn.EMPTY;
 	}
@@ -991,18 +948,16 @@ public class StateTablut {
 		}
 	}
 	
-
 	@Override
 	public String toString() {
-		/*for(int i=0; i < this.getBoard().length; i++) {
+		for(int i=0; i < this.getBoard().length; i++) {
 			for(int j=0; j < this.getBoard().length; j++) {
 				System.out.print(this.getBoard()[i][j]+ "|");
 			}
 			System.out.println("");
-		}*/
+		}
 		return "";
 	}
-
 
 	public String getBox(int row, int column) {
 		String ret;
@@ -1010,7 +965,6 @@ public class StateTablut {
 		ret = col + "" + (row + 1);
 		return ret;
 	}
-	
 	
 	@Override
 	public boolean equals(Object obj) {

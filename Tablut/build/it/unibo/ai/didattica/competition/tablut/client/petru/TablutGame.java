@@ -36,11 +36,10 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 
 	@Override
 	public double getUtility(StateTablut state, Turn player) {
-		//int result = state.getUtility();
 		double toreturn = 0;
 		if(state.getCurrentDepth() == 0) {
 			if(player.equals(Turn.WHITE)) {
-				toreturn = 10*(state.getDistanceFromKingToClosestEscapeArea()) - 2*state.isTheKingInTheThrone() - 0.5*state.getNumberOfWhiteCloseToKing() - 4*state.getNumberOfBlackCloseToKing()
+				toreturn = 1*(state.getDistanceFromKingToClosestEscapeArea()) - 2*state.isTheKingInTheThrone() - 0.5*state.getNumberOfWhiteCloseToKing() - 4*state.getNumberOfBlackCloseToKing()
 				+ 0.5*state.getNumberOf(Pawn.WHITE) - 2*state.getNumberOf(Pawn.BLACK);
 				System.out.println("toreturn: "+toreturn);
 			} else if(player.equals(Turn.BLACK)) {
@@ -52,7 +51,7 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 
 	@Override
 	public boolean isTerminal(StateTablut state) {
-		return state.getCurrentDepth() == 0; /*|| state.getUtility() != StateTablut.STATE_IS_NOT_YET_FINISHED;*/
+		return state.getCurrentDepth() == 0;
 	}
 
 	@Override
