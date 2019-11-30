@@ -41,6 +41,11 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 		if (result != StateTablut.STATE_IS_NOT_YET_FINISHED) {
 			if(player.equals(Turn.WHITE)) {
 				toreturn = result;
+//				System.out.println("-----------------------------------");
+//				state.printBoard();
+//				System.out.println(state.getUtility());
+//				System.out.println("-----------------------------------");
+//				System.out.println("");
 				return result;
 			} else if(player.equals(Turn.BLACK)) {
 				
@@ -49,6 +54,12 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 			if(player.equals(Turn.WHITE)) {
 				toreturn = 10*(state.getDistanceFromKingToClosestEscapeArea()) - 2*state.isTheKingInTheThrone() - 0.5*state.getNumberOfWhiteCloseToKing() - 4*state.getNumberOfBlackCloseToKing()
 				+ 0.5*state.getNumberOf(Pawn.WHITE) - 2*state.getNumberOf(Pawn.BLACK);
+//				System.out.println("-----------------------------------");
+//				state.printBoard();
+//				System.out.println(state.getUtility());
+//				System.out.println("toreturn: "+toreturn);
+//				System.out.println("-----------------------------------");
+//				System.out.println("");
 			} else if(player.equals(Turn.BLACK)) {
 				
 			}

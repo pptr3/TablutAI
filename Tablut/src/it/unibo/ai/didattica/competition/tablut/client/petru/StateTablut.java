@@ -90,7 +90,6 @@ public class StateTablut {
 		this.setCurrentDepth(depth);
 	}
 	
-	
 	public void applyMove(XYWho action) {
 		if(this.getUtility() == STATE_IS_NOT_YET_FINISHED && this.getCurrentDepth() != 0) {
 			if(this.getTurn().equals(Turn.WHITE)) {
@@ -197,11 +196,6 @@ public class StateTablut {
 		return 10 - Collections.min(min);
 	}
 
-	public static void main(String[] args) {
-		StateTablut dd = new StateTablut(2);
-		System.out.println(dd.getDistanceFromKingToClosestEscapeArea());
-	}
-	
 	public int getNumberOf(Pawn color) {
 		int count = 0;
 		for (int i = 0; i < this.getBoard().length; i++) {
@@ -561,13 +555,7 @@ public class StateTablut {
 	private boolean isDraw() {
 		return false; //TODO: do draw
 	}
-	
-	
-	public StateTablut(Pawn[][] board, Turn playerToMove) {
-		this.setBoard(board);
-		this.setTurn(playerToMove);
-		this.initBoard();
-	}
+
 
 	
 	public int getUtility() {
@@ -915,6 +903,7 @@ public class StateTablut {
 		result.setBoard(newboard);
 		result.setTurn(this.getTurn());
 		result.setCurrentDepth(this.getCurrentDepth());
+		result.setUtility(this.getUtility());
 		return result;
 	}
 	
@@ -1004,12 +993,12 @@ public class StateTablut {
 
 	@Override
 	public String toString() {
-		for(int i=0; i < this.getBoard().length; i++) {
+		/*for(int i=0; i < this.getBoard().length; i++) {
 			for(int j=0; j < this.getBoard().length; j++) {
 				System.out.print(this.getBoard()[i][j]+ "|");
 			}
 			System.out.println("");
-		}
+		}*/
 		return "";
 	}
 

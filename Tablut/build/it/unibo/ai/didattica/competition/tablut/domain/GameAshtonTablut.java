@@ -39,8 +39,8 @@ public class GameAshtonTablut implements Game {
 	private List<StateTablut> drawConditions;
 
 	public GameAshtonTablut(int repeated_moves_allowed, int cache_size, String logs_folder, String whiteName,
-			String blackName) {
-		this(new StateTablut(3), repeated_moves_allowed, cache_size, logs_folder, whiteName, blackName);
+			String blackName, int depth) {
+		this(new StateTablut(depth), repeated_moves_allowed, cache_size, logs_folder, whiteName, blackName);
 	}
 
 	public GameAshtonTablut(StateTablut state, int repeated_moves_allowed, int cache_size, String logs_folder,
@@ -312,7 +312,7 @@ public class GameAshtonTablut implements Game {
 		this.loggGame.fine("Current draw cache size: " + this.drawConditions.size());
 
 		this.loggGame.fine("Stato:\n" + state.toString());
-		System.out.println("Stato:\n" + state.toString());
+		//System.out.println("Stato:\n" + state.toString());
 
 		return state;
 	}

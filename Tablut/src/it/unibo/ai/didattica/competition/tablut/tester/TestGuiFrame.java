@@ -60,7 +60,7 @@ public class TestGuiFrame extends JFrame{
 			board3[4][4] = Pawn.THRONE;
 			state = new StateTablut(3);
 			state.setTurn(StateTablut.Turn.WHITE);
-			theGame=new GameAshtonTablut(0, -1, "test", "testW", "testB");
+			theGame=new GameAshtonTablut(0, -1, "test", "testW", "testB", 3);
 			state.setBoard(board3);
 			break;	
 		default:
