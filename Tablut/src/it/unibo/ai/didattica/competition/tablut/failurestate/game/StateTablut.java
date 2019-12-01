@@ -183,6 +183,11 @@ public class StateTablut {
 		return (kingPosition[0] == KING_POSITION && kingPosition[1] == KING_POSITION) ? 1 : -1;
 	}
 	
+	public int isTheKingOnEscapeArea() {
+		int[] kingPosition = this.getKingPosition();
+		return (this.getArea(kingPosition[0], kingPosition[1]).equals(Area.ESCAPES)) ? 1 : -1;
+	}
+	
 	public double getDistanceFromKingToClosestEscapeArea() {
 		int[] kingPosition = this.getKingPosition();
 		List<int[]> escapeCoord = new ArrayList<>();
@@ -220,7 +225,7 @@ public class StateTablut {
 			double deltaY = Math.abs(kingPosition[1] - (blacksCoord.get(i)[1]));
 			min.add(Math.sqrt(deltaX*deltaX + deltaY*deltaY));
 		}
-		return 100 - min.stream().mapToDouble(Double::doubleValue).sum();
+		return min.stream().mapToDouble(Double::doubleValue).sum();
 	}
 
 	public int getNumberOf(Pawn color) {
@@ -380,40 +385,27 @@ public class StateTablut {
 		
 	}
 	
-	public boolean hasWhiteWon() {
-
-		// white won when the king is on an escape area
-		for(int i=0; i < this.getBoard().length; i++) {
-			for(int j=0; j < this.getBoard().length; j++) {
-				if(this.getPawn(i, j).equals(Pawn.KING) && this.getArea(i, j).equals(Area.ESCAPES)) {
-					return true;
-				}
-			}
-		}
+	public int playerCannotMoveAnyPawn(Pawn color) {
 		
-		int blackMovesCount = 0;
-		// if the black cannot move any pawn, white wins
+		int moves = 0;
+		// if the player `color` cannot move any pawn, the other player wins
 		for(int i=0; i < this.getBoard().length; i++) {
 			for(int j=0; j < this.getBoard().length; j++) {
-				if(this.getPawn(i, j).equals(Pawn.BLACK)) {
+				if(this.getPawn(i, j).equals(color)) {
 					if(((i + 1) < this.getBoard().length) && this.getPawn(i + 1, j).equals(Pawn.EMPTY)) {
-						blackMovesCount++;
+						moves++;
 					} else if(((i - 1) >= 0) && this.getPawn(i - 1, j).equals(Pawn.EMPTY)) {
-						blackMovesCount++;
+						moves++;
 					} else if(((j + 1) < this.getBoard().length) && this.getPawn(i, j + 1).equals(Pawn.EMPTY)) {
-						blackMovesCount++;
+						moves++;
 					} else if(((j - 1) >= 0) && this.getPawn(i, j - 1).equals(Pawn.EMPTY)) {
-						blackMovesCount++;
+						moves++;
 					}
 				}
 				
 			}
 		}
-		if(blackMovesCount == 0) {
-			return true;
-		}
-		
-		return false;
+		return moves == 0 ? 1 : 0;
 	}
 	
 	public boolean hasBlackWon(XYWho action) {
@@ -578,10 +570,6 @@ public class StateTablut {
 		
 		// return false whether any of the previous conditions are satisfied
 		return false;
-	}
-
-	public boolean isDraw() {
-		return false; //TODO: do draw
 	}
 
 	public List<XYWho> getAllLegalMoves() {
