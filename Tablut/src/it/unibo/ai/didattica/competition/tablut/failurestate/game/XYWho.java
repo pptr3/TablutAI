@@ -8,15 +8,7 @@ public class XYWho {
     private int[] who; // old coordinates
     boolean hasLeftTheCamp;
 
-	/**
-	 * Constructs and initializes a location at the specified (<em>x</em>,
-	 * <em>y</em>) location in the coordinate space.
-	 * 
-	 * @param x
-	 *            the x coordinate
-	 * @param y
-	 *            the y coordinate
-	 */
+
 	public XYWho(int x, int y, int[] who, boolean hasLeftTheCamp) {
 		this.x = x;
 		this.y = y;
@@ -24,11 +16,6 @@ public class XYWho {
 		this.hasLeftTheCamp = hasLeftTheCamp;
 	}
 
-	/**
-	 * Returns the X coordinate of the location in integer precision.
-	 * 
-	 * @return the X coordinate of the location in double precision.
-	 */
 	public int getX() {
 		return this.x;
 	}

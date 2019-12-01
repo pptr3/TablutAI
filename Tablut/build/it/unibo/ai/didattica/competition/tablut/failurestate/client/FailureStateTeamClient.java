@@ -31,7 +31,6 @@ public class FailureStateTeamClient extends TablutClient {
 		}
 
 		StateTablut state = this.tablutGame.getInitialState();
-		
 		System.out.println("You are player " + this.getPlayer().toString() + "!");
 
 		while (true) {
@@ -41,24 +40,28 @@ public class FailureStateTeamClient extends TablutClient {
 				System.exit(1);
 			}
 			state = this.getCurrentState();
-			System.out.println(state.getPawn(4, 3));
-			System.out.println(state.getPawn(3, 6));
+			state.printBoard();
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
 			}
-
+			
 			if (this.getPlayer().equals(Turn.WHITE)) {
 				if (state.getTurn().equals(StateTablut.Turn.WHITE)) {
 					
 					Action a = null;
-					XYWho a2 = this.ab.makeDecision(this.getCurrentState());
-					String from = state.getBox(a2.getWho()[0], a2.getWho()[1]);
+					XYWho a2 = null;
+					a2 = this.ab.makeDecision(state);
+					String from = null;
+					try {
+						from = state.getBox(a2.getWho()[0], a2.getWho()[1]);
+					} catch (Exception ex) {
+						System.out.println("ERROR HERE, a2 is: " + a2);
+					}
 					String to = state.getBox(a2.getX(), a2.getY());
 					try {
 						a = new Action(from, to, StateTablut.Turn.WHITE);
 					} catch (IOException e1) {
-						e1.printStackTrace();
 					}
 					//System.out.println("Mossa scelta: " + a.toString());
 					try {
@@ -72,7 +75,7 @@ public class FailureStateTeamClient extends TablutClient {
 
 				if (state.getTurn().equals(StateTablut.Turn.BLACK)) {
 					Action a = null;
-					XYWho a2 = this.ab.makeDecision(this.getCurrentState());
+					XYWho a2 = this.ab.makeDecision(state);
 					String from = state.getBox(a2.getWho()[0], a2.getWho()[1]);
 					String to = state.getBox(a2.getX(), a2.getY());
 					

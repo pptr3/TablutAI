@@ -44,12 +44,13 @@ public class AlphaBetaSearch<S, A, P> implements AdversarialSearch<S, A> {
         for (A action : game.getActions(state)) {
             value = Math.max(value, minValue( //
                     game.getResult(state, action), player, alpha, beta, depth - 1));
-            if (value >= beta) {
+            if (value >= beta && (value != Double.POSITIVE_INFINITY)) {
                 return value;
             }
             alpha = Math.max(alpha, value);
         }
-        return value;
+        //System.out.println("thisssss: "+value);
+        return value != Double.POSITIVE_INFINITY? value : 0;
     }
 
     public double minValue(S state, P player, double alpha, double beta, int depth) {
@@ -62,12 +63,13 @@ public class AlphaBetaSearch<S, A, P> implements AdversarialSearch<S, A> {
         for (A action : game.getActions(state)) {
             value = Math.min(value, maxValue( //
                     game.getResult(state, action), player, alpha, beta, depth - 1));
-            if (value <= alpha) {
+            if (value <= alpha && (value != Double.NEGATIVE_INFINITY)) {
+            	System.out.println("thisssss: "+value);
                 return value;
             }
             beta = Math.min(beta, value);
         }
-        return value;
+        return value != Double.NEGATIVE_INFINITY? value : 0;
     }
 
     @Override
