@@ -604,7 +604,9 @@ public class StateTablut {
 				// move each pawn vertically
 				for (int j = 0; j < this.getBoard().length; j++) {
 					// (x, y - j) UP
-					if(((whitePawn.getY() - j) >= 0) && this.getPawn(whitePawn.getX(), whitePawn.getY() - j) == Pawn.EMPTY && (this.getArea(whitePawn.getX(), whitePawn.getY() - j) != Area.CAMPS) && (this.getArea(whitePawn.getX(), whitePawn.getY() - j) != Area.CASTLE)) {
+					if(((whitePawn.getY() - j) >= 0) && this.getPawn(whitePawn.getX(), whitePawn.getY() - j) == Pawn.EMPTY 
+							&& (this.getArea(whitePawn.getX(), whitePawn.getY() - j) != Area.CAMPS) 
+							&& (this.getArea(whitePawn.getX(), whitePawn.getY() - j) != Area.CASTLE)) {
 						int howManyEmptyPawns = 0;
 						for (int f = whitePawn.getY() - 1; f > whitePawn.getY() - j; f--) {
 							if(this.getPawn(whitePawn.getX(), f) != Pawn.EMPTY || this.getArea(whitePawn.getX(), f) == Area.CAMPS || this.getArea(whitePawn.getX(), f) == Area.CASTLE) {
@@ -616,7 +618,9 @@ public class StateTablut {
 						}
 					}
 					// (x, y + j) DOWN
-					if(((whitePawn.getY() + j) < this.getBoard().length) && this.getPawn(whitePawn.getX(), whitePawn.getY() + j) == Pawn.EMPTY && (this.getArea(whitePawn.getX(), whitePawn.getY() + j) != Area.CAMPS) && (this.getArea(whitePawn.getX(), whitePawn.getY() + j) != Area.CASTLE)) {
+					if(((whitePawn.getY() + j) < this.getBoard().length) && this.getPawn(whitePawn.getX(), whitePawn.getY() + j) == Pawn.EMPTY 
+							&& (this.getArea(whitePawn.getX(), whitePawn.getY() + j) != Area.CAMPS) 
+							&& (this.getArea(whitePawn.getX(), whitePawn.getY() + j) != Area.CASTLE)) {
 						int howManyEmptyPawns = 0;
 						for (int f = whitePawn.getY() + 1; f < whitePawn.getY() + j; f++) {
 							if(this.getPawn(whitePawn.getX(), f) != Pawn.EMPTY || this.getArea(whitePawn.getX(), f) == Area.CAMPS || this.getArea(whitePawn.getX(), f) == Area.CASTLE) {
@@ -631,7 +635,9 @@ public class StateTablut {
 				// move each pawn horizontally
 				for (int i = 0; i < this.getBoard().length; i++) {
 					// (x - i, y) LEFT
-					if(((whitePawn.getX() - i) >= 0) && this.getPawn(whitePawn.getX() - i, whitePawn.getY()) == Pawn.EMPTY && (this.getArea(whitePawn.getX() - i, whitePawn.getY()) != Area.CAMPS) && (this.getArea(whitePawn.getX() - i, whitePawn.getY()) != Area.CASTLE)) {
+					if(((whitePawn.getX() - i) >= 0) && this.getPawn(whitePawn.getX() - i, whitePawn.getY()) == Pawn.EMPTY 
+							&& (this.getArea(whitePawn.getX() - i, whitePawn.getY()) != Area.CAMPS) 
+							&& (this.getArea(whitePawn.getX() - i, whitePawn.getY()) != Area.CASTLE)) {
 						int howManyEmptyPawns = 0;
 						for (int f = whitePawn.getX() - 1; f > whitePawn.getX() - i; f--) {
 							if(this.getPawn(f, whitePawn.getY()) != Pawn.EMPTY || this.getArea(f, whitePawn.getY()) == Area.CAMPS || this.getArea(f, whitePawn.getY()) == Area.CASTLE) {
@@ -643,7 +649,9 @@ public class StateTablut {
 						}
 					}
 					// (x + i, y) RIGHT
-					if(((whitePawn.getX() + i) < this.getBoard().length) && this.getPawn(whitePawn.getX() + i, whitePawn.getY()) == Pawn.EMPTY && (this.getArea(whitePawn.getX() + i, whitePawn.getY()) != Area.CAMPS) && (this.getArea(whitePawn.getX() + i, whitePawn.getY()) != Area.CASTLE)) {
+					if(((whitePawn.getX() + i) < this.getBoard().length) && this.getPawn(whitePawn.getX() + i, whitePawn.getY()) == Pawn.EMPTY 
+							&& (this.getArea(whitePawn.getX() + i, whitePawn.getY()) != Area.CAMPS) 
+							&& (this.getArea(whitePawn.getX() + i, whitePawn.getY()) != Area.CASTLE)) {
 						int howManyEmptyPawns = 0;
 						for (int f = whitePawn.getX() + 1; f < whitePawn.getX() + i; f++) {
 							if(this.getPawn(f, whitePawn.getY()) != Pawn.EMPTY || this.getArea(f, whitePawn.getY()) == Area.CAMPS || this.getArea(f, whitePawn.getY()) == Area.CASTLE) {
@@ -684,7 +692,9 @@ public class StateTablut {
 				// move each pawn vertically
 				for (int j = 0; j < this.getBoard().length; j++) {
 					// (x, y - j) UP
-					if(((blackPawn.getY() - j) >= 0) && this.getPawn(blackPawn.getX(), blackPawn.getY() - j) == Pawn.EMPTY && (this.getArea(blackPawn.getX(), blackPawn.getY() - j) != Area.CASTLE)) {
+					if(((blackPawn.getY() - j) >= 0) && this.getPawn(blackPawn.getX(), blackPawn.getY() - j) == Pawn.EMPTY 
+							&& (this.getArea(blackPawn.getX(), blackPawn.getY() - j) != Area.CASTLE)
+							&& (this.getArea(blackPawn.getX(), blackPawn.getY() - j) != Area.CAMPS)) {
 						int howManyEmptyPawns = 0;
 						for (int f = blackPawn.getY() - 1; f > blackPawn.getY() - j; f--) {
 							if(this.getPawn(blackPawn.getX(), f) != Pawn.EMPTY || (this.getArea(blackPawn.getX(), f) == Area.CAMPS && blackPawn.hasLeftTheCamp()) || this.getArea(blackPawn.getX(), f) == Area.CASTLE) {
@@ -699,7 +709,9 @@ public class StateTablut {
 						}
 					}
 					// (x, y + j) DOWN
-					if(((blackPawn.getY() + j) < this.getBoard().length) && this.getPawn(blackPawn.getX(), blackPawn.getY() + j) == Pawn.EMPTY && (this.getArea(blackPawn.getX(), blackPawn.getY() + j) != Area.CASTLE)) {
+					if(((blackPawn.getY() + j) < this.getBoard().length) && this.getPawn(blackPawn.getX(), blackPawn.getY() + j) == Pawn.EMPTY 
+							&& (this.getArea(blackPawn.getX(), blackPawn.getY() + j) != Area.CASTLE)
+							&& (this.getArea(blackPawn.getX(), blackPawn.getY() + j) != Area.CAMPS)) {
 						int howManyEmptyPawns = 0;
 						for (int f = blackPawn.getY() + 1; f < blackPawn.getY() + j; f++) {
 							if(this.getPawn(blackPawn.getX(), f) != Pawn.EMPTY || (this.getArea(blackPawn.getX(), f) == Area.CAMPS && blackPawn.hasLeftTheCamp()) || this.getArea(blackPawn.getX(), f) == Area.CASTLE) {
@@ -716,7 +728,9 @@ public class StateTablut {
 				// move each pawn horizontally
 				for (int i = 0; i < this.getBoard().length; i++) {
 					// (x - i, y) LEFT
-					if(((blackPawn.getX() - i) >= 0) && this.getPawn(blackPawn.getX() - i, blackPawn.getY()) == Pawn.EMPTY && (this.getArea(blackPawn.getX() - i, blackPawn.getY()) != Area.CASTLE)) {
+					if(((blackPawn.getX() - i) >= 0) && this.getPawn(blackPawn.getX() - i, blackPawn.getY()) == Pawn.EMPTY 
+							&& (this.getArea(blackPawn.getX() - i, blackPawn.getY()) != Area.CASTLE)
+							&& (this.getArea(blackPawn.getX() - i, blackPawn.getY()) != Area.CAMPS)) {
 						int howManyEmptyPawns = 0;
 						for (int f = blackPawn.getX() - 1; f > blackPawn.getX() - i; f--) {
 							if(this.getPawn(f, blackPawn.getY()) != Pawn.EMPTY || (this.getArea(f, blackPawn.getY()) == Area.CAMPS && blackPawn.hasLeftTheCamp()) || this.getArea(f, blackPawn.getY()) == Area.CASTLE) {
@@ -731,7 +745,9 @@ public class StateTablut {
 						
 					}
 					// (x + i, y) RIGHT
-					if(((blackPawn.getX() + i) < this.getBoard().length) && this.getPawn(blackPawn.getX() + i, blackPawn.getY()) == Pawn.EMPTY && (this.getArea(blackPawn.getX() + i, blackPawn.getY()) != Area.CASTLE)) {
+					if(((blackPawn.getX() + i) < this.getBoard().length) && this.getPawn(blackPawn.getX() + i, blackPawn.getY()) == Pawn.EMPTY
+							&& (this.getArea(blackPawn.getX() + i, blackPawn.getY()) != Area.CASTLE)
+							&& (this.getArea(blackPawn.getX() + i, blackPawn.getY()) != Area.CAMPS)) {
 						int howManyEmptyPawns = 0;
 						for (int f = blackPawn.getX() + 1; f < blackPawn.getX() + i; f++) {
 							if(this.getPawn(f, blackPawn.getY()) != Pawn.EMPTY || (this.getArea(f, blackPawn.getY()) == Area.CAMPS && blackPawn.hasLeftTheCamp()) || this.getArea(f, blackPawn.getY()) == Area.CASTLE) {

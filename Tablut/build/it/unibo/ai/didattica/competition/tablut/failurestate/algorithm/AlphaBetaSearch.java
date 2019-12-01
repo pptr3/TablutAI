@@ -49,7 +49,6 @@ public class AlphaBetaSearch<S, A, P> implements AdversarialSearch<S, A> {
             }
             alpha = Math.max(alpha, value);
         }
-        //System.out.println("thisssss: "+value);
         return value != Double.POSITIVE_INFINITY? value : 0;
     }
 
