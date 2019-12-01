@@ -48,16 +48,16 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 						- 2*state.getNumberOfCampsCloseToKing()
 						+ 0.5*state.getNumberOf(Pawn.WHITE) 
 						- 2*state.getNumberOf(Pawn.BLACK);
-				return toreturn;				
+				return 0;				
 			} else if(player.equals(Turn.BLACK)) {
 				// prevent king from winning when have a direct way
-				toreturn = 1000*state.playerCannotMoveAnyPawn(Pawn.WHITE) 
-						- 100*(state.getDistanceFromKingToClosestEscapeArea()) 
+				toreturn = 1000*state.hasBlackWon() + 1000*state.playerCannotMoveAnyPawn(Pawn.WHITE) 
+						- 50*(state.getDistanceFromKingToClosestEscapeArea()) 
 						- 15*state.getDistanceFromKingToAllBlacks() 
 						+ 15*state.getNumberCloseToTheKingOf(Pawn.BLACK) 
-						- 2*state.getNumberOf(Pawn.WHITE) 
+						- 40*state.getNumberOf(Pawn.WHITE) 
 						+ 0.5*state.getNumberOf(Pawn.BLACK);
-				return 0;	
+				return toreturn;	
 			}
 		}
 		return toreturn;

@@ -1,0 +1,114 @@
+Dec 01, 2019 10:48:06 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Accensione server
+Dec 01, 2019 10:48:06 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Partita di Tablut
+Dec 01, 2019 10:48:07 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Accettata connessione con client giocatore Bianco
+Dec 01, 2019 10:48:07 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Lettura nome player bianco in corso..
+Dec 01, 2019 10:48:07 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: White player name:	FailureSta
+Dec 01, 2019 10:48:09 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Accettata connessione con client giocatore Nero
+Dec 01, 2019 10:48:09 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Lettura nome player nero in corso..
+Dec 01, 2019 10:48:09 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Black player name:	FailureState
+Dec 01, 2019 10:48:09 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Invio messaggio ai giocatori
+Dec 01, 2019 10:48:09 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Lettura mossa player W in corso..
+Dec 01, 2019 10:48:10 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Move received.	Turn: W Pawn from e3 to d3
+Dec 01, 2019 10:48:10 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Invio messaggio ai client
+Dec 01, 2019 10:48:10 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Lettura mossa player B in corso..
+Dec 01, 2019 10:48:11 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Move received.	Turn: B Pawn from f1 to f4
+Dec 01, 2019 10:48:11 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Invio messaggio ai client
+Dec 01, 2019 10:48:11 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Lettura mossa player W in corso..
+Dec 01, 2019 10:48:11 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Move received.	Turn: W Pawn from d3 to c3
+Dec 01, 2019 10:48:11 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Invio messaggio ai client
+Dec 01, 2019 10:48:11 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Lettura mossa player B in corso..
+Dec 01, 2019 10:48:11 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Move received.	Turn: B Pawn from d1 to d4
+Dec 01, 2019 10:48:11 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Invio messaggio ai client
+Dec 01, 2019 10:48:11 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Lettura mossa player W in corso..
+Dec 01, 2019 10:48:12 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Move received.	Turn: W Pawn from c3 to b3
+Dec 01, 2019 10:48:12 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Invio messaggio ai client
+Dec 01, 2019 10:48:12 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Lettura mossa player B in corso..
+Dec 01, 2019 10:48:13 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Move received.	Turn: B Pawn from a6 to d6
+Dec 01, 2019 10:48:13 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Invio messaggio ai client
+Dec 01, 2019 10:48:13 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Lettura mossa player W in corso..
+Dec 01, 2019 10:48:13 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Move received.	Turn: W Pawn from b3 to a3
+Dec 01, 2019 10:48:13 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Invio messaggio ai client
+Dec 01, 2019 10:48:13 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Lettura mossa player B in corso..
+Dec 01, 2019 10:48:14 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Move received.	Turn: B Pawn from i6 to f6
+Dec 01, 2019 10:48:14 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Invio messaggio ai client
+Dec 01, 2019 10:48:14 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Lettura mossa player W in corso..
+Dec 01, 2019 10:48:14 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Move received.	Turn: W Pawn from a3 to b3
+Dec 01, 2019 10:48:14 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Invio messaggio ai client
+Dec 01, 2019 10:48:14 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Lettura mossa player B in corso..
+Dec 01, 2019 10:48:15 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Move received.	Turn: B Pawn from e2 to e4
+Dec 01, 2019 10:48:15 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Invio messaggio ai client
+Dec 01, 2019 10:48:15 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Lettura mossa player W in corso..
+Dec 01, 2019 10:48:15 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Move received.	Turn: W Pawn from b3 to a3
+Dec 01, 2019 10:48:15 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Invio messaggio ai client
+Dec 01, 2019 10:48:15 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Lettura mossa player B in corso..
+Dec 01, 2019 10:48:16 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Move received.	Turn: B Pawn from d4 to d5
+Dec 01, 2019 10:48:16 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Invio messaggio ai client
+Dec 01, 2019 10:48:16 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Lettura mossa player W in corso..
+Dec 01, 2019 10:48:16 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Move received.	Turn: W Pawn from a3 to b3
+Dec 01, 2019 10:48:16 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Invio messaggio ai client
+Dec 01, 2019 10:48:16 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Lettura mossa player B in corso..
+Dec 01, 2019 10:48:17 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Move received.	Turn: B Pawn from f4 to f5
+Dec 01, 2019 10:48:17 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Invio messaggio ai client
+Dec 01, 2019 10:48:17 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Lettura mossa player W in corso..
+Dec 01, 2019 10:48:17 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Move received.	Turn: W Pawn from b3 to a3
+Dec 01, 2019 10:48:17 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Invio messaggio ai client
+Dec 01, 2019 10:48:17 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Lettura mossa player B in corso..
+Dec 01, 2019 10:48:17 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Move received.	Turn: B Pawn from d6 to e6
+Dec 01, 2019 10:48:17 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Invio messaggio ai client
