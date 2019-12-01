@@ -80,7 +80,7 @@ public class TablutRandomClient extends TablutClient {
 		Game rules = null;
 		switch (this.game) {
 		case 4:
-			rules = new GameAshtonTablut(99, 0, "garbage", "fake", "fake", this.d);
+			//rules = new GameAshtonTablut(99, 0, "garbage", "fake", "fake", this.d);
 			System.out.println("Ashton Tablut game");
 			break;
 		default:
@@ -157,10 +157,10 @@ public class TablutRandomClient extends TablutClient {
 			} else {
 
 				// my class
-				/*if (this.getCurrentState().getTurn().equals(StateTablut.Turn.BLACK)) {
+				if (this.getCurrentState().getTurn().equals(StateTablut.Turn.BLACK)) {
 					
 					Action a = null;
-					XYWho a2 = ab.makeDecision(this.getCurrentState());
+					XYWho a2 = this.ab.makeDecision(this.getCurrentState());
 					String from = this.getCurrentState().getBox(a2.getWho()[0], a2.getWho()[1]);
 					String to = this.getCurrentState().getBox(a2.getX(), a2.getY());
 					try {
@@ -192,7 +192,7 @@ public class TablutRandomClient extends TablutClient {
 				} else if (state.getTurn().equals(StateTablut.Turn.DRAW)) {
 					System.out.println("DRAW!");
 					System.exit(0);
-				}*/
+				}
 				
 				
 				
@@ -201,7 +201,7 @@ public class TablutRandomClient extends TablutClient {
 				
 				
 				// teacher class
-				// è il mio turno
+				/*
 				if (this.getCurrentState().getTurn().equals(StateTablut.Turn.BLACK)) {
 					int[] buf;
 					for (int i = 0; i < state.getBoard().length; i++) {
@@ -278,7 +278,7 @@ public class TablutRandomClient extends TablutClient {
 				} else if (state.getTurn().equals(StateTablut.Turn.DRAW)) {
 					System.out.println("DRAW!");
 					System.exit(0);
-				}
+				}*/
 
 			}
 		}
