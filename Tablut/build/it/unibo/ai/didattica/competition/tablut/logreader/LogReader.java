@@ -10,7 +10,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import it.unibo.ai.didattica.competition.tablut.client.petru.StateTablut.Turn;
+import it.unibo.ai.didattica.competition.tablut.client.game.StateTablut.Turn;
 
 /**
  * @author Andrea Galassi

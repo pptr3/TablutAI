@@ -7,10 +7,10 @@ import java.io.IOException;
 
 import javax.swing.JTextField;
 
-import it.unibo.ai.didattica.competition.tablut.client.petru.StateTablut;
-import it.unibo.ai.didattica.competition.tablut.client.petru.StateTablut.Pawn;
-import it.unibo.ai.didattica.competition.tablut.client.petru.StateTablut.Turn;
 import it.unibo.ai.didattica.competition.tablut.domain.Action;
+import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut;
+import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut.Pawn;
+import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut.Turn;
 import it.unibo.ai.didattica.competition.tablut.gui.Gui;
 
 public class AggiungiRe implements ActionListener {

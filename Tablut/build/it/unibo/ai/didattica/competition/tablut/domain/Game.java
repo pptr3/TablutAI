@@ -1,6 +1,6 @@
 package it.unibo.ai.didattica.competition.tablut.domain;
 
-import it.unibo.ai.didattica.competition.tablut.client.petru.StateTablut;
+import it.unibo.ai.didattica.competition.tablut.client.game.StateTablut;
 import it.unibo.ai.didattica.competition.tablut.domain.Action;
 import it.unibo.ai.didattica.competition.tablut.exceptions.ActionException;
 import it.unibo.ai.didattica.competition.tablut.exceptions.BoardException;

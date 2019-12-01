@@ -10,7 +10,8 @@ import java.security.InvalidParameterException;
 
 import com.google.gson.Gson;
 
-import it.unibo.ai.didattica.competition.tablut.client.petru.StateTablut.Turn;
+import it.unibo.ai.didattica.competition.tablut.client.game.StateTablut;
+import it.unibo.ai.didattica.competition.tablut.client.game.StateTablut.Turn;
 import it.unibo.ai.didattica.competition.tablut.domain.Action;
 import it.unibo.ai.didattica.competition.tablut.util.StreamUtils;
 import it.unibo.ai.didattica.competition.tablut.server.Server;

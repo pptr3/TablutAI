@@ -12,7 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-import it.unibo.ai.didattica.competition.tablut.client.petru.StateTablut;
+import it.unibo.ai.didattica.competition.tablut.client.game.StateTablut;
 import it.unibo.ai.didattica.competition.tablut.exceptions.*;
 
 public class GameAshtonTablut implements Game {
