@@ -39,11 +39,13 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 		double toreturn = 0;
 		if(state.getCurrentDepth() == 0) {
 			if(player.equals(Turn.WHITE)) {
-				// add heuristic "whether in a certain position the black will winn with one move"
-				toreturn = 100*(state.getDistanceFromKingToClosestEscapeArea()) - 2*state.isTheKingInTheThrone() + 2*state.getNumberCloseToTheKingOf(Pawn.WHITE) 
+				// add heuristic "whether in a certain position the black will win with one move"
+				toreturn = 100*(state.getDistanceFromKingToClosestEscapeArea()) - 12*state.getDistanceFromKingToAllBlacks() - 2*state.isTheKingInTheThrone() + 2*state.getNumberCloseToTheKingOf(Pawn.WHITE) 
 						- 10*state.getNumberCloseToTheKingOf(Pawn.BLACK) - 2*state.getNumberOfCampsCloseToKing() + 0.5*state.getNumberOf(Pawn.WHITE) - 2*state.getNumberOf(Pawn.BLACK);
 			} else if(player.equals(Turn.BLACK)) {
-				
+				// prevent king from winning when have a direct way
+				//toreturn = 100*state.getNumberCloseToTheKingOf(Pawn.BLACK) + 2*state.getNumberOfCampsCloseToKing() - 2*state.getNumberOf(Pawn.WHITE) + 0.5*state.getNumberOf(Pawn.BLACK);
+				toreturn = 12*state.getDistanceFromKingToAllBlacks() - 100*(state.getDistanceFromKingToClosestEscapeArea());
 			}
 		}
 		return toreturn;

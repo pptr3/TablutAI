@@ -22,25 +22,6 @@ public class FailureStateTeamClient extends TablutClient {
 		super(player, name);
 	}
 
-	public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException {
-		String role = "";
-		String name = "FailureState";
-	
-		if (args.length < 1) {
-			System.out.println("You must specify which player you are (WHITE or BLACK)");
-			System.exit(-1);
-		} else {
-			System.out.println(args[0]);
-			role = (args[0]);
-		}
-		if (args.length == 3) {
-			name = args[2];
-		}
-		System.out.println("Selected client: " + args[0]);
-		FailureStateTeamClient client = new FailureStateTeamClient(role, name);
-		client.run();
-	}
-
 	@Override
 	public void run() {
 
@@ -107,7 +88,24 @@ public class FailureStateTeamClient extends TablutClient {
 					}
 				}
 			}
-		}
-
+		}	
 	}
+		public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException {
+			String role = "";
+			String name = "FailureState";
+		
+			if (args.length < 1) {
+				System.out.println("You must specify which player you are (WHITE or BLACK)");
+				System.exit(-1);
+			} else {
+				System.out.println(args[0]);
+				role = (args[0]);
+			}
+			if (args.length == 3) {
+				name = args[2];
+			}
+			System.out.println("Selected client: " + args[0]);
+			FailureStateTeamClient client = new FailureStateTeamClient(role, name);
+			client.run();
+		}
 }
