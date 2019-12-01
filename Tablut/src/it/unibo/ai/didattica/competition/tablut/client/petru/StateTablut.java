@@ -80,7 +80,7 @@ public class StateTablut {
 		this.setTurn(Turn.WHITE);
 		this.setCurrentDepth(depth);
 	}
-	
+
 	public void applyMove(XYWho action) {
 		if(this.getCurrentDepth() != 0) {
 			if(this.getTurn().equals(Turn.WHITE)) {
@@ -100,50 +100,87 @@ public class StateTablut {
 		}
 	}
 	
-	public int getNumberOfWhiteCloseToKing() {
-		int whiteThatSurroundKing = 0;
+	public int getNumberCloseToTheKingOf(Pawn color) {
+		int pawnsThatSurroundKing = 0;
 		
 		int[] kingPosition = this.getKingPosition();
 		
-		if((kingPosition[1] - 1) >= 0 && this.getPawn(kingPosition[0], kingPosition[1] - 1).equals(Pawn.WHITE)) {
-			whiteThatSurroundKing++;
+		// cross
+		if((kingPosition[1] - 1) >= 0 && this.getPawn(kingPosition[0], kingPosition[1] - 1).equals(color)) {
+			pawnsThatSurroundKing++;
 		}
-		if((kingPosition[1] + 1) < (StateTablut.KING_POSITION  * 2 + 1) && this.getPawn(kingPosition[0], kingPosition[1] + 1).equals(Pawn.WHITE)) {
-			whiteThatSurroundKing++;
+		if((kingPosition[1] + 1) < (StateTablut.KING_POSITION * 2 + 1) && this.getPawn(kingPosition[0], kingPosition[1] + 1).equals(color)) {
+			pawnsThatSurroundKing++;
 		}
-		if((kingPosition[0] - 1) >= 0 && !this.getPawn(kingPosition[0] - 1, kingPosition[1]).equals(Pawn.WHITE)) {
-			whiteThatSurroundKing++;
+		if((kingPosition[0] - 1) >= 0 && this.getPawn(kingPosition[0] - 1, kingPosition[1]).equals(color)) {
+			pawnsThatSurroundKing++;
 		}
-		if((kingPosition[0] + 1) < (StateTablut.KING_POSITION  * 2 + 1) && this.getPawn(kingPosition[0] + 1, kingPosition[1]).equals(Pawn.WHITE)) {
-			whiteThatSurroundKing++;
+		if((kingPosition[0] + 1) < (StateTablut.KING_POSITION * 2 + 1) && this.getPawn(kingPosition[0] + 1, kingPosition[1]).equals(color)) {
+			pawnsThatSurroundKing++;
 		}
-		return whiteThatSurroundKing;	
+		
+		// angle
+		if((kingPosition[0] - 1 >= 0) && ((kingPosition[1] - 1) >= 0) && this.getPawn(kingPosition[0] - 1, kingPosition[1] - 1).equals(color)) {
+			pawnsThatSurroundKing++;
+		}
+		if(((kingPosition[0] + 1) < (StateTablut.KING_POSITION * 2 + 1)) && ((kingPosition[1] + 1) < (StateTablut.KING_POSITION * 2 + 1)) 
+				&& this.getPawn(kingPosition[0] + 1, kingPosition[1] + 1).equals(color)) {	
+			pawnsThatSurroundKing++;
+		}
+		if(((kingPosition[0] - 1) >= 0) && ((kingPosition[1] + 1) < (StateTablut.KING_POSITION * 2 + 1))
+				&& this.getPawn(kingPosition[0] - 1, kingPosition[1] + 1).equals(color)) {
+			pawnsThatSurroundKing++;
+		}
+		if((kingPosition[0] + 1) < (StateTablut.KING_POSITION  * 2 + 1) && ((kingPosition[1] - 1) >= 0) 
+				&& this.getPawn(kingPosition[0] + 1, kingPosition[1] - 1).equals(color)) {
+			pawnsThatSurroundKing++;
+		}
+		
+		return pawnsThatSurroundKing;	
 	}
 	
-	public int getNumberOfBlackCloseToKing() {
-		
-		int blackThatSurroundKing = 0;
+	public int getNumberOfCampsCloseToKing() {
+		int campsCloseToTheKing = 0;
 		
 		int[] kingPosition = this.getKingPosition();
 		
-		if((kingPosition[1] - 1) >= 0 && this.getPawn(kingPosition[0], kingPosition[1] - 1).equals(Pawn.BLACK)) {
-			blackThatSurroundKing++;
+		// cross
+		if((kingPosition[1] - 1) >= 0 && this.getArea(kingPosition[0], kingPosition[1] - 1).equals(Area.CAMPS)) {
+			campsCloseToTheKing++;
 		}
-		if((kingPosition[1] + 1) < (StateTablut.KING_POSITION  * 2 + 1) && this.getPawn(kingPosition[0], kingPosition[1] + 1).equals(Pawn.BLACK)) {
-			blackThatSurroundKing++;
+		if((kingPosition[1] + 1) < (StateTablut.KING_POSITION * 2 + 1) && this.getArea(kingPosition[0], kingPosition[1] + 1).equals(Area.CAMPS)) {
+			campsCloseToTheKing++;
 		}
-		if((kingPosition[0] - 1) >= 0 && !this.getPawn(kingPosition[0] - 1, kingPosition[1]).equals(Pawn.BLACK)) {
-			blackThatSurroundKing++;
+		if((kingPosition[0] - 1) >= 0 && this.getArea(kingPosition[0] - 1, kingPosition[1]).equals(Area.CAMPS)) {
+			campsCloseToTheKing++;
 		}
-		if((kingPosition[0] + 1) < (StateTablut.KING_POSITION  * 2 + 1) && this.getPawn(kingPosition[0] + 1, kingPosition[1]).equals(Pawn.BLACK)) {
-			blackThatSurroundKing++;
+		if((kingPosition[0] + 1) < (StateTablut.KING_POSITION * 2 + 1) && this.getArea(kingPosition[0] + 1, kingPosition[1]).equals(Area.CAMPS)) {
+			campsCloseToTheKing++;
 		}
-		return blackThatSurroundKing;	
+		
+		// angle
+		if((kingPosition[0] - 1 >= 0) && ((kingPosition[1] - 1) >= 0) && this.getArea(kingPosition[0] - 1, kingPosition[1] - 1).equals(Area.CAMPS)) {
+			campsCloseToTheKing++;
+		}
+		if(((kingPosition[0] + 1) < (StateTablut.KING_POSITION * 2 + 1)) && ((kingPosition[1] + 1) < (StateTablut.KING_POSITION * 2 + 1)) 
+				&& this.getArea(kingPosition[0] + 1, kingPosition[1] + 1).equals(Area.CAMPS)) {	
+			campsCloseToTheKing++;
+		}
+		if(((kingPosition[0] - 1) >= 0) && ((kingPosition[1] + 1) < (StateTablut.KING_POSITION * 2 + 1))
+				&& this.getArea(kingPosition[0] - 1, kingPosition[1] + 1).equals(Area.CAMPS)) {
+			campsCloseToTheKing++;
+		}
+		if((kingPosition[0] + 1) < (StateTablut.KING_POSITION  * 2 + 1) && ((kingPosition[1] - 1) >= 0) 
+				&& this.getArea(kingPosition[0] + 1, kingPosition[1] - 1).equals(Area.CAMPS)) {
+			campsCloseToTheKing++;
+		}
+		
+		return campsCloseToTheKing;	
 	}
 		
 	public int isTheKingInTheThrone() {
 		int[] kingPosition = this.getKingPosition();
-		return (kingPosition[0] == 4 && kingPosition[1] == 4) ? 1 : -1;
+		return (kingPosition[0] == KING_POSITION && kingPosition[1] == KING_POSITION) ? 1 : -1;
 	}
 	
 	public double getDistanceFromKingToClosestEscapeArea() {

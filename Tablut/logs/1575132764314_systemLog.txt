@@ -1,0 +1,20 @@
+Nov 30, 2019 5:52:44 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Accensione server
+Nov 30, 2019 5:52:44 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Partita di Tablut
+Nov 30, 2019 5:52:45 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Accettata connessione con client giocatore Bianco
+Nov 30, 2019 5:52:45 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Lettura nome player bianco in corso..
+Nov 30, 2019 5:52:46 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: White player name:	random
+Nov 30, 2019 5:52:48 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Accettata connessione con client giocatore Nero
+Nov 30, 2019 5:52:48 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Lettura nome player nero in corso..
+Nov 30, 2019 5:52:49 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Black player name:	random
+Nov 30, 2019 5:52:49 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Invio messaggio ai giocatori
+Nov 30, 2019 5:52:49 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Lettura mossa player W in corso..

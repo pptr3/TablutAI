@@ -1,0 +1,24 @@
+Nov 30, 2019 5:54:30 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Accensione server
+Nov 30, 2019 5:54:30 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Partita di Tablut
+Nov 30, 2019 5:54:31 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Accettata connessione con client giocatore Bianco
+Nov 30, 2019 5:54:31 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Lettura nome player bianco in corso..
+Nov 30, 2019 5:54:32 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: White player name:	random
+Nov 30, 2019 5:54:33 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Accettata connessione con client giocatore Nero
+Nov 30, 2019 5:54:33 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Lettura nome player nero in corso..
+Nov 30, 2019 5:54:34 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Black player name:	random
+Nov 30, 2019 5:54:34 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Invio messaggio ai giocatori
+Nov 30, 2019 5:54:34 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Lettura mossa player W in corso..
+Nov 30, 2019 5:55:34 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+WARNING: Timeout! Player W lose!
+Nov 30, 2019 5:55:34 PM it.unibo.ai.didattica.competition.tablut.server.Server run
+WARNING: Chiusura sistema per timeout

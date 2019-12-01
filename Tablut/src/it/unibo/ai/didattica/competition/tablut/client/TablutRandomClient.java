@@ -20,7 +20,7 @@ import it.unibo.ai.didattica.competition.tablut.domain.*;
 public class TablutRandomClient extends TablutClient {
 
 	private int game;
-	private int d = 4;
+	private int d = 3;
 	TablutGame tablutGame = new TablutGame(this.d);
 	AlphaBetaSearch<StateTablut, XYWho, Turn> ab = new AlphaBetaSearch<StateTablut, XYWho, Turn> (this.tablutGame, this.d);
 	
