@@ -202,9 +202,7 @@ public class StateTablut {
 		}
 		return 10 - Collections.min(min);
 	}
-	
-	
-	
+		
 	public double getDistanceFromKingToAllBlacks() {
 		int[] kingPosition = this.getKingPosition();
 		List<int[]> blacksCoord = new ArrayList<>();
@@ -225,12 +223,6 @@ public class StateTablut {
 		return 100 - min.stream().mapToDouble(Double::doubleValue).sum();
 	}
 
-	public static void main(String[] args) {
-		StateTablut s  = new StateTablut(3);
-		System.out.println(s.getDistanceFromKingToAllBlacks());
-		
-	}
-	
 	public int getNumberOf(Pawn color) {
 		int count = 0;
 		for (int i = 0; i < this.getBoard().length; i++) {

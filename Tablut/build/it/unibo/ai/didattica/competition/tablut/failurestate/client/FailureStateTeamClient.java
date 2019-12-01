@@ -41,25 +41,26 @@ public class FailureStateTeamClient extends TablutClient {
 				System.exit(1);
 			}
 			state = this.getCurrentState();
-			System.out.println(state.toString());
+			System.out.println(state.getPawn(4, 3));
+			System.out.println(state.getPawn(3, 6));
 			try {
-				Thread.sleep(20);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 			}
 
 			if (this.getPlayer().equals(Turn.WHITE)) {
-				if (this.getCurrentState().getTurn().equals(StateTablut.Turn.WHITE)) {
+				if (state.getTurn().equals(StateTablut.Turn.WHITE)) {
 					
 					Action a = null;
 					XYWho a2 = this.ab.makeDecision(this.getCurrentState());
-					String from = this.getCurrentState().getBox(a2.getWho()[0], a2.getWho()[1]);
-					String to = this.getCurrentState().getBox(a2.getX(), a2.getY());
+					String from = state.getBox(a2.getWho()[0], a2.getWho()[1]);
+					String to = state.getBox(a2.getX(), a2.getY());
 					try {
 						a = new Action(from, to, StateTablut.Turn.WHITE);
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
-					System.out.println("Mossa scelta: " + a.toString());
+					//System.out.println("Mossa scelta: " + a.toString());
 					try {
 						this.write(a);
 					} catch (ClassNotFoundException | IOException e) {
@@ -69,12 +70,11 @@ public class FailureStateTeamClient extends TablutClient {
 				}
 			} else {
 
-				if (this.getCurrentState().getTurn().equals(StateTablut.Turn.BLACK)) {
-					
+				if (state.getTurn().equals(StateTablut.Turn.BLACK)) {
 					Action a = null;
 					XYWho a2 = this.ab.makeDecision(this.getCurrentState());
-					String from = this.getCurrentState().getBox(a2.getWho()[0], a2.getWho()[1]);
-					String to = this.getCurrentState().getBox(a2.getX(), a2.getY());
+					String from = state.getBox(a2.getWho()[0], a2.getWho()[1]);
+					String to = state.getBox(a2.getX(), a2.getY());
 					
 					try {
 						a = new Action(from, to, StateTablut.Turn.BLACK);
