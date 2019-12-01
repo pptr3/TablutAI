@@ -7,10 +7,10 @@ import java.awt.event.ActionListener;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import it.unibo.ai.didattica.competition.tablut.client.game.StateTablut;
-import it.unibo.ai.didattica.competition.tablut.client.game.StateTablut.Turn;
 import it.unibo.ai.didattica.competition.tablut.domain.Action;
 import it.unibo.ai.didattica.competition.tablut.domain.Game;
+import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut;
+import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut.Turn;
 import it.unibo.ai.didattica.competition.tablut.gui.Gui;
 
 public class CheckerMove implements ActionListener {

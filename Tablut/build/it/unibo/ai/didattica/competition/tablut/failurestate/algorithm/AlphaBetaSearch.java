@@ -1,8 +1,8 @@
-package it.unibo.ai.didattica.competition.tablut.algorithm;
+package it.unibo.ai.didattica.competition.tablut.failurestate.algorithm;
 
 import aima.core.search.adversarial.AdversarialSearch;
 import aima.core.search.framework.Metrics;
-import it.unibo.ai.didattica.competition.tablut.client.game.Game;
+import it.unibo.ai.didattica.competition.tablut.failurestate.game.Game;
 
 public class AlphaBetaSearch<S, A, P> implements AdversarialSearch<S, A> {
 

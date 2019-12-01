@@ -1,4 +1,4 @@
-package it.unibo.ai.didattica.competition.tablut.client.petru;
+package it.unibo.ai.didattica.competition.tablut.failurestate.client;
 
 import java.io.DataInputStream;
 
@@ -10,9 +10,9 @@ import java.security.InvalidParameterException;
 
 import com.google.gson.Gson;
 
-import it.unibo.ai.didattica.competition.tablut.client.game.StateTablut;
-import it.unibo.ai.didattica.competition.tablut.client.game.StateTablut.Turn;
 import it.unibo.ai.didattica.competition.tablut.domain.Action;
+import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut;
+import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut.Turn;
 import it.unibo.ai.didattica.competition.tablut.util.StreamUtils;
 import it.unibo.ai.didattica.competition.tablut.server.Server;
 

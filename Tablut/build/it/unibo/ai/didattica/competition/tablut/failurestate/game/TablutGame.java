@@ -1,9 +1,9 @@
-package it.unibo.ai.didattica.competition.tablut.client.game;
+package it.unibo.ai.didattica.competition.tablut.failurestate.game;
 
 import java.util.List;
 
-import it.unibo.ai.didattica.competition.tablut.client.game.StateTablut.Pawn;
-import it.unibo.ai.didattica.competition.tablut.client.game.StateTablut.Turn;
+import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut.Pawn;
+import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut.Turn;
 
 
 public class TablutGame implements Game<StateTablut, XYWho, Turn> {

@@ -24,7 +24,7 @@ public class FailureStateTeamClient extends TablutClient {
 
 	public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException {
 		String role = "";
-		String name = "random";
+		String name = "FailureState";
 	
 		if (args.length < 1) {
 			System.out.println("You must specify which player you are (WHITE or BLACK)");

@@ -6,7 +6,7 @@ import java.awt.Image;
 
 import javax.swing.JFrame;
 
-import it.unibo.ai.didattica.competition.tablut.client.game.StateTablut;;
+import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut;;
 
 public abstract class Background extends JFrame {
 	

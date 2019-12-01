@@ -1,4 +1,4 @@
-package it.unibo.ai.didattica.competition.tablut.client.game;
+package it.unibo.ai.didattica.competition.tablut.failurestate.game;
 
 import java.util.List;
 

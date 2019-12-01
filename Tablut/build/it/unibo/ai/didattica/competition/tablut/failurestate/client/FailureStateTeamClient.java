@@ -1,15 +1,15 @@
-package it.unibo.ai.didattica.competition.tablut.client.petru;
+package it.unibo.ai.didattica.competition.tablut.failurestate.client;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
 
-import it.unibo.ai.didattica.competition.tablut.algorithm.AlphaBetaSearch;
-import it.unibo.ai.didattica.competition.tablut.client.game.StateTablut;
-import it.unibo.ai.didattica.competition.tablut.client.game.TablutGame;
-import it.unibo.ai.didattica.competition.tablut.client.game.XYWho;
-import it.unibo.ai.didattica.competition.tablut.client.game.StateTablut.Turn;
-import it.unibo.ai.didattica.competition.tablut.client.petru.TablutClient;
 import it.unibo.ai.didattica.competition.tablut.domain.*;
+import it.unibo.ai.didattica.competition.tablut.failurestate.algorithm.AlphaBetaSearch;
+import it.unibo.ai.didattica.competition.tablut.failurestate.client.TablutClient;
+import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut;
+import it.unibo.ai.didattica.competition.tablut.failurestate.game.TablutGame;
+import it.unibo.ai.didattica.competition.tablut.failurestate.game.XYWho;
+import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut.Turn;
 
 
 public class FailureStateTeamClient extends TablutClient {
@@ -24,7 +24,7 @@ public class FailureStateTeamClient extends TablutClient {
 
 	public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException {
 		String role = "";
-		String name = "random";
+		String name = "FailureState";
 	
 		if (args.length < 1) {
 			System.out.println("You must specify which player you are (WHITE or BLACK)");
