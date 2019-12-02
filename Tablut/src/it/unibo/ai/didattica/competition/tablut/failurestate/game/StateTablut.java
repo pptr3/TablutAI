@@ -453,31 +453,41 @@ public class StateTablut {
 		// case if the king is adjacent to the Castle, it must be surround on all the three free sides
 		if(((StateTablut.KING_POSITION - 1) >= 0)
 				&& this.getPawn(StateTablut.KING_POSITION, StateTablut.KING_POSITION - 1).equals(Pawn.KING)) {
-			if(//TODO: add contraints on outOfBounds
-					(this.getPawn(StateTablut.KING_POSITION, StateTablut.KING_POSITION - 2).equals(Pawn.BLACK)
+			if(((StateTablut.KING_POSITION + 1) < this.getBoard().length) && ((StateTablut.KING_POSITION - 2) >= 0)
+					&& ((StateTablut.KING_POSITION + 1) < this.getBoard().length)
+					&& (this.getPawn(StateTablut.KING_POSITION, StateTablut.KING_POSITION - 2).equals(Pawn.BLACK)
 					&& this.getPawn(StateTablut.KING_POSITION - 1, StateTablut.KING_POSITION - 1).equals(Pawn.BLACK)
 					&& this.getPawn(StateTablut.KING_POSITION + 1, StateTablut.KING_POSITION - 1).equals(Pawn.BLACK))
 					){
 				return 1;
 			}
 			
-		} else if(this.getPawn(StateTablut.KING_POSITION, StateTablut.KING_POSITION + 1).equals(Pawn.KING)) {
-			if((this.getPawn(StateTablut.KING_POSITION, StateTablut.KING_POSITION + 2).equals(Pawn.BLACK)
+		} else if(((StateTablut.KING_POSITION + 1) < this.getBoard().length)
+				&& this.getPawn(StateTablut.KING_POSITION, StateTablut.KING_POSITION + 1).equals(Pawn.KING)) {
+			if(((StateTablut.KING_POSITION + 2) < this.getBoard().length)
+					&& ((StateTablut.KING_POSITION - 1) >= 0)
+					&& (this.getPawn(StateTablut.KING_POSITION, StateTablut.KING_POSITION + 2).equals(Pawn.BLACK)
 					&& this.getPawn(StateTablut.KING_POSITION + 1, StateTablut.KING_POSITION + 1).equals(Pawn.BLACK)
 					&& this.getPawn(StateTablut.KING_POSITION - 1, StateTablut.KING_POSITION + 1).equals(Pawn.BLACK)) 
 					) {
 				return 1;
 			}
-		} else if(this.getPawn(StateTablut.KING_POSITION - 1, StateTablut.KING_POSITION).equals(Pawn.KING)) {
-			if((this.getPawn(StateTablut.KING_POSITION - 1, StateTablut.KING_POSITION - 1).equals(Pawn.BLACK)
+		} else if(((StateTablut.KING_POSITION - 1) >= 0)
+				&& this.getPawn(StateTablut.KING_POSITION - 1, StateTablut.KING_POSITION).equals(Pawn.KING)) {
+			if((((StateTablut.KING_POSITION - 2) >= 0)
+					&& ((StateTablut.KING_POSITION + 1) < this.getBoard().length)
+					&& this.getPawn(StateTablut.KING_POSITION - 1, StateTablut.KING_POSITION - 1).equals(Pawn.BLACK)
 					&& this.getPawn(StateTablut.KING_POSITION - 2, StateTablut.KING_POSITION).equals(Pawn.BLACK)
 					&& this.getPawn(StateTablut.KING_POSITION - 1, StateTablut.KING_POSITION + 1).equals(Pawn.BLACK))
 					) {
 				return 1;
 			}
 			
-		} else if(this.getPawn(StateTablut.KING_POSITION + 1, StateTablut.KING_POSITION).equals(Pawn.KING)) {
-			if((this.getPawn(StateTablut.KING_POSITION + 1, StateTablut.KING_POSITION + 1).equals(Pawn.BLACK)
+		} else if(((StateTablut.KING_POSITION + 1) < this.getBoard().length)
+				&& this.getPawn(StateTablut.KING_POSITION + 1, StateTablut.KING_POSITION).equals(Pawn.KING)) {
+			if((((StateTablut.KING_POSITION + 2) < this.getBoard().length)
+					&& ((StateTablut.KING_POSITION - 1) >= 0)
+					&& this.getPawn(StateTablut.KING_POSITION + 1, StateTablut.KING_POSITION + 1).equals(Pawn.BLACK)
 					&& this.getPawn(StateTablut.KING_POSITION + 2, StateTablut.KING_POSITION).equals(Pawn.BLACK)
 					&& this.getPawn(StateTablut.KING_POSITION + 1, StateTablut.KING_POSITION - 1).equals(Pawn.BLACK))
 					) {

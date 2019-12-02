@@ -1,0 +1,10 @@
+Dec 02, 2019 11:33:34 AM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Accensione server
+Dec 02, 2019 11:33:34 AM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Partita di Tablut
+Dec 02, 2019 11:34:32 AM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Accettata connessione con client giocatore Bianco
+Dec 02, 2019 11:34:32 AM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: Lettura nome player bianco in corso..
+Dec 02, 2019 11:34:33 AM it.unibo.ai.didattica.competition.tablut.server.Server run
+FINE: White player name:	FailureSta
