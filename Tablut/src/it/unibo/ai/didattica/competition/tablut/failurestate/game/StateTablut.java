@@ -180,12 +180,12 @@ public class StateTablut {
 		
 	public int isTheKingInTheThrone() {
 		int[] kingPosition = this.getKingPosition();
-		return (kingPosition[0] == KING_POSITION && kingPosition[1] == KING_POSITION) ? 1 : -1;
+		return (kingPosition[0] == KING_POSITION && kingPosition[1] == KING_POSITION) ? 1 : 0;
 	}
 	
 	public int isTheKingOnEscapeArea() {
 		int[] kingPosition = this.getKingPosition();
-		return (this.getArea(kingPosition[0], kingPosition[1]).equals(Area.ESCAPES)) ? 1 : -1;
+		return (this.getArea(kingPosition[0], kingPosition[1]).equals(Area.ESCAPES)) ? 1 : 0;
 	}
 	
 	public double getDistanceFromKingToClosestEscapeArea() {
@@ -195,7 +195,7 @@ public class StateTablut {
 		
 		for (int i = 0; i < this.getBoard().length; i++) {
 			for (int j = 0; j < this.getBoard().length; j++) {
-				if(this.getArea(i, j).equals(Area.ESCAPES)) {
+				if(this.getArea(i, j).equals(Area.ESCAPES) && this.getPawn(i, j).equals(Pawn.EMPTY)) {
 					escapeCoord.add(new int[] {i, j});
 				}
 			}
@@ -405,7 +405,7 @@ public class StateTablut {
 				
 			}
 		}
-		return moves == 0 ? 1 : -1;
+		return moves == 0 ? 1 : 0;
 	}
 	
 	public int hasBlackWon() {
@@ -567,7 +567,7 @@ public class StateTablut {
 				}
 			}
 		}
-		return -1;
+		return 0;
 	}
 
 	public List<XYWho> getAllLegalMoves() {
@@ -801,22 +801,22 @@ public class StateTablut {
 
 		this.setArea(4, 4, Area.CASTLE);
 		
-		this.setArea(0, 0, Area.ESCAPES);
+		//this.setArea(0, 0, Area.ESCAPES);
 		this.setArea(0, 1, Area.ESCAPES);
 		this.setArea(0, 2, Area.ESCAPES);
 		this.setArea(0, 6, Area.ESCAPES);
 		this.setArea(0, 7, Area.ESCAPES);
-		this.setArea(0, 8, Area.ESCAPES);
+		//this.setArea(0, 8, Area.ESCAPES);
 		this.setArea(1, 0, Area.ESCAPES);
 		this.setArea(2, 0, Area.ESCAPES);
 		this.setArea(6, 0, Area.ESCAPES);
 		this.setArea(7, 0, Area.ESCAPES);
-		this.setArea(8, 0, Area.ESCAPES);
+		//this.setArea(8, 0, Area.ESCAPES);
 		this.setArea(8, 1, Area.ESCAPES);
 		this.setArea(8, 2, Area.ESCAPES);
 		this.setArea(8, 6, Area.ESCAPES);
 		this.setArea(8, 7, Area.ESCAPES);
-		this.setArea(8, 8, Area.ESCAPES);
+		//this.setArea(8, 8, Area.ESCAPES);
 		this.setArea(1, 8, Area.ESCAPES);
 		this.setArea(2, 8, Area.ESCAPES);
 		this.setArea(6, 8, Area.ESCAPES);
