@@ -63,7 +63,6 @@ public class AlphaBetaSearch<S, A, P> implements AdversarialSearch<S, A> {
             value = Math.min(value, maxValue( //
                     game.getResult(state, action), player, alpha, beta, depth - 1));
             if (value <= alpha && (value != Double.NEGATIVE_INFINITY)) {
-            	System.out.println("thisssss: "+value);
                 return value;
             }
             beta = Math.min(beta, value);

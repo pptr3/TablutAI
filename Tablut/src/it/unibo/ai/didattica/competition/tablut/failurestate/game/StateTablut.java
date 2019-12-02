@@ -414,7 +414,9 @@ public class StateTablut {
 			for(int j=0; j < this.getBoard().length; j++) {
 				if(this.getPawn(i, j).equals(Pawn.KING)) {
 					// case B K B
-					if(this.getPawn(i - 1, j).equals(Pawn.BLACK) && this.getPawn(i + 1, j).equals(Pawn.BLACK) && 
+					if(((i - 1) >= 0 && (i + 1) < this.getBoard().length)
+							&& ((j - 1) >= 0 && (j + 1) < this.getBoard().length)
+							&& this.getPawn(i - 1, j).equals(Pawn.BLACK) && this.getPawn(i + 1, j).equals(Pawn.BLACK) && 
 							(!this.getArea(i, j).equals(Area.CASTLE) && (!this.getArea(i, j - 1).equals(Area.CASTLE) &&
 							(!this.getArea(i, j + 1).equals(Area.CASTLE))))) {
 								return 1;
@@ -424,7 +426,9 @@ public class StateTablut {
 					 * K
 					 * B
 					 */
-					if(this.getPawn(i, j - 1).equals(Pawn.BLACK) && this.getPawn(i, j + 1).equals(Pawn.BLACK) && 
+					if(((i - 1) >= 0 && (i + 1) < this.getBoard().length)
+							&& ((j - 1) >= 0 && (j + 1) < this.getBoard().length)
+							&& this.getPawn(i, j - 1).equals(Pawn.BLACK) && this.getPawn(i, j + 1).equals(Pawn.BLACK) && 
 							(!this.getArea(i, j).equals(Area.CASTLE) && (!this.getArea(i - 1, j).equals(Area.CASTLE) &&
 							(!this.getArea(i + 1, j).equals(Area.CASTLE))))) {
 								return 1;
@@ -437,7 +441,9 @@ public class StateTablut {
 		for(int i=0; i < this.getBoard().length; i++) {
 			for(int j=0; j < this.getBoard().length; j++) {
 				if(this.getPawn(i, j).equals(Pawn.KING) && this.getArea(i, j).equals(Area.CASTLE)) {
-					if(this.getPawn(i, j - 1).equals(Pawn.BLACK) && this.getPawn(i, j + 1).equals(Pawn.BLACK)
+					if(((i - 1) >= 0 && (i + 1) < this.getBoard().length)
+							&& ((j - 1) >= 0 && (j + 1) < this.getBoard().length)
+							&& this.getPawn(i, j - 1).equals(Pawn.BLACK) && this.getPawn(i, j + 1).equals(Pawn.BLACK)
 							&& this.getPawn(i - 1, j).equals(Pawn.BLACK) && this.getPawn(i + 1, j).equals(Pawn.BLACK)) {
 						return 1;
 					}
@@ -445,8 +451,10 @@ public class StateTablut {
 			}
 		}
 		// case if the king is adjacent to the Castle, it must be surround on all the three free sides
-		if(this.getPawn(StateTablut.KING_POSITION, StateTablut.KING_POSITION - 1).equals(Pawn.KING)) {
-			if((this.getPawn(StateTablut.KING_POSITION, StateTablut.KING_POSITION - 2).equals(Pawn.BLACK)
+		if(((StateTablut.KING_POSITION - 1) >= 0)
+				&& this.getPawn(StateTablut.KING_POSITION, StateTablut.KING_POSITION - 1).equals(Pawn.KING)) {
+			if(//TODO: add contraints on outOfBounds
+					(this.getPawn(StateTablut.KING_POSITION, StateTablut.KING_POSITION - 2).equals(Pawn.BLACK)
 					&& this.getPawn(StateTablut.KING_POSITION - 1, StateTablut.KING_POSITION - 1).equals(Pawn.BLACK)
 					&& this.getPawn(StateTablut.KING_POSITION + 1, StateTablut.KING_POSITION - 1).equals(Pawn.BLACK))
 					){
@@ -482,46 +490,66 @@ public class StateTablut {
 			for(int j=0; j < this.getBoard().length; j++) {
 				if(this.getPawn(i, j).equals(Pawn.KING)) {
 					// normal case
-					if(this.getArea(i + 1, j).equals(Area.CAMPS) && this.getPawn(i - 1, j).equals(Pawn.BLACK)) {
+					if(((i - 1) >= 0 && (i + 1) < this.getBoard().length)
+							&& this.getArea(i + 1, j).equals(Area.CAMPS) && this.getPawn(i - 1, j).equals(Pawn.BLACK)) {
 						return 1;
-					} else if(this.getArea(i - 1, j).equals(Area.CAMPS) && this.getPawn(i + 1, j).equals(Pawn.BLACK)) {
+					} else if(((i - 1) >= 0 && (i + 1) < this.getBoard().length)
+							&& this.getArea(i - 1, j).equals(Area.CAMPS) && this.getPawn(i + 1, j).equals(Pawn.BLACK)) {
 						return 1;
-					} else if(this.getArea(i, j - 1).equals(Area.CAMPS) && this.getPawn(i, j + 1).equals(Pawn.BLACK)) {
+					} else if(((j - 1) >= 0 && (j + 1) < this.getBoard().length)
+							&& this.getArea(i, j - 1).equals(Area.CAMPS) && this.getPawn(i, j + 1).equals(Pawn.BLACK)) {
 						return 1;
-					} else if(this.getArea(i, j + 1).equals(Area.CAMPS) && this.getPawn(i, j - 1).equals(Pawn.BLACK)) {
+					} else if(((j - 1) >= 0 && (j + 1) < this.getBoard().length)
+							&& this.getArea(i, j + 1).equals(Area.CAMPS) && this.getPawn(i, j - 1).equals(Pawn.BLACK)) {
 						return 1;
 					}
 					
 					// angle case
-					if(this.getArea(i - 1, j).equals(Area.CAMPS) && this.getArea(i, j + 1).equals(Area.CAMPS)
+					if(((i - 1) >= 0 && (i + 1) < this.getBoard().length)
+							&& ((j - 1) >= 0 && (j + 1) < this.getBoard().length)
+							&& this.getArea(i - 1, j).equals(Area.CAMPS) && this.getArea(i, j + 1).equals(Area.CAMPS)
 							&& ((this.getPawn(i + 1, j).equals(Pawn.BLACK))
 									|| (this.getPawn(i, j - 1).equals(Pawn.BLACK)))) {
 						return 1;
-					} else if(this.getArea(i - 1, j).equals(Area.CAMPS) && this.getArea(i, j - 1).equals(Area.CAMPS)
+					} else if(((i - 1) >= 0 && (i + 1) < this.getBoard().length)
+							&& ((j - 1) >= 0 && (j + 1) < this.getBoard().length)
+							&& this.getArea(i - 1, j).equals(Area.CAMPS) && this.getArea(i, j - 1).equals(Area.CAMPS)
 							&& ((this.getPawn(i + 1, j).equals(Pawn.BLACK)) 
 									|| (this.getPawn(i, j + 1).equals(Pawn.BLACK)))) {
 						return 1;
-					} else if(this.getArea(i, j + 1).equals(Area.CAMPS) && this.getArea(i + 1, j).equals(Area.CAMPS)
+					} else if(((i - 1) >= 0 && (i + 1) < this.getBoard().length)
+							&& ((j - 1) >= 0 && (j + 1) < this.getBoard().length)
+							&& this.getArea(i, j + 1).equals(Area.CAMPS) && this.getArea(i + 1, j).equals(Area.CAMPS)
 							&& ((this.getPawn(i - 1, j).equals(Pawn.BLACK)) 
 									|| (this.getPawn(i, j - 1).equals(Pawn.BLACK)))) {
 						return 1;
-					} else if(this.getArea(i - 1, j).equals(Area.CAMPS) && this.getArea(i, j + 1).equals(Area.CAMPS)
+					} else if(((i - 1) >= 0 && (i + 1) < this.getBoard().length)
+							&& ((j - 1) >= 0 && (j + 1) < this.getBoard().length)
+							&& this.getArea(i - 1, j).equals(Area.CAMPS) && this.getArea(i, j + 1).equals(Area.CAMPS)
 							&& ((this.getPawn(i, j - 1).equals(Pawn.BLACK))
 									|| (this.getPawn(i + 1, j).equals(Pawn.BLACK)))) {
 						return 1;
-					} else if(this.getArea(i + 1, j).equals(Area.CAMPS) && this.getArea(i, j - 1).equals(Area.CAMPS)
+					} else if(((i - 1) >= 0 && (i + 1) < this.getBoard().length)
+							&& ((j - 1) >= 0 && (j + 1) < this.getBoard().length)
+							&& this.getArea(i + 1, j).equals(Area.CAMPS) && this.getArea(i, j - 1).equals(Area.CAMPS)
 							&& ((this.getPawn(i - 1, j).equals(Pawn.BLACK))
 									|| (this.getPawn(i, j + 1).equals(Pawn.BLACK)))) {
 						return 1;
-					} else if(this.getArea(i + 1, j).equals(Area.CAMPS) && this.getArea(i, j + 1).equals(Area.CAMPS)
+					} else if(((i - 1) >= 0 && (i + 1) < this.getBoard().length)
+							&& ((j - 1) >= 0 && (j + 1) < this.getBoard().length)
+							&& this.getArea(i + 1, j).equals(Area.CAMPS) && this.getArea(i, j + 1).equals(Area.CAMPS)
 							&& ((this.getPawn(i - 1, j).equals(Pawn.BLACK))
 									|| (this.getPawn(i, j - 1).equals(Pawn.BLACK)))) {
 						return 1;
-					} else if(this.getArea(i, j - 1).equals(Area.CAMPS) && this.getArea(i - 1, j).equals(Area.CAMPS)
+					} else if(((i - 1) >= 0 && (i + 1) < this.getBoard().length)
+							&& ((j - 1) >= 0 && (j + 1) < this.getBoard().length)
+							&& this.getArea(i, j - 1).equals(Area.CAMPS) && this.getArea(i - 1, j).equals(Area.CAMPS)
 							&& ((this.getPawn(i + 1, j).equals(Pawn.BLACK))
 									|| (this.getPawn(i, j + 1).equals(Pawn.BLACK)))) {
 						return 1;
-					} else if(this.getArea(i, j - 1).equals(Area.CAMPS) && this.getArea(i + 1, j).equals(Area.CAMPS)
+					} else if(((i - 1) >= 0 && (i + 1) < this.getBoard().length)
+							&& ((j - 1) >= 0 && (j + 1) < this.getBoard().length)
+							&& this.getArea(i, j - 1).equals(Area.CAMPS) && this.getArea(i + 1, j).equals(Area.CAMPS)
 							&& ((this.getPawn(i - 1, j).equals(Pawn.BLACK))
 									|| (this.getPawn(i, j + 1).equals(Pawn.BLACK)))) {
 						return 1;
