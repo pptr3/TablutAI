@@ -40,21 +40,21 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 		if(state.getCurrentDepth() == 0) {
 			if(player.equals(Turn.WHITE)) {
 				toreturn = 200000*state.isTheKingOnEscapeArea()
-						+ 200000*state.playerCannotMoveAnyPawn(Pawn.BLACK) 
+						+ 200000*state.playerCannotMoveAnyPawn(Pawn.BLACK)
 						+ 100*(state.getDistanceFromKingToClosestEscapeArea())
-						+ 2*state.getNumberOf(Pawn.WHITE)
-						+ 15*state.getDistanceFromKingToAllBlacks()
-						+ 2*state.getNumberCloseToTheKingOf(Pawn.WHITE) 
-						- 2*state.isTheKingInTheThrone() 
-						- 10*state.getNumberCloseToTheKingOf(Pawn.BLACK) 
-						- 2*state.getNumberOfCampsCloseToKing()
-						- 4*state.getNumberOf(Pawn.BLACK)
-						- 10000*state.hasBlackWon();
+						+ 6*state.getNumberOf(Pawn.WHITE)
+						+ 20*state.getDistanceFromKingToAllBlacks()
+						+ 2*state.getNumberCloseToTheKingOf(Pawn.WHITE);
+//						- 2*state.isTheKingInTheThrone() 
+//						- 10*state.getNumberCloseToTheKingOf(Pawn.BLACK) 
+//						- 2*state.getNumberOfCampsCloseToKing()
+						//- 4*state.getNumberOf(Pawn.BLACK)
+						//- 10000*state.hasBlackWon();
 				
 			} else if(player.equals(Turn.BLACK)) {
 				toreturn = 200000*state.hasBlackWon() 
 						+ 20000*state.playerCannotMoveAnyPawn(Pawn.WHITE)
-						+ 30*state.getNumberCloseToTheKingOf(Pawn.BLACK)
+						//+ 30*state.getNumberCloseToTheKingOf(Pawn.BLACK)
 						+ 6*state.getNumberOf(Pawn.BLACK)
 						+ 2*state.getNumberOfCampsCloseToKing()
 						- 100*state.getDistanceFromKingToClosestEscapeArea()
