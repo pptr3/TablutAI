@@ -246,17 +246,17 @@ public class StateTablut {
 				for(int j=0; j < this.getBoard().length; j++) {
 					if(this.getPawn(i, j).equals(Pawn.WHITE)) {
 						// normal capture
-						// case B W B
-						if(((i - 1) >= 0 && (i + 1) < this.getBoard().length) && this.getPawn(i - 1, j).equals(Pawn.BLACK) && this.getPawn(i + 1, j).equals(Pawn.BLACK)) {
-							if((action.getX() == (i - 1) && action.getY() == (j)) || ((action.getX() == (i + 1) && action.getY() == (j)))) {
-								this.setPawn(i, j, Pawn.EMPTY);
-							}
-						}
 						/*case
 						 * B
 						 * W
 						 * B
 						 */
+						if(((i - 1) >= 0 && (i + 1) < this.getBoard().length) && this.getPawn(i - 1, j).equals(Pawn.BLACK) && this.getPawn(i + 1, j).equals(Pawn.BLACK)) {
+							if((action.getX() == (i - 1) && action.getY() == (j)) || ((action.getX() == (i + 1) && action.getY() == (j)))) { // checking whether is 
+								this.setPawn(i, j, Pawn.EMPTY);																				 // an active move
+							}
+						}
+						/* case B W B */
 						if(((j - 1) >= 0 && (j + 1) < this.getBoard().length) && this.getPawn(i, j - 1).equals(Pawn.BLACK) && this.getPawn(i, j + 1).equals(Pawn.BLACK)) {
 							if((action.getX() == (i) && action.getY() == (j - 1)) || ((action.getX() == (i) && action.getY() == (j + 1)))) {
 								this.setPawn(i, j, Pawn.EMPTY);
@@ -315,17 +315,17 @@ public class StateTablut {
 				for(int j=0; j < this.getBoard().length; j++) {
 					if(this.getPawn(i, j).equals(Pawn.BLACK)) {
 						// normal capture
-						// case W B W
-						if(((i - 1) >= 0 && (i + 1) < this.getBoard().length) && this.getPawn(i - 1, j).equals(Pawn.WHITE) && this.getPawn(i + 1, j).equals(Pawn.WHITE)) {
-							if((action.getX() == (i - 1) && action.getY() == (j)) || ((action.getX() == (i + 1) && action.getY() == (j)))) {
-								this.setPawn(i, j, Pawn.EMPTY);
-							}
-						}
 						/*case
 						 * W
 						 * B
 						 * W
 						 */
+						if(((i - 1) >= 0 && (i + 1) < this.getBoard().length) && this.getPawn(i - 1, j).equals(Pawn.WHITE) && this.getPawn(i + 1, j).equals(Pawn.WHITE)) {
+							if((action.getX() == (i - 1) && action.getY() == (j)) || ((action.getX() == (i + 1) && action.getY() == (j)))) {
+								this.setPawn(i, j, Pawn.EMPTY);
+							}
+						}
+						/* case W B W */
 						if(((j - 1) >= 0 && (j + 1) < this.getBoard().length) && this.getPawn(i, j - 1).equals(Pawn.WHITE) && this.getPawn(i, j + 1).equals(Pawn.WHITE)) {
 							if((action.getX() == (i) && action.getY() == (j - 1)) || ((action.getX() == (i) && action.getY() == (j + 1)))) {
 								this.setPawn(i, j, Pawn.EMPTY);
@@ -394,11 +394,14 @@ public class StateTablut {
 				if(this.getPawn(i, j).equals(color)) {
 					if(((i + 1) < this.getBoard().length) && this.getPawn(i + 1, j).equals(Pawn.EMPTY)) {
 						moves++;
-					} else if(((i - 1) >= 0) && this.getPawn(i - 1, j).equals(Pawn.EMPTY)) {
+					}
+					if(((i - 1) >= 0) && this.getPawn(i - 1, j).equals(Pawn.EMPTY)) {
 						moves++;
-					} else if(((j + 1) < this.getBoard().length) && this.getPawn(i, j + 1).equals(Pawn.EMPTY)) {
+					} 
+					if(((j + 1) < this.getBoard().length) && this.getPawn(i, j + 1).equals(Pawn.EMPTY)) {
 						moves++;
-					} else if(((j - 1) >= 0) && this.getPawn(i, j - 1).equals(Pawn.EMPTY)) {
+					} 
+					if(((j - 1) >= 0) && this.getPawn(i, j - 1).equals(Pawn.EMPTY)) {
 						moves++;
 					}
 				}
@@ -413,7 +416,11 @@ public class StateTablut {
 		for(int i=0; i < this.getBoard().length; i++) {
 			for(int j=0; j < this.getBoard().length; j++) {
 				if(this.getPawn(i, j).equals(Pawn.KING)) {
-					// case B K B
+					/*case
+					 * B
+					 * K
+					 * B
+					 */
 					if(((i - 1) >= 0 && (i + 1) < this.getBoard().length)
 							&& ((j - 1) >= 0 && (j + 1) < this.getBoard().length)
 							&& this.getPawn(i - 1, j).equals(Pawn.BLACK) && this.getPawn(i + 1, j).equals(Pawn.BLACK) && 
@@ -421,11 +428,7 @@ public class StateTablut {
 							(!this.getArea(i, j + 1).equals(Area.CASTLE))))) {
 								return 1;
 					}
-					/*case
-					 * B
-					 * K
-					 * B
-					 */
+					/* case B K B */
 					if(((i - 1) >= 0 && (i + 1) < this.getBoard().length)
 							&& ((j - 1) >= 0 && (j + 1) < this.getBoard().length)
 							&& this.getPawn(i, j - 1).equals(Pawn.BLACK) && this.getPawn(i, j + 1).equals(Pawn.BLACK) && 
