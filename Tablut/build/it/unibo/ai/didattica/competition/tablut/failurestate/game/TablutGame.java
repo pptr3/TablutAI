@@ -46,7 +46,7 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 						+ 20*state.getDistanceFromKingToAllBlacks()
 						+ 2*state.getNumberCloseToTheKingOf(Pawn.WHITE)
 						- 2*state.isTheKingInTheThrone()
-						- 5*state.getNumberCloseToTheKingOf(Pawn.BLACK)
+						- 10*state.getNumberCloseToTheKingOf(Pawn.BLACK)
 						- 2*state.getNumberOfCampsCloseToKing()
 						- 4*state.getNumberOf(Pawn.BLACK)
 						- 200000*state.hasBlackWon();
