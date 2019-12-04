@@ -44,23 +44,23 @@ public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 						+ 100*(state.getDistanceFromKingToClosestEscapeArea())
 						+ 6*state.getNumberOf(Pawn.WHITE)
 						+ 20*state.getDistanceFromKingToAllBlacks()
-						+ 2*state.getNumberCloseToTheKingOf(Pawn.WHITE);
-//						- 2*state.isTheKingInTheThrone() 
-//						- 10*state.getNumberCloseToTheKingOf(Pawn.BLACK) 
-//						- 2*state.getNumberOfCampsCloseToKing()
-						//- 4*state.getNumberOf(Pawn.BLACK)
-						//- 10000*state.hasBlackWon();
+						+ 2*state.getNumberCloseToTheKingOf(Pawn.WHITE)
+						- 2*state.isTheKingInTheThrone()
+						- 5*state.getNumberCloseToTheKingOf(Pawn.BLACK)
+						- 2*state.getNumberOfCampsCloseToKing()
+						- 4*state.getNumberOf(Pawn.BLACK)
+						- 200000*state.hasBlackWon();
 				
 			} else if(player.equals(Turn.BLACK)) {
 				toreturn = 200000*state.hasBlackWon() 
-						+ 20000*state.playerCannotMoveAnyPawn(Pawn.WHITE)
-						//+ 30*state.getNumberCloseToTheKingOf(Pawn.BLACK)
-						+ 6*state.getNumberOf(Pawn.BLACK)
-						+ 2*state.getNumberOfCampsCloseToKing()
+						+ 200000*state.playerCannotMoveAnyPawn(Pawn.WHITE)
+						+ 50*state.getNumberCloseToTheKingOf(Pawn.BLACK)
+						+ 10*state.getNumberOf(Pawn.BLACK)
+						+ 10*state.getNumberOfCampsCloseToKing()
 						- 100*state.getDistanceFromKingToClosestEscapeArea()
-						- 1*state.getDistanceFromKingToAllBlacks()
-						- 10*state.getNumberOf(Pawn.WHITE)
-						- 10000*state.isTheKingOnEscapeArea();
+						- 25*state.getDistanceFromKingToAllBlacks()
+						- 25*state.getNumberOf(Pawn.WHITE)
+						- 200000*state.isTheKingOnEscapeArea();
 			}
 		}
 		return toreturn;

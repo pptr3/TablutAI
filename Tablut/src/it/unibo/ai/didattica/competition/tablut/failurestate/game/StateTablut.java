@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut.Pawn;
+
 
 
 public class StateTablut {
@@ -207,7 +209,7 @@ public class StateTablut {
 		}
 		return 10 - Collections.min(min);
 	}
-		
+	
 	public double getDistanceFromKingToAllBlacks() {
 		int[] kingPosition = this.getKingPosition();
 		List<int[]> blacksCoord = new ArrayList<>();
@@ -226,6 +228,11 @@ public class StateTablut {
 			min.add(Math.sqrt(deltaX*deltaX + deltaY*deltaY));
 		}
 		return min.stream().mapToDouble(Double::doubleValue).sum();
+	}
+	
+	public static void main(String[] args) {
+		StateTablut s = new StateTablut(3);
+		System.out.println(s.getNumberCloseToTheKingOf(Pawn.WHITE));
 	}
 
 	public int getNumberOf(Pawn color) {
@@ -412,6 +419,11 @@ public class StateTablut {
 	}
 	
 	public int hasBlackWon() {
+		// if the king has already won return 0, no matter whether the black can win in one move
+		int[] kingPosition = this.getKingPosition();
+		if(this.getArea(kingPosition[0], kingPosition[1]).equals(Area.ESCAPES)) {
+			return 0;
+		}
 		// normal capture of the king
 		for(int i=0; i < this.getBoard().length; i++) {
 			for(int j=0; j < this.getBoard().length; j++) {
