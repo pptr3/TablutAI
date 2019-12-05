@@ -6,7 +6,7 @@ import java.awt.Image;
 
 import javax.swing.JFrame;
 
-import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut;;
+import it.unibo.ai.didattica.competition.tablut.failurestate.game.InternalState;;
 
 public abstract class Background extends JFrame {
 	
@@ -19,18 +19,18 @@ public abstract class Background extends JFrame {
 	protected Image black;
 	protected Image white;
 	protected Image king;
-	protected StateTablut aState;
+	protected InternalState aState;
 	
 	public Background()
 	{
 		super();
 	}
 	
-	public StateTablut getaState() {
+	public InternalState getaState() {
 		return aState;
 	}
 	
-	public void setaState(StateTablut aState) {
+	public void setaState(InternalState aState) {
 		this.aState = aState;
 	}
 	

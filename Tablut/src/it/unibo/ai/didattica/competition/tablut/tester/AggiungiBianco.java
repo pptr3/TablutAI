@@ -1,16 +1,13 @@
 package it.unibo.ai.didattica.competition.tablut.tester;
 
 import java.awt.event.ActionEvent;
-
 import java.awt.event.ActionListener;
 import java.io.IOException;
-
 import javax.swing.JTextField;
-
 import it.unibo.ai.didattica.competition.tablut.domain.Action;
-import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut;
-import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut.Pawn;
-import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut.Turn;
+import it.unibo.ai.didattica.competition.tablut.domain.State.Pawn;
+import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
+import it.unibo.ai.didattica.competition.tablut.domain.StateTablut;
 import it.unibo.ai.didattica.competition.tablut.gui.Gui;
 
 public class AggiungiBianco implements ActionListener {

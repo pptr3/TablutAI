@@ -1,11 +1,8 @@
 package it.unibo.ai.didattica.competition.tablut.domain;
 
 import java.io.IOException;
-
 import java.io.Serializable;
 import java.security.InvalidParameterException;
-
-import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut;
 
 /**
  * this class represents an action of a player
@@ -20,7 +17,7 @@ public class Action implements Serializable {
 	private String from;
 	private String to;
 
-	private StateTablut.Turn turn;
+	private State.Turn turn;
 
 	public Action(String from, String to, StateTablut.Turn t) throws IOException {
 		if (from.length() != 2 || to.length() != 2) {
