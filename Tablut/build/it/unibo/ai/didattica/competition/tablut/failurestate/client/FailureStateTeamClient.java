@@ -14,7 +14,7 @@ import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut.Tu
 
 public class FailureStateTeamClient extends TablutClient {
 
-	private int d = 3;
+	private int d = 4;
 	private TablutGame tablutGame = new TablutGame(this.d);
 	private AlphaBetaSearch<StateTablut, XYWho, Turn> ab = new AlphaBetaSearch<StateTablut, XYWho, Turn> (this.tablutGame, this.d);
 	
@@ -50,21 +50,13 @@ public class FailureStateTeamClient extends TablutClient {
 				if (state.getTurn().equals(StateTablut.Turn.WHITE)) {
 					
 					Action a = null;
-					XYWho a2 = null;
-					a2 = this.ab.makeDecision(state);
-					String from = null;
-					try {
-						from = state.getBox(a2.getWho()[0], a2.getWho()[1]);
-					} catch (Exception ex) {
-						// TODO: try and catch in case of an error
-						System.out.println("ERROR HERE, a2 is: " + a2);
-					}
+					XYWho a2 = this.ab.makeDecision(state);
+					String from = state.getBox(a2.getWho()[0], a2.getWho()[1]);
 					String to = state.getBox(a2.getX(), a2.getY());
 					try {
 						a = new Action(from, to, StateTablut.Turn.WHITE);
 					} catch (IOException e1) {
 					}
-					//System.out.println("Mossa scelta: " + a.toString());
 					try {
 						this.write(a);
 					} catch (ClassNotFoundException | IOException e) {

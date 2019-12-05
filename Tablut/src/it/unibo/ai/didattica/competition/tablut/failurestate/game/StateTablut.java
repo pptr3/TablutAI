@@ -422,7 +422,6 @@ public class StateTablut {
 		// if the king has already won return 0, no matter whether the black can win in one move
 		int[] kingPosition = this.getKingPosition();
 		if(this.getArea(kingPosition[0], kingPosition[1]).equals(Area.ESCAPES)) {
-			System.out.println("KKKKKKKKK");
 			return 0;
 		}
 		// normal capture of the king
