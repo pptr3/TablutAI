@@ -1,7 +1,6 @@
 package it.unibo.ai.didattica.competition.tablut.server;
 
 import java.io.DataInputStream;
-
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -13,8 +12,7 @@ import java.util.Date;
 import java.util.logging.*;
 
 import it.unibo.ai.didattica.competition.tablut.domain.*;
-import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut;
-import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut.Turn;
+import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 import it.unibo.ai.didattica.competition.tablut.gui.Gui;
 import it.unibo.ai.didattica.competition.tablut.util.StreamUtils;
 
@@ -35,7 +33,7 @@ public class Server implements Runnable {
 	/**
 	 * State of the game
 	 */
-	private StateTablut state;
+	private State state;
 	/**
 	 * Number of seconds allowed for a decision
 	 */
@@ -98,7 +96,7 @@ public class Server implements Runnable {
 		this.gson = new Gson();
 	}
 
-	public void initializeGUI(StateTablut state) {
+	public void initializeGUI(State state) {
 		this.theGui = new Gui(this.gameC);
 		this.theGui.update(state);
 	}
@@ -440,9 +438,21 @@ public class Server implements Runnable {
 		}
 
 		switch (this.gameC) {
+		case 1:
+			state = new StateTablut();
+			this.game = new GameTablut(moveCache);
+			break;
+		case 2:
+			state = new StateTablut();
+			this.game = new GameModernTablut(moveCache);
+			break;
+		case 3:
+			state = new StateBrandub();
+			this.game = new GameTablut(moveCache);
+			break;
 		case 4:
-			state = new StateTablut(400);
-			state.setTurn(StateTablut.Turn.WHITE);
+			state = new StateTablut();
+			state.setTurn(State.Turn.WHITE);
 			this.game = new GameAshtonTablut(state, repeated, this.cacheSize, "logs", whiteName, blackName);
 			break;
 		default:
@@ -476,7 +486,7 @@ public class Server implements Runnable {
 		while (!endgame) {
 			// RECEIVE MOVE
 			
-			System.out.println("State: \n"+state.toString());
+			// System.out.println("State: \n"+state.toString());
 			System.out.println("Waiting for " + state.getTurn() + "...");
 
 			// create the process that listen the answer

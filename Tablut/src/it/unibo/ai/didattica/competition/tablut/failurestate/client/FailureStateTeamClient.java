@@ -6,17 +6,17 @@ import java.net.UnknownHostException;
 import it.unibo.ai.didattica.competition.tablut.domain.*;
 import it.unibo.ai.didattica.competition.tablut.failurestate.algorithm.AlphaBetaSearch;
 import it.unibo.ai.didattica.competition.tablut.failurestate.client.TablutClient;
-import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut;
+import it.unibo.ai.didattica.competition.tablut.failurestate.game.InternalState;
 import it.unibo.ai.didattica.competition.tablut.failurestate.game.TablutGame;
 import it.unibo.ai.didattica.competition.tablut.failurestate.game.XYWho;
-import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut.Turn;
+import it.unibo.ai.didattica.competition.tablut.failurestate.game.InternalState.Turn;
 
 
 public class FailureStateTeamClient extends TablutClient {
 
 	private int d = 3;
 	private TablutGame tablutGame = new TablutGame(this.d);
-	private AlphaBetaSearch<StateTablut, XYWho, Turn> ab = new AlphaBetaSearch<StateTablut, XYWho, Turn> (this.tablutGame, this.d);
+	private AlphaBetaSearch<InternalState, XYWho, Turn> ab = new AlphaBetaSearch<InternalState, XYWho, Turn> (this.tablutGame, this.d);
 	
 	public FailureStateTeamClient(String player, String name) throws UnknownHostException, IOException {
 		super(player, name);
@@ -30,7 +30,7 @@ public class FailureStateTeamClient extends TablutClient {
 		} catch (Exception e) {
 		}
 
-		StateTablut state = this.tablutGame.getInitialState();
+		InternalState state = this.tablutGame.getInitialState();
 		System.out.println("You are player " + this.getPlayer().toString() + "!");
 
 		while (true) {
@@ -47,7 +47,7 @@ public class FailureStateTeamClient extends TablutClient {
 			}
 			
 			if (this.getPlayer().equals(Turn.WHITE)) {
-				if (state.getTurn().equals(StateTablut.Turn.WHITE)) {
+				if (state.getTurn().equals(InternalState.Turn.WHITE)) {
 					
 					Action a = null;
 					XYWho a2 = null;
@@ -74,7 +74,7 @@ public class FailureStateTeamClient extends TablutClient {
 				}
 			} else {
 
-				if (state.getTurn().equals(StateTablut.Turn.BLACK)) {
+				if (state.getTurn().equals(InternalState.Turn.BLACK)) {
 					Action a = null;
 					XYWho a2 = this.ab.makeDecision(state);
 					String from = state.getBox(a2.getWho()[0], a2.getWho()[1]);
