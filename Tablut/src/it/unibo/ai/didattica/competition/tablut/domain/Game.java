@@ -1,7 +1,6 @@
 package it.unibo.ai.didattica.competition.tablut.domain;
 
 import it.unibo.ai.didattica.competition.tablut.domain.Action;
-import it.unibo.ai.didattica.competition.tablut.domain.State;
 import it.unibo.ai.didattica.competition.tablut.exceptions.ActionException;
 import it.unibo.ai.didattica.competition.tablut.exceptions.BoardException;
 import it.unibo.ai.didattica.competition.tablut.exceptions.CitadelException;
@@ -12,6 +11,7 @@ import it.unibo.ai.didattica.competition.tablut.exceptions.OccupitedException;
 import it.unibo.ai.didattica.competition.tablut.exceptions.PawnException;
 import it.unibo.ai.didattica.competition.tablut.exceptions.StopException;
 import it.unibo.ai.didattica.competition.tablut.exceptions.ThroneException;
+import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut;
 
 /**
  * Contains the rules of the game
@@ -40,14 +40,8 @@ public interface Game {
 	 *             try to move a pawn diagonally
 	 * @throws ClimbingException
 	 *             try to climb over another pawn
-	 * @throws ThroneException
-	 *             try to move a pawn into the throne boxe
-	 * @throws OccupitedException
-	 *             try to move a pawn into an ccupited box
-	 * @throws ClimbingCitadelException
-	 * @throws CitadelException
 	 */
-	public State checkMove(State state, Action a)
+	public StateTablut checkMove(StateTablut state, Action a)
 			throws BoardException, ActionException, StopException, PawnException, DiagonalException, ClimbingException,
 			ThroneException, OccupitedException, ClimbingCitadelException, CitadelException;
 

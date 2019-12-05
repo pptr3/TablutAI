@@ -8,21 +8,21 @@ import java.io.IOException;
 import javax.swing.JTextField;
 
 import it.unibo.ai.didattica.competition.tablut.domain.Action;
-import it.unibo.ai.didattica.competition.tablut.failurestate.game.InternalState;
-import it.unibo.ai.didattica.competition.tablut.failurestate.game.InternalState.Pawn;
-import it.unibo.ai.didattica.competition.tablut.failurestate.game.InternalState.Turn;
+import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut;
+import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut.Pawn;
+import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut.Turn;
 import it.unibo.ai.didattica.competition.tablut.gui.Gui;
 
 public class AggiungiNero implements ActionListener {
 
 	private Gui theGui;
 	private JTextField posizione;
-	private InternalState state;
+	private StateTablut state;
 	private TestGuiFrame ret;
 	
 	
 	
-	public AggiungiNero(Gui theGui, JTextField field, InternalState state, TestGuiFrame ret) {
+	public AggiungiNero(Gui theGui, JTextField field, StateTablut state, TestGuiFrame ret) {
 		super();
 		this.theGui = theGui;
 		this.posizione = field;

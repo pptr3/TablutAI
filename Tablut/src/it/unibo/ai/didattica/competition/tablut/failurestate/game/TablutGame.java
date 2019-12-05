@@ -2,30 +2,30 @@ package it.unibo.ai.didattica.competition.tablut.failurestate.game;
 
 import java.util.List;
 
-import it.unibo.ai.didattica.competition.tablut.failurestate.game.InternalState.Pawn;
-import it.unibo.ai.didattica.competition.tablut.failurestate.game.InternalState.Turn;
+import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut.Pawn;
+import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut.Turn;
 
 
-public class TablutGame implements Game<InternalState, XYWho, Turn> {
+public class TablutGame implements Game<StateTablut, XYWho, Turn> {
 
-	private InternalState initialState;
+	private StateTablut initialState;
 	
 	public TablutGame(int depth) {
-		this.initialState = new InternalState(depth);
+		this.initialState = new StateTablut(depth);
 	}
 
 	@Override
-	public List<XYWho> getActions(InternalState state) {
+	public List<XYWho> getActions(StateTablut state) {
 		return state.getAllLegalMoves();
 	}
 
 	@Override
-	public InternalState getInitialState() {
+	public StateTablut getInitialState() {
 		return this.initialState;
 	}
 
 	@Override
-	public Turn getPlayer(InternalState state) {
+	public Turn getPlayer(StateTablut state) {
 		return state.getTurn();
 	}
 
@@ -35,7 +35,7 @@ public class TablutGame implements Game<InternalState, XYWho, Turn> {
 	}
 
 	@Override
-	public double getUtility(InternalState state, Turn player) {
+	public double getUtility(StateTablut state, Turn player) {
 		double toreturn = 0;
 		if(state.getCurrentDepth() == 0) {
 			if(player.equals(Turn.WHITE)) {
@@ -67,25 +67,25 @@ public class TablutGame implements Game<InternalState, XYWho, Turn> {
 	}
 
 	@Override
-	public boolean isTerminal(InternalState state) {
+	public boolean isTerminal(StateTablut state) {
 		return state.getCurrentDepth() == 0;
 	}
 
 	@Override
-	public InternalState getResult(InternalState state, XYWho action) {
-		InternalState result = state.clone();
+	public StateTablut getResult(StateTablut state, XYWho action) {
+		StateTablut result = state.clone();
 		result.applyMove(action);
 		return result;
 	}
 
 	
 	@Override
-	public int getCurrentDepth(InternalState state) {
+	public int getCurrentDepth(StateTablut state) {
 		return state.getCurrentDepth();
 	}
 
 	@Override
-	public void setCurrentDepth(InternalState state, int depth) {
+	public void setCurrentDepth(StateTablut state, int depth) {
 		state.setCurrentDepth(depth);
 		
 	}

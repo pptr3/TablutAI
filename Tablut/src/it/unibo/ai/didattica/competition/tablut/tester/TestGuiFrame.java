@@ -13,8 +13,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import it.unibo.ai.didattica.competition.tablut.domain.*;
-import it.unibo.ai.didattica.competition.tablut.failurestate.game.InternalState;
-import it.unibo.ai.didattica.competition.tablut.failurestate.game.InternalState.*;
+import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut;
+import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut.*;
 import it.unibo.ai.didattica.competition.tablut.gui.Gui;
 
 public class TestGuiFrame extends JFrame{
@@ -24,7 +24,7 @@ public class TestGuiFrame extends JFrame{
 	 */
 	private static final long serialVersionUID = 1L;
 	private Gui theGui;
-	private InternalState state;
+	private StateTablut state;
 	private Game theGame;
 	private Label l1;
 	private Label l2;
@@ -58,8 +58,8 @@ public class TestGuiFrame extends JFrame{
 				}
 			}
 			board3[4][4] = Pawn.THRONE;
-			state = new InternalState(400);
-			state.setTurn(InternalState.Turn.WHITE);
+			state = new StateTablut(400);
+			state.setTurn(StateTablut.Turn.WHITE);
 			theGame=new GameAshtonTablut(0, -1, "test", "testW", "testB", 3);
 			state.setBoard(board3);
 			break;	
@@ -118,7 +118,7 @@ public class TestGuiFrame extends JFrame{
 
 
 
-	public void setState(InternalState state) {
+	public void setState(StateTablut state) {
 		this.state = state;
 	}
 

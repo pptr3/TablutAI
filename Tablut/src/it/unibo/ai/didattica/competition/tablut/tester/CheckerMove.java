@@ -9,20 +9,20 @@ import javax.swing.JTextField;
 
 import it.unibo.ai.didattica.competition.tablut.domain.Action;
 import it.unibo.ai.didattica.competition.tablut.domain.Game;
-import it.unibo.ai.didattica.competition.tablut.failurestate.game.InternalState;
-import it.unibo.ai.didattica.competition.tablut.failurestate.game.InternalState.Turn;
+import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut;
+import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut.Turn;
 import it.unibo.ai.didattica.competition.tablut.gui.Gui;
 
 public class CheckerMove implements ActionListener {
 
 	private Gui theGui;
 	private JTextField posizione;
-	private InternalState state;
+	private StateTablut state;
 	private TestGuiFrame ret;
 	private Game game;
 	private JRadioButton turno;
 
-	public CheckerMove(Gui theGui, JTextField field, InternalState state, TestGuiFrame ret, Game game, JRadioButton jr) {
+	public CheckerMove(Gui theGui, JTextField field, StateTablut state, TestGuiFrame ret, Game game, JRadioButton jr) {
 		super();
 		this.setTheGui(theGui);
 		this.posizione = field;

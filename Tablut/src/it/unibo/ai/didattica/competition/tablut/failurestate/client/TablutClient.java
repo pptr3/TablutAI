@@ -11,8 +11,8 @@ import java.security.InvalidParameterException;
 import com.google.gson.Gson;
 
 import it.unibo.ai.didattica.competition.tablut.domain.Action;
-import it.unibo.ai.didattica.competition.tablut.failurestate.game.InternalState;
-import it.unibo.ai.didattica.competition.tablut.failurestate.game.InternalState.Turn;
+import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut;
+import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut.Turn;
 import it.unibo.ai.didattica.competition.tablut.util.StreamUtils;
 import it.unibo.ai.didattica.competition.tablut.server.Server;
 
@@ -31,14 +31,14 @@ public abstract class TablutClient implements Runnable {
 	private Gson gson;
 	private int timeout;
 	private String serverIp;
-	private InternalState currentState;
-	private InternalState.Turn player;
+	private StateTablut currentState;
+	private StateTablut.Turn player;
 	
-	public void setPlayer(InternalState.Turn player) {
+	public void setPlayer(StateTablut.Turn player) {
 		this.player = player;
 	}
 	
-	public InternalState.Turn getPlayer() {
+	public StateTablut.Turn getPlayer() {
 		return this.player;
 	}
 	/**
@@ -62,10 +62,10 @@ public abstract class TablutClient implements Runnable {
 		this.timeout = timeout;
 		this.gson = new Gson();
 		if (player.toLowerCase().equals("white")) {
-			this.player = InternalState.Turn.WHITE;
+			this.player = StateTablut.Turn.WHITE;
 			port = Server.whitePort;
 		} else if (player.toLowerCase().equals("black")) {
-			this.player = InternalState.Turn.BLACK;
+			this.player = StateTablut.Turn.BLACK;
 			port = Server.blackPort;
 		} else {
 			throw new InvalidParameterException("Player role must be BLACK or WHITE");
@@ -134,7 +134,7 @@ public abstract class TablutClient implements Runnable {
 		this.name = name;
 	}
 
-	public InternalState getCurrentState() {
+	public StateTablut getCurrentState() {
 		return this.currentState;
 	}
 	
@@ -156,6 +156,6 @@ public abstract class TablutClient implements Runnable {
 	 * Read the state from the server
 	 */
 	public void read() throws ClassNotFoundException, IOException {
-		this.currentState = this.gson.fromJson(StreamUtils.readString(in), InternalState.class);
+		this.currentState = this.gson.fromJson(StreamUtils.readString(in), StateTablut.class);
 	}
 }
