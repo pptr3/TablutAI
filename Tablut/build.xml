@@ -53,21 +53,11 @@
         </java>
     </target>
 	
-	<target name="whiteFailureState">
-        <java classname="it.unibo.ai.didattica.competition.tablut.failurestate.client.WhiteFailureStateTeamClient" fork="true">
-            <classpath>
-                <pathelement location="lib/gson-2.2.2.jar"/>
-                <pathelement location="build"/>
-            </classpath>
-        	<classpath>
-                <pathelement location="lib/aima-core.jar"/>
-                <pathelement location="build"/>
-            </classpath>
-        </java>
-    </target>
-	
-	<target name="blackFailureState">
-	    <java classname="it.unibo.ai.didattica.competition.tablut.failurestate.client.BlackFailureStateTeamClient" fork="true">
+	<target name="failureState">
+	    <java classname="it.unibo.ai.didattica.competition.tablut.failurestate.client.FailureStateTeamClient" fork="true">
+	    	<arg value="${arg0}"/>
+        	<arg value="${arg1}"/>
+	    	<arg value="${arg2}"/>
 	        <classpath>
 	            <pathelement location="lib/gson-2.2.2.jar"/>
 	            <pathelement location="build"/>

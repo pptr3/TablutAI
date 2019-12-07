@@ -20,8 +20,8 @@ public class FailureStateTeamClient extends TablutClient {
 	private TablutGame tablutGame = new TablutGame(this.d);
 	private AlphaBetaSearch<MyStateTablut, XYWho, Turn> ab = new AlphaBetaSearch<MyStateTablut, XYWho, Turn> (this.tablutGame, this.d);
 	
-	public FailureStateTeamClient(String player, String name) throws UnknownHostException, IOException {
-		super(player, name);
+	public FailureStateTeamClient(String player, String name, int timeout, String ipAddress) throws UnknownHostException, IOException {
+		super(player, name, timeout, ipAddress);
 	}
 
 	@Override
@@ -47,7 +47,6 @@ public class FailureStateTeamClient extends TablutClient {
 			}
 			state = this.getCurrentState();
 			MyStateTablut state2 = new MyStateTablut(4).stateAdapter(this.getCurrentState());
-			//System.out.println(this.getCurrentState());
 			state2.printBoard();
 			try {
 				Thread.sleep(1000);
@@ -95,22 +94,28 @@ public class FailureStateTeamClient extends TablutClient {
 			}
 		}	
 	}
-		public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException {
-			String role = "";
-			String name = "FailureState";
-		
-			if (args.length < 1) {
-				System.out.println("You must specify which player you are (WHITE or BLACK)");
-				System.exit(-1);
-			} else {
-				System.out.println(args[0]);
-				role = (args[0]);
-			}
-			if (args.length == 3) {
-				name = args[2];
-			}
-			System.out.println("Selected client: " + args[0]);
-			FailureStateTeamClient client = new FailureStateTeamClient(role, name);
-			client.run();
+	
+	public static void main(String[] args) throws UnknownHostException, IOException, ClassNotFoundException {
+		String role = "";
+		String name = "FailureState";
+		int timeout = 0;
+		String serverIpAddress = "";
+		if (args.length < 1) {
+			System.out.println("You must specify which player you are (WHITE or BLACK)");
+			System.exit(-1);
 		}
+		if (args.length < 3) {
+			System.out.println("You must specify in the following order which player you are (WHITE or BLACK), timeout time(in seconds) and server IP address.");
+			System.exit(-1);
+		} else if (args.length == 3) {
+			role = args[0];
+			name = name + args[0];
+			timeout = Integer.valueOf(args[1]);
+			serverIpAddress = args[2];
+		}
+		
+		System.out.println("Selected client: " + args[0]);
+		FailureStateTeamClient client = new FailureStateTeamClient(role, name, timeout, serverIpAddress);
+		client.run();
+	}
 }
