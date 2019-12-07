@@ -16,7 +16,7 @@ import it.unibo.ai.didattica.competition.tablut.failurestate.game.XYWho;
 
 public class FailureStateTeamClient extends TablutClient {
 
-	private int d = 2;
+	private int d = 4;
 	private TablutGame tablutGame = new TablutGame(this.d);
 	private AlphaBetaSearch<MyStateTablut, XYWho, Turn> ab = new AlphaBetaSearch<MyStateTablut, XYWho, Turn> (this.tablutGame, this.d);
 	

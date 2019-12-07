@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ "$1" == "WHITE" ];then
+	ant whiteFailureState
+elif [ "$1" == "BLACK" ];then
+	ant blackFailureState
+else
+	echo "You should specify as the first parameter the color of the player in upper case";
+fi

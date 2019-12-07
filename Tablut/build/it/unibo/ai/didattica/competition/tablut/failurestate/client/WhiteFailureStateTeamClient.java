@@ -12,6 +12,4 @@ public class WhiteFailureStateTeamClient {
 		}
 		FailureStateTeamClient.main(array);
 	}
-
-
 }
