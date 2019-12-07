@@ -438,7 +438,7 @@ public class Server implements Runnable {
 		}
 
 		switch (this.gameC) {
-		/*case 1:
+		case 1:
 			state = new StateTablut();
 			this.game = new GameTablut(moveCache);
 			break;
@@ -449,7 +449,7 @@ public class Server implements Runnable {
 		case 3:
 			state = new StateBrandub();
 			this.game = new GameTablut(moveCache);
-			break;*/
+			break;
 		case 4:
 			state = new StateTablut();
 			state.setTurn(State.Turn.WHITE);

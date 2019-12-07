@@ -18,41 +18,6 @@ public class MyStateTablut {
 
 	private static final long serialVersionUID = 1L;
 	
-//	public enum Turn {
-//		WHITE("W"), BLACK("B"), WHITEWIN("WW"), BLACKWIN("BW"), DRAW("D");
-//		private final String inner_turn;
-//
-//		private Turn(String s) {
-//			this.inner_turn = s;
-//		}
-//
-//		public boolean equalsTurn(String otherName) {
-//			return (otherName == null) ? false : this.inner_turn.equals(otherName);
-//		}
-//
-//		public String toString() {
-//			return this.inner_turn;
-//		}
-//	}
-//
-//	public enum Pawn {
-//		EMPTY(" "), WHITE("W"), BLACK("B"), THRONE("T"), KING("K");
-//		private final String pawn;
-//
-//		private Pawn(String s) {
-//			this.pawn = s;
-//		}
-//
-//		public boolean equalsPawn(String otherPawn) {
-//			return (otherPawn == null) ? false : this.pawn.equals(otherPawn);
-//		}
-//
-//		public String toString() {
-//			return this.pawn;
-//		}
-//
-//	}
-	
 	public enum Area {
 		NORMAL("N"), CASTLE("K"), CAMPS("C"), ESCAPES("E");
 		private final String area;

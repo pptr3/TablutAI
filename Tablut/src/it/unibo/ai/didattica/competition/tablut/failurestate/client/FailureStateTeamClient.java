@@ -47,8 +47,8 @@ public class FailureStateTeamClient extends TablutClient {
 			}
 			state = this.getCurrentState();
 			MyStateTablut state2 = new MyStateTablut(4).stateAdapter(this.getCurrentState());
-			System.out.println(this.getCurrentState());
-			//state.printBoard();
+			//System.out.println(this.getCurrentState());
+			state2.printBoard();
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
