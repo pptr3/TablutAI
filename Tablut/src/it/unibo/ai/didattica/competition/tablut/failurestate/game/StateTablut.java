@@ -229,11 +229,6 @@ public class StateTablut {
 		}
 		return min.stream().mapToDouble(Double::doubleValue).sum();
 	}
-	
-	public static void main(String[] args) {
-		StateTablut s = new StateTablut(3);
-		System.out.println(s.getNumberCloseToTheKingOf(Pawn.WHITE));
-	}
 
 	public int getNumberOf(Pawn color) {
 		int count = 0;
