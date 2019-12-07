@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd /tablut/TablutAI/Tablut
+
 if [ "$1" == "WHITE" ];then
 	ant whiteFailureState
 elif [ "$1" == "BLACK" ];then
