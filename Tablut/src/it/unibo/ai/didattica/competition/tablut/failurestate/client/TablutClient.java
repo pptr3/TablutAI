@@ -1,7 +1,6 @@
 package it.unibo.ai.didattica.competition.tablut.failurestate.client;
 
 import java.io.DataInputStream;
-
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -11,8 +10,8 @@ import java.security.InvalidParameterException;
 import com.google.gson.Gson;
 
 import it.unibo.ai.didattica.competition.tablut.domain.Action;
-import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut;
-import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut.Turn;
+import it.unibo.ai.didattica.competition.tablut.domain.State;
+import it.unibo.ai.didattica.competition.tablut.domain.StateTablut;
 import it.unibo.ai.didattica.competition.tablut.util.StreamUtils;
 import it.unibo.ai.didattica.competition.tablut.server.Server;
 
@@ -24,23 +23,32 @@ import it.unibo.ai.didattica.competition.tablut.server.Server;
  */
 public abstract class TablutClient implements Runnable {
 
+	private State.Turn player;
 	private String name;
 	private Socket playerSocket;
 	private DataInputStream in;
 	private DataOutputStream out;
 	private Gson gson;
+	private State currentState;
 	private int timeout;
 	private String serverIp;
-	private StateTablut currentState;
-	private StateTablut.Turn player;
-	
-	public void setPlayer(StateTablut.Turn player) {
+
+	public State.Turn getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(State.Turn player) {
 		this.player = player;
 	}
-	
-	public StateTablut.Turn getPlayer() {
-		return this.player;
+
+	public State getCurrentState() {
+		return currentState;
 	}
+
+	public void setCurrentState(State currentState) {
+		this.currentState = currentState;
+	}
+
 	/**
 	 * Creates a new player initializing the sockets and the logger
 	 * 
@@ -62,10 +70,10 @@ public abstract class TablutClient implements Runnable {
 		this.timeout = timeout;
 		this.gson = new Gson();
 		if (player.toLowerCase().equals("white")) {
-			this.player = StateTablut.Turn.WHITE;
+			this.player = State.Turn.WHITE;
 			port = Server.whitePort;
 		} else if (player.toLowerCase().equals("black")) {
-			this.player = StateTablut.Turn.BLACK;
+			this.player = State.Turn.BLACK;
 			port = Server.blackPort;
 		} else {
 			throw new InvalidParameterException("Player role must be BLACK or WHITE");
@@ -134,10 +142,6 @@ public abstract class TablutClient implements Runnable {
 		this.name = name;
 	}
 
-	public StateTablut getCurrentState() {
-		return this.currentState;
-	}
-	
 	/**
 	 * Write an action to the server
 	 */
@@ -151,7 +155,7 @@ public abstract class TablutClient implements Runnable {
 	public void declareName() throws IOException, ClassNotFoundException {
 		StreamUtils.writeString(out, this.gson.toJson(this.name));
 	}
-	
+
 	/**
 	 * Read the state from the server
 	 */

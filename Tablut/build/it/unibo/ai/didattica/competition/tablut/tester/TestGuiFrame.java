@@ -1,7 +1,6 @@
 package it.unibo.ai.didattica.competition.tablut.tester;
 
 import java.awt.BorderLayout;
-
 import java.awt.GridLayout;
 import java.awt.Label;
 
@@ -13,8 +12,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import it.unibo.ai.didattica.competition.tablut.domain.*;
-import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut;
-import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut.*;
+import it.unibo.ai.didattica.competition.tablut.domain.State.*;
 import it.unibo.ai.didattica.competition.tablut.gui.Gui;
 
 public class TestGuiFrame extends JFrame{
@@ -24,7 +22,7 @@ public class TestGuiFrame extends JFrame{
 	 */
 	private static final long serialVersionUID = 1L;
 	private Gui theGui;
-	private StateTablut state;
+	private State state;
 	private Game theGame;
 	private Label l1;
 	private Label l2;
@@ -50,6 +48,42 @@ public class TestGuiFrame extends JFrame{
 		super();
 		
 		switch (game) {
+		/*case 1:
+			Pawn board[][] = new Pawn[9][9];
+			for(int i=0;i<9;i++){
+				for(int j=0;j<9;j++){
+					board[i][j]=Pawn.EMPTY;
+				}
+			}
+			board[4][4] = Pawn.THRONE;
+			state = new StateTablut();
+			theGame=new GameTablut(10);
+			state.setBoard(board);
+			break;
+		case 2:
+			Pawn board1[][] = new Pawn[9][9];
+			for(int i=0;i<9;i++){
+				for(int j=0;j<9;j++){
+					board1[i][j]=Pawn.EMPTY;
+				}
+			}
+			board1[4][4] = Pawn.THRONE;
+			state = new StateTablut();
+			theGame=new GameModernTablut(10);
+			state.setBoard(board1);
+			break;
+		case 3:
+			Pawn board2[][] = new Pawn[7][7];
+			for(int i=0;i<7;i++){
+				for(int j=0;j<7;j++){
+					board2[i][j]=Pawn.EMPTY;
+				}
+			}
+			board2[3][3] = Pawn.THRONE;
+			state = new StateBrandub();
+			theGame=new GameTablut(10);
+			state.setBoard(board2);
+			break;	*/
 		case 4:
 			Pawn board3[][] = new Pawn[9][9];
 			for(int i=0;i<9;i++){
@@ -58,9 +92,9 @@ public class TestGuiFrame extends JFrame{
 				}
 			}
 			board3[4][4] = Pawn.THRONE;
-			state = new StateTablut(400);
-			state.setTurn(StateTablut.Turn.WHITE);
-			theGame=new GameAshtonTablut(0, -1, "test", "testW", "testB", 3);
+			state = new StateTablut();
+			state.setTurn(State.Turn.WHITE);
+			theGame=new GameAshtonTablut(0, -1, "test", "testW", "testB");
 			state.setBoard(board3);
 			break;	
 		default:
@@ -118,7 +152,7 @@ public class TestGuiFrame extends JFrame{
 
 
 
-	public void setState(StateTablut state) {
+	public void setState(State state) {
 		this.state = state;
 	}
 

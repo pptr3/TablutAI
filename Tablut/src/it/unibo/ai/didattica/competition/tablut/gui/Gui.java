@@ -2,7 +2,7 @@ package it.unibo.ai.didattica.competition.tablut.gui;
 
 import javax.swing.JFrame;
 
-import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut;;
+import it.unibo.ai.didattica.competition.tablut.domain.State;
 
 /**
  * 
@@ -27,7 +27,7 @@ public class Gui {
 	 * Update the graphic whit a new state of the game
 	 * @param aState represent the new state of the game
 	 */
-	public void update(StateTablut aState) {
+	public void update(State aState) {
 		frame.setaState(aState);
 		frame.repaint();
 	}	

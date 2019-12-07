@@ -1,22 +1,24 @@
 package it.unibo.ai.didattica.competition.tablut.failurestate.client;
 
 import java.io.IOException;
+
 import java.net.UnknownHostException;
 
 import it.unibo.ai.didattica.competition.tablut.domain.*;
+import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 import it.unibo.ai.didattica.competition.tablut.failurestate.algorithm.AlphaBetaSearch;
 import it.unibo.ai.didattica.competition.tablut.failurestate.client.TablutClient;
-import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut;
+import it.unibo.ai.didattica.competition.tablut.failurestate.game.MyStateTablut;
 import it.unibo.ai.didattica.competition.tablut.failurestate.game.TablutGame;
 import it.unibo.ai.didattica.competition.tablut.failurestate.game.XYWho;
-import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut.Turn;
+
 
 
 public class FailureStateTeamClient extends TablutClient {
 
-	private int d = 5;
+	private int d = 2;
 	private TablutGame tablutGame = new TablutGame(this.d);
-	private AlphaBetaSearch<StateTablut, XYWho, Turn> ab = new AlphaBetaSearch<StateTablut, XYWho, Turn> (this.tablutGame, this.d);
+	private AlphaBetaSearch<MyStateTablut, XYWho, Turn> ab = new AlphaBetaSearch<MyStateTablut, XYWho, Turn> (this.tablutGame, this.d);
 	
 	public FailureStateTeamClient(String player, String name) throws UnknownHostException, IOException {
 		super(player, name);
@@ -30,7 +32,11 @@ public class FailureStateTeamClient extends TablutClient {
 		} catch (Exception e) {
 		}
 
-		StateTablut state = this.tablutGame.getInitialState();
+		State state;
+		Game rules = null;
+		state = new StateTablut();
+		state.setTurn(State.Turn.WHITE);
+		rules = new GameAshtonTablut(99, 0, "garbage", "fake", "fake");
 		System.out.println("You are player " + this.getPlayer().toString() + "!");
 
 		while (true) {
@@ -40,23 +46,26 @@ public class FailureStateTeamClient extends TablutClient {
 				System.exit(1);
 			}
 			state = this.getCurrentState();
-			state.printBoard();
+			MyStateTablut state2 = new MyStateTablut(4).stateAdapter(this.getCurrentState());
+			System.out.println(this.getCurrentState());
+			//state.printBoard();
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 			}
 			
 			if (this.getPlayer().equals(Turn.WHITE)) {
-				if (state.getTurn().equals(StateTablut.Turn.WHITE)) {
+				if (state.getTurn().equals(Turn.WHITE)) {
 					
 					Action a = null;
-					XYWho a2 = this.ab.makeDecision(state);
+					XYWho a2 = this.ab.makeDecision(state2);
 					String from = state.getBox(a2.getWho()[0], a2.getWho()[1]);
 					String to = state.getBox(a2.getX(), a2.getY());
 					try {
 						a = new Action(from, to, StateTablut.Turn.WHITE);
 					} catch (IOException e1) {
 					}
+					System.out.println("Mossa scelta: " + a.toString());
 					try {
 						this.write(a);
 					} catch (ClassNotFoundException | IOException e) {
@@ -66,9 +75,9 @@ public class FailureStateTeamClient extends TablutClient {
 				}
 			} else {
 
-				if (state.getTurn().equals(StateTablut.Turn.BLACK)) {
+				if (state.getTurn().equals(Turn.BLACK)) {
 					Action a = null;
-					XYWho a2 = this.ab.makeDecision(state);
+					XYWho a2 = this.ab.makeDecision(state2);
 					String from = state.getBox(a2.getWho()[0], a2.getWho()[1]);
 					String to = state.getBox(a2.getX(), a2.getY());
 					

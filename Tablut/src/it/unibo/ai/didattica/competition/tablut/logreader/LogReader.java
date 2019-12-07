@@ -5,12 +5,13 @@ package it.unibo.ai.didattica.competition.tablut.logreader;
 
 import java.io.*;
 
+
 import java.nio.file.*;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import it.unibo.ai.didattica.competition.tablut.failurestate.game.StateTablut.Turn;
+import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 
 /**
  * @author Andrea Galassi
