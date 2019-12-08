@@ -55,3 +55,79 @@ OOOOBOOOO
 OOOBBBOOO
 -
 W
+Dec 07, 2019 10:50:19 PM it.unibo.ai.didattica.competition.tablut.domain.GameAshtonTablut checkMove
+FINE: Turn: W Pawn from d5 to d6
+Dec 07, 2019 10:50:19 PM it.unibo.ai.didattica.competition.tablut.domain.GameAshtonTablut movePawn
+FINE: Movimento pedina
+Dec 07, 2019 10:50:19 PM it.unibo.ai.didattica.competition.tablut.domain.GameAshtonTablut checkMove
+FINE: Current draw cache size: 3
+Dec 07, 2019 10:50:19 PM it.unibo.ai.didattica.competition.tablut.domain.GameAshtonTablut checkMove
+FINE: Stato:
+OOOBBBOOO
+OOOOBOOOO
+OOOWOOOOO
+OOOBWOOOB
+BBWOKWWBB
+BOOWWOOOB
+OOOOWOOOO
+OOOOBOOOO
+OOOBBBOOO
+-
+B
+Dec 07, 2019 10:50:31 PM it.unibo.ai.didattica.competition.tablut.domain.GameAshtonTablut checkMove
+FINE: Turn: B Pawn from f9 to f6
+Dec 07, 2019 10:50:31 PM it.unibo.ai.didattica.competition.tablut.domain.GameAshtonTablut movePawn
+FINE: Movimento pedina
+Dec 07, 2019 10:50:31 PM it.unibo.ai.didattica.competition.tablut.domain.GameAshtonTablut checkMove
+FINE: Current draw cache size: 4
+Dec 07, 2019 10:50:31 PM it.unibo.ai.didattica.competition.tablut.domain.GameAshtonTablut checkMove
+FINE: Stato:
+OOOBBBOOO
+OOOOBOOOO
+OOOWOOOOO
+OOOBWOOOB
+BBWOKWWBB
+BOOWWBOOB
+OOOOWOOOO
+OOOOBOOOO
+OOOBBOOOO
+-
+W
+Dec 07, 2019 10:50:38 PM it.unibo.ai.didattica.competition.tablut.domain.GameAshtonTablut checkMove
+FINE: Turn: W Pawn from f5 to f4
+Dec 07, 2019 10:50:38 PM it.unibo.ai.didattica.competition.tablut.domain.GameAshtonTablut movePawn
+FINE: Movimento pedina
+Dec 07, 2019 10:50:38 PM it.unibo.ai.didattica.competition.tablut.domain.GameAshtonTablut checkMove
+FINE: Current draw cache size: 5
+Dec 07, 2019 10:50:38 PM it.unibo.ai.didattica.competition.tablut.domain.GameAshtonTablut checkMove
+FINE: Stato:
+OOOBBBOOO
+OOOOBOOOO
+OOOWOOOOO
+OOOBWWOOB
+BBWOKOWBB
+BOOWWBOOB
+OOOOWOOOO
+OOOOBOOOO
+OOOBBOOOO
+-
+B
+Dec 07, 2019 10:50:50 PM it.unibo.ai.didattica.competition.tablut.domain.GameAshtonTablut checkMove
+FINE: Turn: B Pawn from a6 to c6
+Dec 07, 2019 10:50:50 PM it.unibo.ai.didattica.competition.tablut.domain.GameAshtonTablut movePawn
+FINE: Movimento pedina
+Dec 07, 2019 10:50:50 PM it.unibo.ai.didattica.competition.tablut.domain.GameAshtonTablut checkMove
+FINE: Current draw cache size: 6
+Dec 07, 2019 10:50:50 PM it.unibo.ai.didattica.competition.tablut.domain.GameAshtonTablut checkMove
+FINE: Stato:
+OOOBBBOOO
+OOOOBOOOO
+OOOWOOOOO
+OOOBWWOOB
+BBWOKOWBB
+OOBWWBOOB
+OOOOWOOOO
+OOOOBOOOO
+OOOBBOOOO
+-
+W

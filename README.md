@@ -42,11 +42,11 @@ ant server
 To start the game, run the `white` player with this command:
 
 ```
-ant whiteFailureState
+ant failureState -Darg0=WHITE -Darg1=1 -Darg2=localhost
 ```
 And then run the `black` player:
 ```
-ant blackFailureState
+ant failureState -Darg0=BLACK -Darg1=1 -Darg2=localhost
 ```
 
 At this point, a window with the game state should appear.

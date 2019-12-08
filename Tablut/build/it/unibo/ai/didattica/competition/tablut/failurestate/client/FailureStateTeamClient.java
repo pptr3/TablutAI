@@ -100,7 +100,6 @@ public class FailureStateTeamClient extends TablutClient {
 		String name = "FailureState";
 		int timeout = 0;
 		String serverIpAddress = "";
-		System.out.println("qui: "+args.length);
 		if (args.length < 1) {
 			System.out.println("You must specify which player you are (WHITE or BLACK)");
 			System.exit(-1);
